@@ -39,6 +39,14 @@
 			<Setter Property="Height" Value="26"/>
 			<Setter Property="Margin" Value="0 0 6 0"/>
 		</Style>
+		<Style Selector="Grid TextBox">
+			<Setter Property="FontSize" Value="14"/>
+			<Setter Property="MinHeight" Value="14"/>
+		</Style>
+		<Style Selector="Grid.props TextBox">
+			<Setter Property="FontSize" Value="10"/>
+			<Setter Property="MinHeight" Value="10"/>
+		</Style>
 	</Window.Styles>
 	
 	<TabControl>
@@ -67,7 +75,7 @@
 			</Grid>
 		</TabItem>
 		
-		<TabItem Header="Атрибуты" IsSelected="True">
+		<TabItem Header="Атрибуты">
 			<StackPanel>
 				<Button Command="{Binding AddFirstAttr}">
 					<Image Width="24" Height="24" Source="/Assets/NewItem.png"></Image>
@@ -87,15 +95,15 @@
 										<ComboBoxItem>public</ComboBoxItem>
 										<ComboBoxItem>internal</ComboBoxItem>
 									</ComboBox>
-									<CheckBox>readonly</CheckBox>
+									<CheckBox IsChecked="{Binding IsReadonly}">readonly</CheckBox>
 									<Border Width="10"/>
-									<CheckBox>static</CheckBox>
+									<CheckBox IsChecked="{Binding IsStatic}">static</CheckBox>
 									<Border Width="10"/>
-									<ComboBox SelectedIndex="0">
+									<ComboBox SelectedIndex="{Binding Stereo}">
 										<ComboBoxItem>-</ComboBoxItem>
-										<ComboBoxItem>event</ComboBoxItem>
-										<ComboBoxItem>property</ComboBoxItem>
-										<ComboBoxItem>required</ComboBoxItem>
+										<ComboBoxItem>"event"</ComboBoxItem>
+										<ComboBoxItem>"property"</ComboBoxItem>
+										<ComboBoxItem>"required"</ComboBoxItem>
 									</ComboBox>
 								</StackPanel>
 								<Button Grid.Column="3" Grid.RowSpan="2" Command="{Binding RemoveMe}">
@@ -108,10 +116,61 @@
 			</StackPanel>
 		</TabItem>
 		
-		<TabItem Header="Операции">
-			<StackPanel Orientation="Horizontal">
-				<TextBlock Text="Square : " HorizontalAlignment="Left" VerticalAlignment="Center"/>
-				<Rectangle Fill="Blue" Width="63" Height="41"/>
+		<TabItem Header="Операции" IsSelected="True">
+			<StackPanel>
+				<Button Command="{Binding AddFirstMethod}">
+					<Image Width="24" Height="24" Source="/Assets/NewItem.png"></Image>
+				</Button>
+				<ListBox Items="{Binding Methods}">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<Grid ColumnDefinitions="auto,1.5*,*,auto" RowDefinitions="auto,auto,auto">
+								<Button Grid.RowSpan="2" Command="{Binding AddNextMethod}">
+									<Image Width="24" Height="24" Source="/Assets/NewItem.png"></Image>
+								</Button>
+								<TextBox Grid.Column="1" Watermark="Название" Text="{Binding Name}"/>
+								<TextBox Grid.Column="2" Watermark="Тип" Text="{Binding Type}"/>
+								<StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
+									<ComboBox SelectedIndex="{Binding Access}">
+										<ComboBoxItem>private</ComboBoxItem>
+										<ComboBoxItem>public</ComboBoxItem>
+										<ComboBoxItem>internal</ComboBoxItem>
+									</ComboBox>
+									<ComboBox SelectedIndex="{Binding Stereo}">
+										<ComboBoxItem>virtual</ComboBoxItem>
+										<ComboBoxItem>static</ComboBoxItem>
+										<ComboBoxItem>abstract</ComboBoxItem>
+										<ComboBoxItem>"create"</ComboBoxItem>
+									</ComboBox>
+								</StackPanel>
+								<StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
+									<Button Command="{Binding AddFirstProp}" VerticalAlignment="Top">
+										<Image Width="16" Height="16" Source="/Assets/NewItem.png"></Image>
+									</Button>
+									<ListBox Items="{Binding Properties}">
+										<ListBox.ItemTemplate>
+											<DataTemplate>
+												<Grid ColumnDefinitions="auto,1.5*,*,auto" Classes="props" Margin="0 -4 0 0">
+													<Button Command="{Binding AddNextProp}" VerticalAlignment="Top">
+														<Image Width="16" Height="16" Source="/Assets/NewItem.png"></Image>
+													</Button>
+													<TextBox Grid.Column="1" Watermark="Название" Text="{Binding Name}"/>
+													<TextBox Grid.Column="2" Watermark="Тип" Text="{Binding Type}"/>
+													<Button Grid.Column="3" Command="{Binding RemoveMe}" VerticalAlignment="Top">
+														<Image Width="16" Height="16" Source="/Assets/TrashCan.png"></Image>
+													</Button>
+												</Grid>
+											</DataTemplate>
+										</ListBox.ItemTemplate>
+									</ListBox>
+								</StackPanel>
+								<Button Grid.Column="3" Grid.RowSpan="2" Command="{Binding RemoveMe}">
+									<Image Width="24" Height="24" Source="/Assets/TrashCan.png"></Image>
+								</Button>
+							</Grid>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
 			</StackPanel>
 		</TabItem>
 	</TabControl>

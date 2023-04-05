@@ -61,6 +61,7 @@ namespace DiagramEditor.ViewModels {
             map = new Mapper();
 
             AddFirstAttr = ReactiveCommand.Create<Unit, Unit>(_ => { FuncAddFirstAttr(); return new Unit(); });
+            AddFirstMethod = ReactiveCommand.Create<Unit, Unit>(_ => { FuncAddFirstMethod(); return new Unit(); });
 
             canv = mw.Find<Canvas>("canvas") ?? new Canvas();
             var panel = (Panel?) canv.Parent;
@@ -98,5 +99,18 @@ namespace DiagramEditor.ViewModels {
         private void FuncAddFirstAttr() => attributes.Insert(0, new AttributeItem(this));
         public void FuncAddNextAttr(AttributeItem item) => attributes.Insert(attributes.IndexOf(item) + 1, new AttributeItem(this));
         public void FuncRemoveAttr(AttributeItem item) => attributes.Remove(item);
+
+        /*
+         * Вкладка методов
+         */
+
+        readonly ObservableCollection<MethodItem> methods = new();
+        public ObservableCollection<MethodItem> Methods { get => methods; }
+
+        public ReactiveCommand<Unit, Unit> AddFirstMethod { get; }
+
+        private void FuncAddFirstMethod() => methods.Insert(0, new MethodItem(this));
+        public void FuncAddNextMethod(MethodItem item) => methods.Insert(methods.IndexOf(item) + 1, new MethodItem(this));
+        public void FuncRemoveMethod(MethodItem item) => methods.Remove(item);
     }
 }

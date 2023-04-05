@@ -9,12 +9,13 @@ namespace DiagramEditor.Models {
         int access = 0; // private, public, internal
         bool _readonly = false;
         bool _static = false;
-        int stereo = 0; // -, event, property, required
+        int stereo = 0; // -, "event", "property", "required"
 
         MainWindowViewModel parent;
 
         public AttributeItem(MainWindowViewModel mwvm) {
             parent = mwvm;
+
             AddNextAttr = ReactiveCommand.Create<Unit, Unit>(_ => { FuncAddNextAttr(); return new Unit(); });
             RemoveMe = ReactiveCommand.Create<Unit, Unit>(_ => { FuncRemoveMe(); return new Unit(); });
         }
