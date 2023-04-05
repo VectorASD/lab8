@@ -1,9 +1,15 @@
-﻿using Avalonia.Controls;
+﻿using Avalonia;
+using Avalonia.Animation.Easings;
+using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
+using DiagramEditor.Models;
 using DiagramEditor.Views;
 using ReactiveUI;
 using Splat;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Reactive;
 
 namespace DiagramEditor.ViewModels {
     public class Log {
@@ -29,11 +35,33 @@ namespace DiagramEditor.ViewModels {
     public class MainWindowViewModel: ViewModelBase {
         private string log = "";
         private readonly Canvas canv;
+        private readonly Mapper map;
 
         public string Logg { get => log; set => this.RaiseAndSetIfChanged(ref log, value); }
 
-        public MainWindowViewModel(MainWindow mw) {
+        /* Не работает подобная тема :/
+         * Не получается получить недосформированное окно, что как раз занято созданием этого класса XD
+         * Ну или как там дизайнер этот работает...
+        
+        public static Window? GetCurrentWindow() {
+            var cur = Application.Current;
+            if (cur == null) return null;
+
+            var app = (IClassicDesktopStyleApplicationLifetime?) cur.ApplicationLifetime;
+            if (app == null) return null;
+
+            return app.MainWindow;
+        }
+
+        public MainWindowViewModel() : this(GetCurrentWindow()) {} // Для корректной работы предварительного просмотра
+        */
+
+        public MainWindowViewModel(Window mw) {
             Log.Mwvm = this;
+            map = new Mapper();
+
+            AddFirstAttr = ReactiveCommand.Create<Unit, Unit>(_ => { FuncAddFirstAttr(); return new Unit(); });
+
             canv = mw.Find<Canvas>("canvas") ?? new Canvas();
             var panel = (Panel?) canv.Parent;
             if (panel == null) return;
@@ -53,7 +81,22 @@ namespace DiagramEditor.ViewModels {
                     var item = map.ReleaseShape(@shape, e.GetCurrentPoint(canv).Position);
                     this.RaiseAndSetIfChanged(ref cur_shape, item, nameof(SelectedShape));
                 }*/
+                var window = new AddShape() { DataContext = this };
+                window.ShowDialog(mw);
             };
         }
+
+        /*
+         * Вкладка атрибутов
+         */
+
+        readonly ObservableCollection<AttributeItem> attributes = new();
+        public ObservableCollection<AttributeItem> Attributes { get => attributes; }
+
+        public ReactiveCommand<Unit, Unit> AddFirstAttr { get; }
+
+        private void FuncAddFirstAttr() => attributes.Insert(0, new AttributeItem(this));
+        public void FuncAddNextAttr(AttributeItem item) => attributes.Insert(attributes.IndexOf(item) + 1, new AttributeItem(this));
+        public void FuncRemoveAttr(AttributeItem item) => attributes.Remove(item);
     }
 }

@@ -9,9 +9,9 @@
         Icon="/Assets/vectorasd-logo.ico"
         Title="DiagramEditor">
 
-    <Design.DataContext>
+	<!--Design.DataContext>
         <vm:MainWindowViewModel/>
-    </Design.DataContext>
+    </Design.DataContext-->
 
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
