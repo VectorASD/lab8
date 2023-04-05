@@ -1,0 +1,34 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:DiagramEditor.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1600" d:DesignHeight="900"
+		Width="1600" Height="900"
+        x:Class="DiagramEditor.Views.MainWindow"
+        Icon="/Assets/vectorasd-logo.ico"
+        Title="DiagramEditor">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<DockPanel>
+		<Menu DockPanel.Dock="Top">
+			<MenuItem Header="Экспортировать" Name="menuExport">
+				<MenuItem Header="Экспортировать в PNG" Command="{Binding Export}" CommandParameter="PNG"/>
+				<MenuItem Header="Экспортировать в JSON" Command="{Binding Export}" CommandParameter="JSON"/>
+				<MenuItem Header="Экспортировать в XML" Command="{Binding Export}" CommandParameter="XML"/>
+			</MenuItem>
+			<MenuItem Header="Импортировать" Name="menuImport">
+				<MenuItem Header="Импортировать из JSON" Command="{Binding Import}" CommandParameter="JSON"/>
+				<MenuItem Header="Импортировать из XML" Command="{Binding Import}" CommandParameter="XML"/>
+			</MenuItem>
+		</Menu>
+		<Panel Background="AliceBlue" DragDrop.AllowDrop="True">
+			<TextBlock Text="{Binding Logg}" IsVisible="{Binding ServiceVisible}"/>
+			<Canvas Name="canvas" Cursor="Hand"/>
+		</Panel>
+	</DockPanel>
+
+</Window>
