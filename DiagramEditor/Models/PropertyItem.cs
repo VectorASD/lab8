@@ -4,10 +4,11 @@ using System.Reactive;
 
 namespace DiagramEditor.Models {
     public class PropertyItem {
-        string name = "name";
-        string type = "type";
+        string name = "pn";
+        string type = "pt";
+        string _default = "pd";
 
-        MethodItem parent;
+        readonly MethodItem parent;
 
         public PropertyItem(MethodItem item) {
             parent = item;
@@ -18,8 +19,9 @@ namespace DiagramEditor.Models {
 
         // Параметры
 
-        public string Name { get => name; set { name = value; } }
-        public string Type { get => type; set { type = value; } }
+        public string Name { get => name; set => name = value; }
+        public string Type { get => type; set => type = value; }
+        public string Default { get => _default; set => _default = value; }
 
         // Кнопочки
 
@@ -27,5 +29,9 @@ namespace DiagramEditor.Models {
         public void FuncRemoveMe() => parent.FuncRemoveProp(this);
         public ReactiveCommand<Unit, Unit> AddNextProp { get; }
         public ReactiveCommand<Unit, Unit> RemoveMe { get; }
+
+        // Цель/суть
+
+        public override string ToString() => $"{name} : {type}" + (_default == "" ? "" : " = " + _default);
     }
 }
