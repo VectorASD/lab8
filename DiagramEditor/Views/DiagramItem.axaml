@@ -9,7 +9,7 @@
 	
 	<UserControl.Styles>
 		<Style Selector="Rectangle">
-			<Setter Property="Fill" Value="#2000"/>
+			<Setter Property="Fill" Value="#0000"/>
 			<Setter Property="ZIndex" Value="3"/>
 		</Style>
 		<Style Selector="TextBlock">

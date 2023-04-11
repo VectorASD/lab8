@@ -17,7 +17,7 @@ namespace DiagramEditor.Views {
         }
 
         public int CompareTo(object? obj) {
-            if (obj is not Distantor @R) throw new ArgumentException("Ожидался Distantor", nameof(obj));
+            if (obj is not Distantor @R) throw new ArgumentException("РћР¶РёРґР°Р»СЃСЏ Distantor", nameof(obj));
             return dist - @R.dist;
         }
     }
@@ -31,7 +31,7 @@ namespace DiagramEditor.Views {
             foreach (var ch in LogicalChildren[0].LogicalChildren)
                 if (ch is Rectangle @rect) rects.Add(@rect);
             borders = rects.ToArray();
-            // Log.Write("Len: " + borders.Length); 4? Всё нормально
+            // Log.Write("Len: " + borders.Length); 4? Р’СЃС‘ РЅРѕСЂРјР°Р»СЊРЅРѕ
         }
 
         private Distantor GetDist(int num, Point pos) {
