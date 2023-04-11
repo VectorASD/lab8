@@ -25,9 +25,9 @@
 				<MenuItem Header="Импортировать из XML" Command="{Binding Import}" CommandParameter="XML"/>
 			</MenuItem>
 		</Menu>
-		<Panel Background="AliceBlue" DragDrop.AllowDrop="True">
+		<Panel Background="AliceBlue" DragDrop.AllowDrop="True" Tag="scene">
 			<TextBlock Text="{Binding Logg}" IsVisible="{Binding ServiceVisible}"/>
-			<Canvas Name="canvas" Cursor="Hand"/>
+			<Canvas Tag="scene" Name="canvas" Cursor="Hand"/>
 		</Panel>
 	</DockPanel>
 

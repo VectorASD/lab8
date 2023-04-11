@@ -72,26 +72,26 @@ namespace DiagramEditor.ViewModels {
             Clear = ReactiveCommand.Create<Unit, Unit>(_ => { FuncClear(); return new Unit(); });
 
             canv = mw.Find<Canvas>("canvas") ?? new Canvas();
+            canv.Children.Add(map.Marker);
+            canv.Children.Add(map.Marker2);
             var panel = (Panel?) canv.Parent;
             if (panel == null) return;
 
-            Log.Write("yeah!");
             panel.PointerPressed += (object? sender, PointerPressedEventArgs e) => {
-                Log.Write("PointerPressed: " + (e.Source == null ? "null" : e.Source.GetType().Name) + " pos: " + e.GetCurrentPoint(canv).Position);
-                // if (e.Source != null && e.Source is Shape @shape) map.PressShape(@shape, e.GetCurrentPoint(canv).Position);
+                if (e.Source != null && e.Source is Control @control) map.Press(@control, e.GetCurrentPoint(canv).Position);
             };
             panel.PointerMoved += (object? sender, PointerEventArgs e) => {
-                Log.Write("PointerMoved: " + (e.Source == null ? "null" : e.Source.GetType().Name) + " pos: " + e.GetCurrentPoint(canv).Position);
-                // if (e.Source != null && e.Source is Shape @shape) map.MoveShape(@shape, e.GetCurrentPoint(canv).Position);
+                if (e.Source != null && e.Source is Control @control) map.Move(@control, e.GetCurrentPoint(canv).Position);
             };
             panel.PointerReleased += (object? sender, PointerReleasedEventArgs e) => {
-                Log.Write("PointerReleased: " + (e.Source == null ? "null" : e.Source.GetType().Name) + " pos: " + e.GetCurrentPoint(canv).Position);
-                /* if (e.Source != null && e.Source is Shape @shape) {
-                    var item = map.ReleaseShape(@shape, e.GetCurrentPoint(canv).Position);
-                    this.RaiseAndSetIfChanged(ref cur_shape, item, nameof(SelectedShape));
-                }*/
-                menu = new AddShape() { DataContext = this };
-                menu.ShowDialog(mw);
+                if (e.Source != null && e.Source is Control @control) {
+                    var pos = e.GetCurrentPoint(canv).Position;
+                    bool tapped = map.Release(@control, pos);
+                    if (tapped) {
+                        menu = new AddShape { DataContext = this };
+                        menu.ShowDialog(mw);
+                    }
+                }
             };
         }
 
@@ -151,9 +151,15 @@ namespace DiagramEditor.ViewModels {
                 sb.Append(' ');
                 sb.Append(stereos[stereo - 1]);
             }
-            foreach (var item in attributes) sb.Append("\n" + item);
-            foreach (var item in methods) sb.Append("\n" + item);
+            foreach (var attr in attributes) sb.Append("\n" + attr);
+            foreach (var meth in methods) sb.Append("\n" + meth);
             Log.Write(sb.ToString());
+
+            var pos = map.tap_pos;
+            var item = new DiagramItem() { Margin = new(pos.X - 75, pos.Y - 50, 0, 0) };
+            canv.Children.Add(item);
+            map.AddItem(item);
+
             FuncClose();
         }
         private void FuncClose() {

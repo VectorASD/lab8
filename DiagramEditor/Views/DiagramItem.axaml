@@ -1,0 +1,35 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="150"
+			 Width="200" Height="150"
+             x:Class="DiagramEditor.Views.DiagramItem"
+			 Tag="item">
+	
+	<UserControl.Styles>
+		<Style Selector="Rectangle">
+			<Setter Property="Fill" Value="#4000"/>
+			<Setter Property="ZIndex" Value="3"/>
+		</Style>
+		<Style Selector="TextBlock">
+			<Setter Property="FontSize" Value="12"/>
+			<Setter Property="Tag" Value="item"/>
+		</Style>
+	</UserControl.Styles>
+	
+	<Canvas ZIndex="3" Tag="item">
+		<Border Tag="item" BorderBrush="Aquamarine" BorderThickness="2" Width="192" Height="142" Canvas.Top="4" Canvas.Left="4">
+			<Grid Tag="item" RowDefinitions="0.3*,*,*" Background="Azure">
+				<TextBlock Classes="item">Название</TextBlock>
+				<TextBlock Classes="item" Grid.Row="1">Поля</TextBlock>
+				<TextBlock Classes="item" Grid.Row="2">Методы</TextBlock>
+			</Grid>
+		</Border>
+		<!-- Военная хитрость ;'-} Без Fill не будут отрабатывать обработчики мыши. -->
+		<Rectangle Tag="field" Width="200" Height="8"/>
+		<Rectangle Tag="field" Width="8" Height="150"/>
+		<Rectangle Tag="field" Width="8" Height="150" Canvas.Right="0"/>
+		<Rectangle Tag="field" Width="200" Height="8" Canvas.Bottom="0"/>
+	</Canvas>
+</UserControl>
