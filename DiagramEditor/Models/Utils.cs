@@ -39,7 +39,7 @@ namespace DiagramEditor.Models {
                     '"' => "\\\"",
                     '\\' => "\\\\",
                     '$' => "{$", // Чисто по моей части ;'-}
-                     _ => i
+                    _ => i
                 });
             }
             return sb.ToString();
@@ -121,8 +121,8 @@ namespace DiagramEditor.Models {
                 case JsonValueKind.Number:
                     if (@item.ToString().Contains('.')) return @item.GetDouble();
                     // Иначе это целое число
-                    long  a = @item.GetInt64();
-                    int   b = @item.GetInt32();
+                    long a = @item.GetInt64();
+                    int b = @item.GetInt32();
                     short c = @item.GetInt16();
                     if (a != b) return a;
                     if (b != c) return b;
@@ -326,6 +326,17 @@ namespace DiagramEditor.Models {
                 if (i == 5) sb.Append("\n    ");
             }
             return sb.ToString();
+        }
+
+        public static int Normalize(this int num, int min, int max) {
+            if (num < min) return min;
+            if (num > max) return max;
+            return num;
+        }
+        public static double Normalize(this double num, double min, double max) {
+            if (num < min) return min;
+            if (num > max) return max;
+            return num;
         }
     }
 }

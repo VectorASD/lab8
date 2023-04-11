@@ -3,19 +3,21 @@ using Avalonia.Controls;
 using Avalonia.Controls.Shapes;
 using Avalonia.Media;
 using DiagramEditor.ViewModels;
+using DiagramEditor.Views;
 using System;
 using System.Collections.Generic;
 
 namespace DiagramEditor.Models {
     public class Mapper {
-        readonly Ellipse marker = new() { Fill = Brushes.Yellow, Width = 8, Height = 8, ZIndex = 2, IsVisible = false };
-        readonly Line marker2 = new() { Stroke = Brushes.Blue, StrokeThickness = 3, ZIndex = 2, IsVisible = false };
+        readonly Ellipse marker = new() { Tag = "marker", Stroke = Brushes.Orange, Fill = Brushes.Yellow, StrokeThickness = 2, Width = 12, Height = 12, ZIndex = 2, IsVisible = false };
+        readonly Line marker2 = new() { Tag = "marker", Stroke = Brushes.Blue, StrokeThickness = 3, ZIndex = 2, IsVisible = false };
+        private DiagramItem? marker_parent;
         public Ellipse Marker { get => marker; }
         public Line Marker2 { get => marker2; }
 
-        readonly List<Control> items = new();
+        readonly List<DiagramItem> items = new();
         Point camera_pos;
-        public void AddItem(Control item) {
+        public void AddItem(DiagramItem item) {
             items.Add(item);
         }
 
@@ -51,23 +53,26 @@ namespace DiagramEditor.Models {
          * 4 - растягиваем элемент
         */
         private void Calc_mode(Control item) {
-            if (item is Ellipse) { Log.Write("LOL"); mode = 3; return; }
             var c = (string?) item.Tag;
             mode = c switch {
                 "scene" => 1,
                 "item" => 2,
                 "field" => 3,
+                "marker" => 3,
                 "resizer" => 4,
                 _ => 0,
             };
         }
-        private static bool IsMode2(Control item) => (string?) item.Tag == "item";
-        private static bool IsMode3(Control item) => (string?) item.Tag == "field" || item is Ellipse;
+        private static bool IsMode2(Control item) => (string?) item.Tag == "item" || (string?) item.Tag == "field";
+        private static bool IsMode3(Control item) => (string?) item.Tag == "field" || (string?) item.Tag == "marker";
 
-        private static Control GetItemRoot(Control item) {
-            while (item.Parent != null && IsMode2(item) && item is not UserControl)
+        private DiagramItem? GetItemRoot(Control item) {
+            if ((string?) item.Tag == "marker" && marker_parent != null) return marker_parent;
+            while (item.Parent != null && IsMode2(item)) {
+                if (item is DiagramItem @DI) return @DI;
                 item = (Control) item.Parent;
-            return item;
+            }
+            return null;
         }
 
         /*
@@ -82,13 +87,11 @@ namespace DiagramEditor.Models {
         public Point tap_pos;
 
         public void Press(Control item, Point pos) {
-            item = GetItemRoot(item);
             // Log.Write("PointerPressed: " + item.GetType().Name + " pos: " + pos);
 
             Calc_mode(item);
             Log.Write("new_mode: " + mode);
 
-            var m = item.Margin;
             moved_item = item;
             moved_pos = pos;
             tapped = true;
@@ -99,6 +102,9 @@ namespace DiagramEditor.Models {
                 SaveItemsPos();
                 break;
             case 2:
+                var d_item = GetItemRoot(item);
+                if (d_item == null) break;
+                var m = d_item.Margin;
                 item_old_pos = new Point(m.Left, m.Top) - camera_pos;
                 break;
             case 3:
@@ -106,6 +112,7 @@ namespace DiagramEditor.Models {
                 marker2.StartPoint = pos;
                 marker2.EndPoint = pos;
                 marker2.IsVisible = true;
+                marker_parent = GetItemRoot(item);
                 break;
             }
 
@@ -113,13 +120,22 @@ namespace DiagramEditor.Models {
         }
 
         public void Move(Control item, Point pos) {
-            item = GetItemRoot(item);
             // Log.Write("PointerMoved: " + item.GetType().Name + " pos: " + pos);
 
             if (mode == 0 && IsMode3(item)) {
-                marker.Margin = new(pos.X - 4, pos.Y - 4, 0, 0);
-                marker.IsVisible = true;
-            } else marker.IsVisible = false;
+                if (marker_parent == null) {
+                    var d_item = GetItemRoot(item);
+                    if (d_item != null) marker_parent = d_item;
+                }
+                if (marker_parent != null) {
+                    var m_pos = marker_parent.GetPos(pos);
+                    marker.Margin = new(m_pos.X - 6, m_pos.Y - 6, 0, 0);
+                    marker.IsVisible = true;
+                }
+            } else {
+                marker.IsVisible = false;
+                marker_parent = null;
+            }
 
             if (moved_item != item) return;
 
@@ -134,8 +150,10 @@ namespace DiagramEditor.Models {
                 MoveItems(delta);
                 break;
             case 2:
+                var d_item = GetItemRoot(item);
+                if (d_item == null) break;
                 var new_pos = item_old_pos + delta + camera_pos;
-                item.Margin = new(new_pos.X, new_pos.Y, 0, 0);
+                d_item.Margin = new(new_pos.X, new_pos.Y, 0, 0);
                 break;
             case 3:
                 marker2.EndPoint = pos;
@@ -144,7 +162,6 @@ namespace DiagramEditor.Models {
         }
 
         public bool Release(Control item, Point pos) {
-            item = GetItemRoot(item);
             Move(item, pos);
             // Log.Write("PointerReleased: " + item.GetType().Name + " pos: " + pos);
 
