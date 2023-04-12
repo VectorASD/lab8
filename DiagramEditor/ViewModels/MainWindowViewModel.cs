@@ -1,19 +1,16 @@
-﻿using Avalonia;
-using Avalonia.Animation.Easings;
-using Avalonia.Controls;
-using Avalonia.Controls.ApplicationLifetimes;
+﻿using Avalonia.Controls;
+using Avalonia.Controls.Shapes;
 using Avalonia.Input;
-using Avalonia.Interactivity;
+using Avalonia.LogicalTree;
+using Avalonia.Media;
+using Avalonia.VisualTree;
 using DiagramEditor.Models;
 using DiagramEditor.Views;
 using ReactiveUI;
-using Splat;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Text;
-using System.Xml.Linq;
 
 namespace DiagramEditor.ViewModels {
     public class Log {
@@ -94,6 +91,8 @@ namespace DiagramEditor.ViewModels {
                     }
                 }
             };
+
+            MeasuredText.Test(canv);
         }
 
         /*
