@@ -20,16 +20,16 @@
 	
 	<Canvas ZIndex="3" Tag="item">
 		<Border Tag="item" BorderBrush="Aquamarine" BorderThickness="2" Width="192" Height="142" Canvas.Top="4" Canvas.Left="4">
-			<Grid Tag="item" RowDefinitions="0.3*,*,*" Background="Azure">
-				<TextBlock Classes="item">Название</TextBlock>
-				<TextBlock Classes="item" Grid.Row="1">Поля</TextBlock>
-				<TextBlock Classes="item" Grid.Row="2">Методы</TextBlock>
+			<Grid Tag="item" RowDefinitions="auto,auto,auto" Background="Azure" Name="sp_grid">
+				<StackPanel/>
+				<StackPanel Grid.Row="1"/>
+				<StackPanel Grid.Row="2"/>
 			</Grid>
 		</Border>
 		<!-- Военная хитрость ;'-} Без Fill не будут отрабатывать обработчики мыши. -->
-		<Rectangle Tag="field" Width="200" Height="8"/>
-		<Rectangle Tag="field" Width="8" Height="150"/>
-		<Rectangle Tag="field" Width="8" Height="150" Canvas.Right="0"/>
-		<Rectangle Tag="field" Width="200" Height="8" Canvas.Bottom="0"/>
+		<Rectangle Tag="field" Width="200" Height="10"/>
+		<Rectangle Tag="field" Width="10" Height="150"/>
+		<Rectangle Tag="field" Width="10" Height="150" Canvas.Right="0"/>
+		<Rectangle Tag="field" Width="200" Height="10" Canvas.Bottom="0"/>
 	</Canvas>
 </UserControl>

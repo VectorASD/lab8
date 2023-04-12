@@ -1,9 +1,5 @@
 ﻿using Avalonia.Controls;
-using Avalonia.Controls.Shapes;
 using Avalonia.Input;
-using Avalonia.LogicalTree;
-using Avalonia.Media;
-using Avalonia.VisualTree;
 using DiagramEditor.Models;
 using DiagramEditor.Views;
 using ReactiveUI;
@@ -91,8 +87,6 @@ namespace DiagramEditor.ViewModels {
                     }
                 }
             };
-
-            MeasuredText.Test(canv);
         }
 
         /*
@@ -151,12 +145,16 @@ namespace DiagramEditor.ViewModels {
                 sb.Append(' ');
                 sb.Append(stereos[stereo - 1]);
             }
-            foreach (var attr in attributes) sb.Append("\n" + attr);
-            foreach (var meth in methods) sb.Append("\n" + meth);
-            Log.Write(sb.ToString());
+            var head = new MeasuredText[] { new(sb.ToString()) };
+
+            List<MeasuredText> arr = new(), arr2 = new();
+            foreach (var attr in attributes) arr.Add(new(attr.ToString()));
+            foreach (var meth in methods) arr2.Add(new(meth.ToString()));
+            MeasuredText[] attrs = arr.ToArray();
+            MeasuredText[] meths = arr2.ToArray();
 
             var pos = map.tap_pos;
-            var item = new DiagramItem() { Margin = new(pos.X - 75, pos.Y - 50, 0, 0) };
+            var item = new DiagramItem(head, attrs, meths) { Margin = new(pos.X - 75, pos.Y - 50, 0, 0) };
             canv.Children.Add(item);
             map.AddItem(item);
 

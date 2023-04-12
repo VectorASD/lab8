@@ -8,6 +8,13 @@ using Rectangle = Avalonia.Controls.Shapes.Rectangle;
 using Brushes = Avalonia.Media.Brushes;
 
 namespace DiagramEditor.Models {
+    public class MeasuredRes {
+        public double Size { get; set; }
+        public double Width { get; set; }
+        public double Height { get; set; }
+    }
+
+
     public class MeasuredText {
         static readonly int max_size = 64;
         static readonly Font[] fonts;
@@ -23,10 +30,12 @@ namespace DiagramEditor.Models {
 
         readonly string text;
         readonly SizeF[] measures;
+        readonly int min_s, max_s;
         public string Text { get => text; }
 
-        public MeasuredText(string text) {
-            this.text = text;
+        public MeasuredText(string text, int min_size = 8, int max_size = 32) {
+            this.text = text; min_s = min_size; max_s = max_size;
+
             measures = fonts.Select(x => graph.MeasureString(text, x)).ToArray();
         }
 
@@ -35,7 +44,7 @@ namespace DiagramEditor.Models {
                 Log.Write(i + ".) " + float.Round(measures[i].Width, 3) + "x" + float.Round(measures[i].Height, 3));
         }
 
-        public double Find(double max_width) {
+        public MeasuredRes Find(double max_width) {
             int L = 0, R = max_size;
             int limit = 10;
             while (L < R) {
@@ -47,7 +56,10 @@ namespace DiagramEditor.Models {
                 if (w < max_width) L = M + 1;
                 else R = M;
             }
-            return (L - 1.2) * 1.35; // Подкруточка (вроде бы идеально)
+            L = L.Normalize(min_s, max_s);
+            double size = (L - 1.2) * 1.35; // Подкруточка (вроде бы идеально)
+            var m = measures[L];
+            return new() { Size = size, Width = m.Width, Height = m.Height };
         }
 
 
@@ -59,7 +71,7 @@ namespace DiagramEditor.Models {
                 int w = 100 + i * 1;
                 var r = new Rectangle() { Width = w, Height = 30, StrokeThickness = 2, Margin = new(300, i * 40, 0, 0), Fill = Brushes.Yellow, Stroke = Brushes.Blue };
                 canv.Children.Add(r);
-                var f = m.Find(w);
+                var f = m.Find(w).Size;
                 var t = new TextBlock() { Text = m.Text, FontSize = f, Margin = new(300, i * 40, 0, 0) };
                 canv.Children.Add(t);
             }
