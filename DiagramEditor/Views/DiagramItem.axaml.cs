@@ -41,7 +41,7 @@ namespace DiagramEditor.Views {
         }
         public Distantor A { get; }
         public Distantor B { get; }
-        public Line line = new() { StrokeThickness = 3, Stroke = Brushes.BlueViolet };
+        public ArrowFactory line = new() { Tag = "arrow", ZIndex = 2 };
 
         public void Update() {
             line.StartPoint = A.GetPos();

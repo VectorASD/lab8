@@ -5,7 +5,8 @@
              mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="150"
 			 Width="200" Height="150"
              x:Class="DiagramEditor.Views.DiagramItem"
-			 Tag="item">
+			 Tag="item"
+			 ZIndex="1">
 	
 	<UserControl.Styles>
 		<Style Selector="Rectangle">
@@ -18,7 +19,7 @@
 		</Style>
 	</UserControl.Styles>
 	
-	<Canvas ZIndex="3" Tag="item">
+	<Canvas Tag="item">
 		<Border Tag="item" BorderBrush="Aquamarine" BorderThickness="2" Width="192" Height="142" Canvas.Top="4" Canvas.Left="4">
 			<Grid Tag="item" RowDefinitions="auto,auto,auto" Background="Azure" Name="sp_grid">
 				<StackPanel Tag="item"/>

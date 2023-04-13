@@ -1,5 +1,7 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Controls.Shapes;
 using Avalonia.Input;
+using Avalonia.Media;
 using DiagramEditor.Models;
 using DiagramEditor.Views;
 using ReactiveUI;
@@ -93,6 +95,19 @@ namespace DiagramEditor.ViewModels {
                     }
                 }
             };
+
+            panel.PointerWheelChanged += (object? sender, PointerWheelEventArgs e) => {
+                if (e.Source != null && e.Source is Control @control) map.WheelMove(@control, e.Delta.Y);
+            };
+
+            /* int x = 100, y = 100, w = 500, angle = 90;
+            Path p = new() {
+                StrokeThickness = 3,
+                Stroke = Brushes.Sienna,
+                Data = Geometry.Parse($"M {x},{y} l {w},0 m -20,-20 l 20,20 m -20,20 l 20,-20"),
+                RenderTransform = new RotateTransform(angle, (x - w) / 2, (y - 20) / 2)
+            };
+            canv.Children.Add(p); */
         }
 
         /*

@@ -12,10 +12,10 @@ using System.Collections.Generic;
 namespace DiagramEditor.Models {
     public class Mapper {
         readonly Ellipse marker = new() { Tag = "marker", Stroke = Brushes.Orange, Fill = Brushes.Yellow, StrokeThickness = 2, Width = 12, Height = 12, ZIndex = 2, IsVisible = false };
-        readonly Line marker2 = new() { Tag = "marker2", Stroke = Brushes.Blue, StrokeThickness = 3, ZIndex = 2, IsVisible = false };
+        readonly ArrowFactory marker2 = new() { Tag = "marker2", ZIndex = 2, IsVisible = false };
         private DiagramItem? marker_parent;
         public Ellipse Marker { get => marker; }
-        public Line Marker2 { get => marker2; }
+        public ArrowFactory Marker2 { get => marker2; }
 
         readonly List<DiagramItem> items = new();
         Point camera_pos;
@@ -52,13 +52,14 @@ namespace DiagramEditor.Models {
 
         int mode = 0;
         /*
-         * Решил реализовать многорежимную систему перемещения:
+         * Решил реализовать многорежимную систему перемещений:
          * 0 - ничего не делает
          * 1 - двигаем камеру
          * 2 - двигаем элемент
          * 3 - тянем проводку
          * 4 - растягиваем элемент
          * 5 - удаляем элемент
+         * 6 - перемещаем уже готовую стрелочку (колесом меняем её тип)
         */
         private void Calc_mode(Control item) {
             var c = (string?) item.Tag;
@@ -69,6 +70,7 @@ namespace DiagramEditor.Models {
                 "marker" => 3,
                 "resizer" => 4,
                 "deleter" => 5,
+                "arrow" => 6,
                 _ => 0,
             };
         }
@@ -235,6 +237,13 @@ namespace DiagramEditor.Models {
                 var d_item = GetItemRoot(item);
                 Log.Write("remove " + d_item);
                 if (d_item != null) RemoveItem(d_item);
+            }
+        }
+
+        public void WheelMove(Control item, double move) {
+            // Log.Write("WheelMoved: " + item.GetType().Name + " delta: " + (move > 0 ? 1 : -1));
+            if ((string?) item.Tag == "arrow" && item is ArrowFactory @arrow) {
+                @arrow.Type = (@arrow.Type + (move > 0 ? 1 : 5)) % 6;
             }
         }
     }
