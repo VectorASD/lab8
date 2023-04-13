@@ -62,14 +62,13 @@ namespace DiagramEditor.Views {
     public partial class DiagramItem: UserControl {
         readonly Rectangle[] borders;
         readonly StackPanel[] panels;
-        private readonly MeasuredText[] head;
-        private readonly MeasuredText[] attrs;
-        private readonly MeasuredText[] meths;
+        MeasuredText[] head, attrs, meths;
+        public object entity;
 
-        public DiagramItem() : this(Array.Empty<MeasuredText>(), Array.Empty<MeasuredText>(), Array.Empty<MeasuredText>()) { } // Чтобы дизайнер не глючил
+        public DiagramItem() : this(Array.Empty<MeasuredText>(), Array.Empty<MeasuredText>(), Array.Empty<MeasuredText>(), 0) { } // Чтобы дизайнер не глючил
 
-        public DiagramItem(MeasuredText[] head, MeasuredText[] attrs, MeasuredText[] meths) {
-            this.head = head; this.attrs = attrs; this.meths = meths;
+        public DiagramItem(MeasuredText[] head, MeasuredText[] attrs, MeasuredText[] meths, object entity) {
+            this.head = head; this.attrs = attrs; this.meths = meths; this.entity = entity;
 
             InitializeComponent();
             DataContext = this;
@@ -121,11 +120,24 @@ namespace DiagramEditor.Views {
             for (int i = 0; i < meths.Length; i++) ((TextBlock) panels[2].Children[i]).FontSize = (sizes_C[i] * mul).Normalize(8, 32);
         }
 
+        public void Change(MeasuredText[] head, MeasuredText[] attrs, MeasuredText[] meths, object entity) {
+            this.head = head; this.attrs = attrs; this.meths = meths; this.entity = entity;
+            for (int i = 0; i < 3; i++) panels[i].Children.Clear();
+
+            foreach (var item in head) panels[0].Children.Add(new TextBlock() { Text = item.Text, Tag = "item" });
+            foreach (var item in attrs) panels[1].Children.Add(new TextBlock() { Text = item.Text, Tag = "item" });
+            foreach (var item in meths) panels[2].Children.Add(new TextBlock() { Text = item.Text, Tag = "item" });
+
+            RecalcSizes();
+        }
+
         /*
          * Действия из Mapper'а
          */
 
         public void Resize(double width, double height) {
+            if (width < 64) width = 64;
+            if (height < 64) height = 64;
             Width = width;
             Height = height;
             borders[0].Width = borders[3].Width = width;

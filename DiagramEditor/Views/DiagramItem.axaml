@@ -13,15 +13,15 @@
 			<Setter Property="Fill" Value="#0000"/>
 			<Setter Property="ZIndex" Value="3"/>
 		</Style>
-		<Style Selector="TextBlock">
-			<Setter Property="FontSize" Value="12"/>
-			<Setter Property="Tag" Value="item"/>
+		<Style Selector="StackPanel">
+			<Setter Property="Background" Value="Azure"/>
+			<Setter Property="Margin" Value="0 0 0 2"/>
 		</Style>
 	</UserControl.Styles>
 	
 	<Canvas Tag="item">
 		<Border Tag="item" BorderBrush="Aquamarine" BorderThickness="2" Width="192" Height="142" Canvas.Top="4" Canvas.Left="4">
-			<Grid Tag="item" RowDefinitions="auto,auto,auto" Background="Azure" Name="sp_grid">
+			<Grid Tag="item" RowDefinitions="auto,auto,auto" Background="#CFE" Name="sp_grid">
 				<StackPanel Tag="item"/>
 				<StackPanel Tag="item" Grid.Row="1"/>
 				<StackPanel Tag="item" Grid.Row="2"/>

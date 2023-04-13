@@ -1,6 +1,8 @@
 ﻿using DiagramEditor.ViewModels;
 using ReactiveUI;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive;
 using System.Text;
 
@@ -13,7 +15,7 @@ namespace DiagramEditor.Models {
         int access = 0; // private, public, protected, package
         int stereo = 0; // virtual, static, abstract, "required"
 
-        MainWindowViewModel parent;
+        readonly MainWindowViewModel parent;
 
         public MethodItem(MainWindowViewModel mwvm) {
             parent = mwvm;
@@ -67,6 +69,37 @@ namespace DiagramEditor.Models {
             sb.Append("): ");
             sb.Append(type);
             return sb.ToString();
+        }
+
+        public Dictionary<string, object> Export() {
+            return new() {
+                ["name"] = name,
+                ["type"] = type,
+                ["access"] = access,
+                ["stereo"] = stereo,
+                ["props"] = props.Select(x => x.Export()).ToList(),
+            };
+        }
+
+        public MethodItem(MainWindowViewModel mwvm, object entity) : this(mwvm) { // Import
+            if (entity is not Dictionary<string, object> @dict) { Log.Write("MethodItem: Ожидался словарь, вместо " + entity.GetType().Name); return; }
+
+            @dict.TryGetValue("name", out var value);
+            name = value is not string @str ? "mn" : @str;
+
+            @dict.TryGetValue("type", out var value2);
+            type = value2 is not string @str2 ? "mt" : @str2;
+
+            @dict.TryGetValue("access", out var value3);
+            access = value3 is not int @int ? 0 : @int;
+
+            @dict.TryGetValue("stereo", out var value4);
+            stereo = value4 is not int @int2 ? 0 : @int2;
+
+            @dict.TryGetValue("props", out var value5);
+            props.Clear();
+            if (value5 is IEnumerable<object> @propz)
+                foreach (var prop in @propz) props.Add(new PropertyItem(this, prop));
         }
     }
 }

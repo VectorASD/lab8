@@ -109,7 +109,7 @@ namespace DiagramEditor.Models {
             // Log.Write("PointerPressed: " + item.GetType().Name + " pos: " + pos);
 
             Calc_mode(item);
-            Log.Write("new_mode: " + mode);
+            // Log.Write("new_mode: " + mode);
 
             moved_pos = pos;
             tapped = true;
@@ -230,8 +230,10 @@ namespace DiagramEditor.Models {
         }
 
         public JoinedItems? new_join; // Обрабатывается после Release
+        public int tap_mode; // Обрабатывается после Release
+        public DiagramItem? tapped_item; // Обрабатывается после Release
 
-        public bool Release(Control item, Point pos) {
+        public void Release(Control item, Point pos) {
             Move(item, pos);
             // Log.Write("PointerReleased: " + item.GetType().Name + " pos: " + pos);
 
@@ -260,21 +262,18 @@ namespace DiagramEditor.Models {
 
             if (tapped) {
                 Tapped(item, pos);
-                bool res = mode == 1;
-                mode = 0;
-                return res;
-            }
+                tap_mode = mode;
+                if (mode == 2) tapped_item = GetItemRoot(item);
+            } else tap_mode = -1;
             mode = 0;
-            return false;
         }
 
         private void Tapped(Control item, Point pos) {
-            Log.Write("Tapped: " + item.GetType().Name + " pos: " + pos);
+            // Log.Write("Tapped: " + item.GetType().Name + " pos: " + pos);
             tap_pos = pos;
             
             if (mode == 5) {
                 var d_item = GetItemRoot(item);
-                Log.Write("remove " + d_item);
                 if (d_item != null) RemoveItem(d_item);
             }
         }

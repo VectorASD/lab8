@@ -7,6 +7,7 @@ using DiagramEditor.Views;
 using ReactiveUI;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive;
 using System.Text;
 
@@ -36,6 +37,7 @@ namespace DiagramEditor.ViewModels {
         private readonly Canvas canv;
         private readonly Mapper map;
         private AddShape? menu;
+        private DiagramItem? editable;
 
         public string Logg { get => log; set => this.RaiseAndSetIfChanged(ref log, value); }
 
@@ -82,16 +84,24 @@ namespace DiagramEditor.ViewModels {
             panel.PointerReleased += (object? sender, PointerReleasedEventArgs e) => {
                 if (e.Source != null && e.Source is Control @control) {
                     var pos = e.GetCurrentPoint(canv).Position;
-                    bool tapped = map.Release(@control, pos);
-                    if (tapped) {
+                    map.Release(@control, pos);
+                    if (map.tap_mode == 1) {
                         menu = new AddShape { DataContext = this };
                         menu.ShowDialog(mw);
+                        editable = null;
                     }
                     
                     if (map.new_join != null) {
                         var newy = map.new_join.line;
                         canv.Children.Add(newy);
                         map.new_join = null;
+                    }
+
+                    if (map.tap_mode == 2 && map.tapped_item != null) {
+                        editable = map.tapped_item;
+                        Import(editable.entity);
+                        menu = new AddShape { DataContext = this };
+                        menu.ShowDialog(mw);
                     }
                 }
             };
@@ -159,6 +169,41 @@ namespace DiagramEditor.ViewModels {
 
         private static readonly string[] stereos = new string[] { "static", "abstract" };
 
+        private Dictionary<string, object> Export() {
+            Dictionary<string, object> res = new() {
+                ["name"] = name,
+                ["stereo"] = stereo,
+                ["access"] = access,
+                ["attributes"] = attributes.Select(x => x.Export()).ToList(),
+                ["methods"] = methods.Select(x => x.Export()).ToList(),
+            };
+            Log.Write(Utils.Obj2json(res));
+            return res;
+        }
+
+        private void Import(object entity) {
+            if (entity is not Dictionary<string, object> @dict) { Log.Write("General: Ожидался словарь, вместо " + entity.GetType().Name); return; }
+            
+            @dict.TryGetValue("name", out var value);
+            name = value is not string @str ? "yeah" : @str;
+
+            @dict.TryGetValue("stereo", out var value2);
+            stereo = value2 is not int @int ? 0 : @int;
+
+            @dict.TryGetValue("access", out var value3);
+            access = value3 is not int @int2 ? 0 : @int2;
+
+            @dict.TryGetValue("attributes", out var value4);
+            attributes.Clear();
+            if (value4 is IEnumerable<object> @attrs)
+                foreach (var attr in @attrs) attributes.Add(new AttributeItem(this, attr));
+
+            @dict.TryGetValue("methods", out var value5);
+            methods.Clear();
+            if (value5 is IEnumerable<object> @meths)
+                foreach (var meth in @meths) methods.Add(new MethodItem(this, meth));
+        }
+
         private void FuncApply() {
             StringBuilder sb = new();
             sb.Append($"{"-+#~"[access]} {name}");
@@ -175,9 +220,14 @@ namespace DiagramEditor.ViewModels {
             MeasuredText[] meths = arr2.ToArray();
 
             var pos = map.tap_pos;
-            var item = new DiagramItem(head, attrs, meths) { Margin = new(pos.X - 75, pos.Y - 50, 0, 0) };
-            canv.Children.Add(item);
-            map.AddItem(item);
+            if (editable == null) {
+                var item = new DiagramItem(head, attrs, meths, Export()) { Margin = new(pos.X - 75, pos.Y - 50, 0, 0) };
+                canv.Children.Add(item);
+                map.AddItem(item);
+            } else {
+                editable.Change(head, attrs, meths, Export());
+                editable = null;
+            }
 
             FuncClose();
         }
