@@ -7,7 +7,6 @@ using DiagramEditor.ViewModels;
 using DiagramEditor.Views;
 using DynamicData;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace DiagramEditor.Models {
@@ -42,7 +41,7 @@ namespace DiagramEditor.Models {
             foreach (var item in items) {
                 var pos = saved_poses[n];
                 var new_pos = pos + delta;
-                item.Margin = new(new_pos.X, new_pos.Y, 0, 0);
+                item.Move(new_pos, true);
                 n += 1;
             }
         }
@@ -93,11 +92,11 @@ namespace DiagramEditor.Models {
          * Обработка мыши
          */
 
-        Control? moved_item;
         Point moved_pos;
         Point item_old_pos;
         bool tapped = false;
-        Point? marker_pos;
+        Distantor? marker_pos;
+        Distantor? start_dist;
 
         public Point tap_pos;
 
@@ -107,7 +106,6 @@ namespace DiagramEditor.Models {
             Calc_mode(item);
             Log.Write("new_mode: " + mode);
 
-            moved_item = item;
             moved_pos = pos;
             tapped = true;
 
@@ -125,9 +123,10 @@ namespace DiagramEditor.Models {
             case 3:
                 if (marker_pos == null) { mode = 0; break; }
                 item_old_pos = pos;
-                marker2.StartPoint = marker2.EndPoint = (Point) marker_pos;
+                marker2.StartPoint = marker2.EndPoint = marker_pos.p;
                 marker2.IsVisible = true;
                 marker_parent = GetItemRoot(item);
+                start_dist = marker_pos;
                 break;
             case 4:
                 d_item = GetItemRoot(item);
@@ -166,7 +165,7 @@ namespace DiagramEditor.Models {
                 }
                 if (marker_parent != null) {
                     var m_pos = marker_parent.GetPos(pos);
-                    marker.Margin = new(m_pos.X - 6, m_pos.Y - 6, 0, 0);
+                    marker.Margin = new(m_pos.p.X - 6, m_pos.p.Y - 6, 0, 0);
                     marker_pos = m_pos;
                 }
             } else {
@@ -189,10 +188,10 @@ namespace DiagramEditor.Models {
                 var d_item = GetItemRoot(item);
                 if (d_item == null) break;
                 var new_pos = item_old_pos + delta + camera_pos;
-                d_item.Margin = new(new_pos.X, new_pos.Y, 0, 0);
+                d_item.Move(new_pos, false);
                 break;
             case 3:
-                marker2.EndPoint = marker_pos == null ? pos : (Point) marker_pos;
+                marker2.EndPoint = marker_pos == null ? pos : marker_pos.p;
                 break;
             case 4:
                 d_item = GetItemRoot(item);
@@ -203,11 +202,20 @@ namespace DiagramEditor.Models {
             }
         }
 
+        public JoinedItems? new_join; // Обрабатывается после Release
+
         public bool Release(Control item, Point pos) {
             Move(item, pos);
             // Log.Write("PointerReleased: " + item.GetType().Name + " pos: " + pos);
 
-            if (mode == 3) marker2.IsVisible = false;
+            if (mode == 3) {
+                if (start_dist != null && marker_pos != null) {
+                    Log.Write("Join: " + start_dist.GetPos() + " " + marker_pos.GetPos());
+                    var join = new JoinedItems(start_dist, marker_pos);
+                    new_join = join;
+                }
+                marker2.IsVisible = false;
+            }
 
             if (tapped) {
                 Tapped(item, pos);

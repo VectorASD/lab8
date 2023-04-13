@@ -85,6 +85,12 @@ namespace DiagramEditor.ViewModels {
                         menu = new AddShape { DataContext = this };
                         menu.ShowDialog(mw);
                     }
+                    
+                    if (map.new_join != null) {
+                        var newy = map.new_join.line;
+                        canv.Children.Add(newy);
+                        map.new_join = null;
+                    }
                 }
             };
         }
