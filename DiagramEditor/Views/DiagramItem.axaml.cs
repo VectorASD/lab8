@@ -34,18 +34,28 @@ namespace DiagramEditor.Views {
     }
 
     public class JoinedItems {
+        public static readonly Dictionary<ArrowFactory, JoinedItems> arrow_to_join = new();
+
         public JoinedItems(Distantor a, Distantor b) {
             A = a; B = b; Update();
             a.parent.AddJoin(this);
             b.parent.AddJoin(this);
+            arrow_to_join[line] = this;
         }
-        public Distantor A { get; }
-        public Distantor B { get; }
+        public Distantor A { get; set; }
+        public Distantor B { get; set; }
         public ArrowFactory line = new() { Tag = "arrow", ZIndex = 2 };
 
         public void Update() {
             line.StartPoint = A.GetPos();
             line.EndPoint = B.GetPos();
+        }
+        public void Delete() {
+            arrow_to_join.Remove(line);
+            var parent = (Canvas?) line.Parent;
+            parent?.Children.Remove(line); // ААА!!! Синтаксическим сахаром подавился!!! ;'-}
+            A.parent.RemoveJoin(this);
+            B.parent.RemoveJoin(this);
         }
     }
 
@@ -170,9 +180,10 @@ namespace DiagramEditor.Views {
          * Обработка соединений
          */
 
-        List<JoinedItems> joins = new();
+        readonly List<JoinedItems> joins = new();
 
         public void AddJoin(JoinedItems join) => joins.Add(join);
+        public void RemoveJoin(JoinedItems join) => joins.Remove(join);
 
         private void UpdateJoins(bool global) {
             foreach (var join in joins)

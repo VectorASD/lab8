@@ -86,13 +86,14 @@ namespace DiagramEditor.Models {
 
         void Update() {
             var delta = start - end;
-            double new_diag = Math.Sqrt(Math.Pow(delta.X, 2) + Math.Pow(delta.Y, 2));
+            double new_diag = delta.Hypot();
+            double orig_diag = new_diag > 0 ? new_diag : 0.001;
             if (new_diag < arrow_width * 1.5) new_diag = arrow_width * 1.5;
             diag = new_diag;
 
             UpdatePath();
 
-            double angle = Math.Acos(delta.X / diag);
+            double angle = Math.Acos(delta.X / orig_diag);
             angle = angle * 180 / Math.PI;
             if (delta.Y < 0) angle = 360 - angle;
             angle = (angle + 180) % 360;

@@ -10,6 +10,7 @@ using System.Text.Json;
 using DiagramEditor.ViewModels;
 using System.Collections;
 using System.Diagnostics;
+using System;
 
 namespace DiagramEditor.Models {
     public static class Utils {
@@ -345,6 +346,14 @@ namespace DiagramEditor.Models {
                 rect.Y + rect2.Y,
                 rect.Width + rect2.Width,
                 rect.Height + rect2.Height);
+        }
+
+        public static double Hypot(this Point delta) {
+            return Math.Sqrt(Math.Pow(delta.X, 2) + Math.Pow(delta.Y, 2));
+        }
+        public static double Hypot(this Point A, Point B) {
+            Point delta = A - B;
+            return Math.Sqrt(Math.Pow(delta.X, 2) + Math.Pow(delta.Y, 2));
         }
     }
 }

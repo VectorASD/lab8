@@ -101,6 +101,9 @@ namespace DiagramEditor.Models {
         Distantor? start_dist;
 
         public Point tap_pos;
+        bool arrow_start;
+        ArrowFactory? old_arrow;
+        bool delete_arrow = false;
 
         public void Press(Control item, Point pos) {
             // Log.Write("PointerPressed: " + item.GetType().Name + " pos: " + pos);
@@ -135,6 +138,18 @@ namespace DiagramEditor.Models {
                 if (d_item == null) break;
                 item_old_pos = new(d_item.Width, d_item.Height);
                 break;
+            case 6:
+                if (item is not ArrowFactory @arrow) break;
+                var dist_a = @arrow.StartPoint.Hypot(pos);
+                var dist_b = @arrow.EndPoint.Hypot(pos);
+                arrow_start = dist_a > dist_b;
+                old_arrow = @arrow;
+
+                marker2.StartPoint = arrow_start ? @arrow.StartPoint : pos;
+                marker2.EndPoint = arrow_start ? pos : @arrow.EndPoint;
+                marker2.IsVisible = true;
+                @arrow.IsVisible = false;
+                break;
             }
 
             Move(item, pos);
@@ -153,7 +168,7 @@ namespace DiagramEditor.Models {
             // Log.Write("PointerMoved: " + item.GetType().Name + " pos: " + pos);
 
             // К сожалению, во время протягивания проводки, marker Ellipse застревает, как кость в горле, так что и соответствующий багофикс, ибо то, что попало в Press, фиксируется на всё время (Move/до конца Release) ;'-}
-            if (mode == 3) {
+            if (mode == 3 || mode == 6) {
                 item = new Canvas() { Tag = "scene" };
                 FixItem(ref item, pos + new Point(0, 32), items); // doc_panel height = 32
             }
@@ -175,6 +190,10 @@ namespace DiagramEditor.Models {
                 marker_parent = null;
                 marker_pos = null;
             }
+
+            if (mode == 6) delete_arrow = (string?) item.Tag == "deleter";
+
+
 
             var delta = pos - moved_pos;
             if (delta.X == 0 && delta.Y == 0) return;
@@ -201,6 +220,12 @@ namespace DiagramEditor.Models {
                 new_pos = item_old_pos + delta;
                 d_item.Resize(new_pos.X, new_pos.Y);
                 break;
+            case 6:
+                if (old_arrow == null) break;
+                var p = marker_pos == null ? pos : marker_pos.p;
+                if (arrow_start) marker2.EndPoint = p;
+                else marker2.StartPoint = p;
+                break;
             }
         }
 
@@ -212,11 +237,25 @@ namespace DiagramEditor.Models {
 
             if (mode == 3) {
                 if (start_dist != null && marker_pos != null) {
-                    Log.Write("Join: " + start_dist.GetPos() + " " + marker_pos.GetPos());
                     var join = new JoinedItems(start_dist, marker_pos);
                     new_join = join;
                 }
                 marker2.IsVisible = false;
+            }
+
+            if (mode == 6 && old_arrow != null) {
+                JoinedItems.arrow_to_join.TryGetValue(old_arrow, out var @join);
+                if (marker_pos != null && @join != null) {
+                    if (arrow_start) @join.B = marker_pos;
+                    else @join.A = marker_pos;
+                    @join.Update();
+                }
+                old_arrow.IsVisible = true;
+                marker2.IsVisible = false;
+                old_arrow = null;
+
+                if (delete_arrow && @join != null) @join.Delete();
+                delete_arrow = false;
             }
 
             if (tapped) {
@@ -242,9 +281,8 @@ namespace DiagramEditor.Models {
 
         public void WheelMove(Control item, double move) {
             // Log.Write("WheelMoved: " + item.GetType().Name + " delta: " + (move > 0 ? 1 : -1));
-            if ((string?) item.Tag == "arrow" && item is ArrowFactory @arrow) {
+            if ((string?) item.Tag == "arrow" && item is ArrowFactory @arrow)
                 @arrow.Type = (@arrow.Type + (move > 0 ? 1 : 5)) % 6;
-            }
         }
     }
 }
