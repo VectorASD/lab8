@@ -338,5 +338,13 @@ namespace DiagramEditor.Models {
             if (num > max) return max;
             return num;
         }
+
+        public static Rect Sum(this Rect rect, Rect rect2) {
+            return new Rect(
+                rect.X + rect2.X,
+                rect.Y + rect2.Y,
+                rect.Width + rect2.Width,
+                rect.Height + rect2.Height);
+        }
     }
 }

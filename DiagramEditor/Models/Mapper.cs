@@ -1,17 +1,19 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Shapes;
+using Avalonia.LogicalTree;
 using Avalonia.Media;
 using DiagramEditor.ViewModels;
 using DiagramEditor.Views;
 using DynamicData;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace DiagramEditor.Models {
     public class Mapper {
         readonly Ellipse marker = new() { Tag = "marker", Stroke = Brushes.Orange, Fill = Brushes.Yellow, StrokeThickness = 2, Width = 12, Height = 12, ZIndex = 2, IsVisible = false };
-        readonly Line marker2 = new() { Tag = "marker", Stroke = Brushes.Blue, StrokeThickness = 3, ZIndex = 2, IsVisible = false };
+        readonly Line marker2 = new() { Tag = "marker2", Stroke = Brushes.Blue, StrokeThickness = 3, ZIndex = 2, IsVisible = false };
         private DiagramItem? marker_parent;
         public Ellipse Marker { get => marker; }
         public Line Marker2 { get => marker2; }
@@ -71,7 +73,6 @@ namespace DiagramEditor.Models {
                 _ => 0,
             };
         }
-        private static bool IsMode3(Control item) => (string?) item.Tag == "field" || (string?) item.Tag == "marker";
         private static bool IsMode(Control item, string[] mods) {
             var name = (string?) item.Tag;
             if (name == null) return false;
@@ -96,6 +97,7 @@ namespace DiagramEditor.Models {
         Point moved_pos;
         Point item_old_pos;
         bool tapped = false;
+        Point? marker_pos;
 
         public Point tap_pos;
 
@@ -121,9 +123,9 @@ namespace DiagramEditor.Models {
                 item_old_pos = new Point(m.Left, m.Top) - camera_pos;
                 break;
             case 3:
+                if (marker_pos == null) { mode = 0; break; }
                 item_old_pos = pos;
-                marker2.StartPoint = pos;
-                marker2.EndPoint = pos;
+                marker2.StartPoint = marker2.EndPoint = (Point) marker_pos;
                 marker2.IsVisible = true;
                 marker_parent = GetItemRoot(item);
                 break;
@@ -137,25 +139,41 @@ namespace DiagramEditor.Models {
             Move(item, pos);
         }
 
+        public void FixItem(ref Control res, Point pos, IEnumerable<ILogical> items) {
+            foreach (var logic in items) {
+                // if (item.IsPointerOver) { } Гениальная вещь! ;'-} Хотя не, всё равно блокируется после Press и до Release, чего я впринципе хочу избежать ;'-}
+                var item = (Control) logic;
+                var tb = item.TransformedBounds;
+                if (tb != null && new Rect(tb.Value.Clip.TopLeft, new Size()).Sum(item.Bounds).Contains(pos)) res = item; // Гениально! ;'-} НАКОНЕЦ-ТО ЗАРАБОТАЛО!
+                FixItem(ref res, pos, item.GetLogicalChildren());
+            }
+        }
         public void Move(Control item, Point pos) {
             // Log.Write("PointerMoved: " + item.GetType().Name + " pos: " + pos);
 
-            if (mode == 0 && IsMode3(item)) {
+            // К сожалению, во время протягивания проводки, marker Ellipse застревает, как кость в горле, так что и соответствующий багофикс, ибо то, что попало в Press, фиксируется на всё время (Move/до конца Release) ;'-}
+            if (mode == 3) {
+                item = new Canvas() { Tag = "scene" };
+                FixItem(ref item, pos + new Point(0, 32), items); // doc_panel height = 32
+            }
+
+            string[] mods = new[] { "field", "marker" };
+            if (IsMode(item, mods)) {
                 if (marker_parent == null) {
                     var d_item = GetItemRoot(item);
                     if (d_item != null) marker_parent = d_item;
+                    marker.IsVisible = true;
                 }
                 if (marker_parent != null) {
                     var m_pos = marker_parent.GetPos(pos);
                     marker.Margin = new(m_pos.X - 6, m_pos.Y - 6, 0, 0);
-                    marker.IsVisible = true;
+                    marker_pos = m_pos;
                 }
             } else {
                 marker.IsVisible = false;
                 marker_parent = null;
+                marker_pos = null;
             }
-
-            if (moved_item != item) return;
 
             var delta = pos - moved_pos;
             if (delta.X == 0 && delta.Y == 0) return;
@@ -174,7 +192,7 @@ namespace DiagramEditor.Models {
                 d_item.Margin = new(new_pos.X, new_pos.Y, 0, 0);
                 break;
             case 3:
-                marker2.EndPoint = pos;
+                marker2.EndPoint = marker_pos == null ? pos : (Point) marker_pos;
                 break;
             case 4:
                 d_item = GetItemRoot(item);
