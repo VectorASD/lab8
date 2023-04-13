@@ -4,6 +4,7 @@ using Avalonia.Controls.Shapes;
 using Avalonia.Media;
 using DiagramEditor.ViewModels;
 using DiagramEditor.Views;
+using DynamicData;
 using System;
 using System.Collections.Generic;
 
@@ -19,6 +20,11 @@ namespace DiagramEditor.Models {
         Point camera_pos;
         public void AddItem(DiagramItem item) {
             items.Add(item);
+        }
+        private void RemoveItem(DiagramItem item) {
+            items.Remove(item);
+            var canv = (Canvas) (item.Parent ?? throw new Exception("Чё?!"));
+            canv.Children.Remove(item);
         }
 
         readonly Points saved_poses = new();
@@ -51,6 +57,7 @@ namespace DiagramEditor.Models {
          * 2 - двигаем элемент
          * 3 - тянем проводку
          * 4 - растягиваем элемент
+         * 5 - удаляем элемент
         */
         private void Calc_mode(Control item) {
             var c = (string?) item.Tag;
@@ -60,15 +67,21 @@ namespace DiagramEditor.Models {
                 "field" => 3,
                 "marker" => 3,
                 "resizer" => 4,
+                "deleter" => 5,
                 _ => 0,
             };
         }
-        private static bool IsMode2(Control item) => (string?) item.Tag == "item" || (string?) item.Tag == "field";
         private static bool IsMode3(Control item) => (string?) item.Tag == "field" || (string?) item.Tag == "marker";
+        private static bool IsMode(Control item, string[] mods) {
+            var name = (string?) item.Tag;
+            if (name == null) return false;
+            return mods.IndexOf(name) != -1;
+        }
 
         private DiagramItem? GetItemRoot(Control item) {
             if ((string?) item.Tag == "marker" && marker_parent != null) return marker_parent;
-            while (item.Parent != null && IsMode2(item)) {
+            string[] mods = new[] { "item", "field", "resizer", "deleter" };
+            while (item.Parent != null && IsMode(item, mods)) {
                 if (item is DiagramItem @DI) return @DI;
                 item = (Control) item.Parent;
             }
@@ -114,6 +127,11 @@ namespace DiagramEditor.Models {
                 marker2.IsVisible = true;
                 marker_parent = GetItemRoot(item);
                 break;
+            case 4:
+                d_item = GetItemRoot(item);
+                if (d_item == null) break;
+                item_old_pos = new(d_item.Width, d_item.Height);
+                break;
             }
 
             Move(item, pos);
@@ -158,6 +176,12 @@ namespace DiagramEditor.Models {
             case 3:
                 marker2.EndPoint = pos;
                 break;
+            case 4:
+                d_item = GetItemRoot(item);
+                if (d_item == null) break;
+                new_pos = item_old_pos + delta;
+                d_item.Resize(new_pos.X, new_pos.Y);
+                break;
             }
         }
 
@@ -180,6 +204,12 @@ namespace DiagramEditor.Models {
         private void Tapped(Control item, Point pos) {
             Log.Write("Tapped: " + item.GetType().Name + " pos: " + pos);
             tap_pos = pos;
+            
+            if (mode == 5) {
+                var d_item = GetItemRoot(item);
+                Log.Write("remove " + d_item);
+                if (d_item != null) RemoveItem(d_item);
+            }
         }
     }
 }

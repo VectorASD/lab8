@@ -49,9 +49,9 @@ namespace DiagramEditor.Views {
             panels = sps.ToArray();
             // Log.Write("Len: " + panels.Length); 3? Всё оки
 
-            foreach (var item in head) panels[0].Children.Add(new TextBlock() { Text = item.Text });
-            foreach (var item in attrs) panels[1].Children.Add(new TextBlock() { Text = item.Text });
-            foreach (var item in meths) panels[2].Children.Add(new TextBlock() { Text = item.Text });
+            foreach (var item in head) panels[0].Children.Add(new TextBlock() { Text = item.Text, Tag = "item" });
+            foreach (var item in attrs) panels[1].Children.Add(new TextBlock() { Text = item.Text, Tag = "item" });
+            foreach (var item in meths) panels[2].Children.Add(new TextBlock() { Text = item.Text, Tag = "item" });
 
             RecalcSizes();
         }
@@ -78,9 +78,20 @@ namespace DiagramEditor.Views {
 
             double mul = sum_h > h ? h / sum_h : 1; // Подавляет размеры всех TextBlock, если они не влезают по высоте... Конечно можно было прикрутить более умный механизм с пирамидальной динамической сортировкой всех элементов по высоте и уменьшению самых высоких элементов, пока sum_h не упадёт до h, но это долго+лень делать :D
 
-            for (int i = 0; i < head.Length; i++) ((TextBlock) panels[0].Children[i]).FontSize = sizes_A[i] * mul;
-            for (int i = 0; i < attrs.Length; i++) ((TextBlock) panels[1].Children[i]).FontSize = sizes_B[i] * mul;
-            for (int i = 0; i < meths.Length; i++) ((TextBlock) panels[2].Children[i]).FontSize = sizes_C[i] * mul;
+            for (int i = 0; i < head.Length; i++) ((TextBlock) panels[0].Children[i]).FontSize = (sizes_A[i] * mul).Normalize(8, 32);
+            for (int i = 0; i < attrs.Length; i++) ((TextBlock) panels[1].Children[i]).FontSize = (sizes_B[i] * mul).Normalize(8, 32);
+            for (int i = 0; i < meths.Length; i++) ((TextBlock) panels[2].Children[i]).FontSize = (sizes_C[i] * mul).Normalize(8, 32);
+        }
+
+        public void Resize(double width, double height) {
+            Width = width;
+            Height = height;
+            borders[0].Width = borders[3].Width = width;
+            borders[1].Height = borders[2].Height = height;
+            var border = (Border) LogicalChildren[0].LogicalChildren[0];
+            border.Width = width - 8;
+            border.Height = height - 8;
+            RecalcSizes();
         }
 
         private Distantor GetDist(int num, Point pos) {
