@@ -135,7 +135,7 @@ namespace DiagramEditor.ViewModels {
          */
 
         string name = "yeah";
-        int stereo = 0; // -, static, abstract
+        int stereo = 0; // -, static, abstract, «interface»
         int access = 0; // private, public, protected, package
 
         public string Name { get => name; set => this.RaiseAndSetIfChanged(ref name, value); }
@@ -143,6 +143,7 @@ namespace DiagramEditor.ViewModels {
         public bool Stereo_1 { get => stereo == 0; set => stereo = value ? 0 : -1; }
         public bool Stereo_2 { get => stereo == 1; set => stereo = value ? 1 : -1; }
         public bool Stereo_3 { get => stereo == 2; set => stereo = value ? 2 : -1; }
+        public bool Stereo_4 { get => stereo == 3; set => stereo = value ? 3 : -1; }
 
         public bool Access_1 { get => access == 0; set => access = value ? 0 : -1; }
         public bool Access_2 { get => access == 1; set => access = value ? 1 : -1; }
@@ -177,7 +178,7 @@ namespace DiagramEditor.ViewModels {
 
         // Ещё кнопочки ;'-}
 
-        private static readonly string[] stereos = new string[] { "static", "abstract" };
+        private static readonly string[] stereos = new string[] { "static", "abstract", "«interface»" };
 
         private Dictionary<string, object> Export() {
             Dictionary<string, object> res = new() {
@@ -236,11 +237,9 @@ namespace DiagramEditor.ViewModels {
         private void FuncApply() {
             StringBuilder sb = new();
             sb.Append($"{"-+#~"[access]} {name}");
-            if (stereo != 0) {
-                sb.Append(' ');
-                sb.Append(stereos[stereo - 1]);
-            }
-            var head = new MeasuredText[] { new(sb.ToString()) };
+            var head = stereo != 0 ?
+                new MeasuredText[] { new(stereos[stereo - 1]), new(sb.ToString()) } :
+                new MeasuredText[] { new(sb.ToString()) };
 
             List<MeasuredText> arr = new(), arr2 = new();
             foreach (var attr in attributes) arr.Add(new(attr.ToString()));

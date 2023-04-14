@@ -124,7 +124,7 @@ namespace DiagramEditor.Views {
             this.head = head; this.attrs = attrs; this.meths = meths; this.entity = entity;
             for (int i = 0; i < 3; i++) panels[i].Children.Clear();
 
-            foreach (var item in head) panels[0].Children.Add(new TextBlock() { Text = item.Text, Tag = "item" });
+            foreach (var item in head) panels[0].Children.Add(new TextBlock() { Text = item.Text, Tag = "item", HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center });
             foreach (var item in attrs) panels[1].Children.Add(new TextBlock() { Text = item.Text, Tag = "item" });
             foreach (var item in meths) panels[2].Children.Add(new TextBlock() { Text = item.Text, Tag = "item" });
 

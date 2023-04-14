@@ -3,18 +3,18 @@ items:
 	-
 		-
 			name: yeah
-			stereo: 0
+			stereo: 2
 			access: 0
 			attributes: []
 			methods: []
-		- 485
-		- 259
+		- 277
+		- 263
 		- 200
 		- 150
 	-
 		-
 			name: named
-			stereo: 0
+			stereo: 3
 			access: 0
 			attributes:
 				-
@@ -64,30 +64,30 @@ items:
 					access: 0
 					stereo: 3
 					props: []
-		- 781
-		- 72
-		- 601
-		- 275
+		- 573
+		- 76
+		- 630
+		- 291
 	-
 		-
 			name: yeahA
-			stereo: 0
+			stereo: 1
 			access: 0
 			attributes: []
 			methods: []
-		- 525
-		- 504
+		- 317
+		- 508
 		- 64
 		- 211
 	-
 		-
 			name: yeahB
-			stereo: 0
+			stereo: 1
 			access: 0
 			attributes: []
 			methods: []
-		- 744
-		- 504
+		- 536
+		- 508
 		- 64
 		- 213
 joins:

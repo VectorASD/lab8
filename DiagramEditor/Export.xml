@@ -2,8 +2,8 @@
 <Dict>
 	<items>
 		<List>
-			<List _1='$485' _2='$259' _3='$200' _4='$150'>
-				<Dict name="yeah" stereo="$0" access="$0">
+			<List _1='$277' _2='$263' _3='$200' _4='$150'>
+				<Dict name="yeah" stereo="$2" access="$0">
 					<attributes>
 						<List/>
 					</attributes>
@@ -12,8 +12,8 @@
 					</methods>
 				</Dict>
 			</List>
-			<List _1='$781' _2='$72' _3='$601' _4='$275'>
-				<Dict name="named" stereo="$0" access="$0">
+			<List _1='$573' _2='$76' _3='$630' _4='$291'>
+				<Dict name="named" stereo="$3" access="$0">
 					<attributes>
 						<List>
 							<Dict name="cat" type="dog" access="$1" readonly="_BOOL_yeah" static="_BOOL_nop" stereo="$1" default="coow"/>
@@ -45,8 +45,8 @@
 					</methods>
 				</Dict>
 			</List>
-			<List _1='$525' _2='$504' _3='$64' _4='$211'>
-				<Dict name="yeahA" stereo="$0" access="$0">
+			<List _1='$317' _2='$508' _3='$64' _4='$211'>
+				<Dict name="yeahA" stereo="$1" access="$0">
 					<attributes>
 						<List/>
 					</attributes>
@@ -55,8 +55,8 @@
 					</methods>
 				</Dict>
 			</List>
-			<List _1='$744' _2='$504' _3='$64' _4='$213'>
-				<Dict name="yeahB" stereo="$0" access="$0">
+			<List _1='$536' _2='$508' _3='$64' _4='$213'>
+				<Dict name="yeahB" stereo="$1" access="$0">
 					<attributes>
 						<List/>
 					</attributes>
