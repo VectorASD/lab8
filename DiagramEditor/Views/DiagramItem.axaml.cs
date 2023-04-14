@@ -202,6 +202,16 @@ namespace DiagramEditor.Views {
                 if (!global || join.A.parent == this) join.Update();
         }
 
+        public void ClearJoins() {
+            foreach (var join in joins.ToArray()) {
+                join.A.parent.RemoveJoin(join);
+                join.B.parent.RemoveJoin(join);
+                var line = join.line;
+                var canv = (Canvas?) line.Parent;
+                if (canv != null) canv.Children.Remove(line);
+            }
+        }
+
         public List<object[]> ExportJoins(Dictionary<DiagramItem, int> me_to_num) {
             List<object[]> res = new();
             foreach (var join in joins) {

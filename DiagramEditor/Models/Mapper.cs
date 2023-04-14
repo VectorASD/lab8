@@ -29,6 +29,7 @@ namespace DiagramEditor.Models {
             items.Remove(item);
             var canv = (Canvas) (item.Parent ?? throw new Exception("Чё?!"));
             canv.Children.Remove(item);
+            item.ClearJoins();
         }
 
         readonly Points saved_poses = new();
