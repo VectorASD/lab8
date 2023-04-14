@@ -217,8 +217,8 @@ namespace DiagramEditor.Models {
                     // Log.Write("XS: '" + @item.GetString() + "' -> '" + s + "'");
                     return s;
                 case JsonValueKind.Number: return "$" + @item.ToString(); // escape NUM
-                case JsonValueKind.True: return "yeah";
-                case JsonValueKind.False: return "nop";
+                case JsonValueKind.True: return "_BOOL_yeah";
+                case JsonValueKind.False: return "_BOOL_nop";
                 case JsonValueKind.Null: return "null";
                 }
             }
@@ -243,8 +243,8 @@ namespace DiagramEditor.Models {
             return str switch {
                 "null" => "null",
                 "undefined" => "undefined",
-                "yeah" => "true",
-                "false" => "false",
+                "_BOOL_yeah" => "true",
+                "_BOOL_nop" => "false",
                 _ => '"' + str + '"',
             };
         }
@@ -295,11 +295,293 @@ namespace DiagramEditor.Models {
         public static string Xml2json(string xml) => ToJSONHandler(XElement.Parse(xml));
 
         /*
+         * YAML абилка
+         */
+
+        public static string YAMLEscape(string str) {
+            string[] arr = new[] { "true", "false", "null", "undefined", "" };
+            if (arr.Contains(str)) return '"' + str + '"';
+
+            string black_list = " -:\"\n\t";
+            bool escape = "0123456789[{".Contains(str[0]);
+            if (!escape)
+                foreach (char i in str)
+                    if (black_list.Contains(i)) { escape = true; break; }
+            if (!escape) return str;
+
+            StringBuilder sb = new();
+            sb.Append('"');
+            foreach (char i in str) {
+                sb.Append(i switch {
+                    '"' => "\\\"",
+                    '\\' => "\\\\",
+                    _ => i
+                });
+            }
+            sb.Append('"');
+            return sb.ToString();
+        }
+
+        private static string Dict2YAML(Dictionary<string, object?> dict, string level) {
+            if (dict.Count == 0) return " {}";
+            StringBuilder res = new();
+            foreach (var entry in dict)
+                res.Append(level + YAMLEscape(entry.Key) + ":" + (IsComposite(entry.Value) ? "" : " ") + ToYAMLHandler(entry.Value, level + "\t"));
+            return res.ToString();
+        }
+        private static string List2YAML(List<object?> list, string level) {
+            if (list.Count == 0) return " []";
+            StringBuilder res = new();
+            foreach (var entry in list)
+                res.Append(level + "-" + (IsComposite(entry) ? "" : " ") + ToYAMLHandler(entry, level + "\t"));
+            return res.ToString();
+        }
+
+        private static string ToYAMLHandler(object? obj, string level) {
+            if (obj == null) return "null";
+
+            if (obj is List<object?> @list) return List2YAML(@list, level);
+            if (obj is Dictionary<string, object?> @dict) return Dict2YAML(@dict, level);
+            if (obj is JsonElement @item) {
+                switch (@item.ValueKind) {
+                case JsonValueKind.Undefined: return "undefined";
+                case JsonValueKind.Object:
+                    return Dict2YAML(new Dictionary<string, object?>(@item.EnumerateObject().Select(pair => new KeyValuePair<string, object?>(pair.Name, pair.Value))), level);
+                case JsonValueKind.Array:
+                    return List2YAML(@item.EnumerateArray().Select(item => (object?) item).ToList(), level);
+                case JsonValueKind.String:
+                    var s = YAMLEscape(@item.GetString() ?? "null");
+                    // Log.Write("YS: '" + @item.GetString() + "' -> " + s);
+                    return s;
+                case JsonValueKind.Number: return @item.ToString();
+                case JsonValueKind.True: return "true";
+                case JsonValueKind.False: return "false";
+                case JsonValueKind.Null: return "null";
+                }
+            }
+            Log.Write("YT: " + obj.GetType());
+            throw new Exception("Чё?!");
+        }
+
+        public static string? Json2yaml(string json) {
+            json = json.Trim();
+            if (json.Length == 0) return null;
+
+            object? data;
+            if (json[0] == '[') data = JsonSerializer.Deserialize<List<object?>>(json);
+            else if (json[0] == '{') data = JsonSerializer.Deserialize<Dictionary<string, object?>>(json);
+            else return null;
+
+            return "---" + ToYAMLHandler(data, "\n") + "\n"; // Конец будет обязателен, как в питоне!
+        }
+
+        // Полностью мой парсер (by VectorASD).
+        // Конечно можно было лучше сделать, предварительно обработав слои,
+        // а потом уже их содержимое, но это мой первый опыт с паршением слоевушек,
+        // да и перекодивать уже нулевое желание...
+
+        private static void YAML_Log(string mess, int level = 0) {
+            if (level >= 4) Log.Write(mess);
+        }
+        private static string YAML_ParseString(ref string yaml, ref int pos) {
+            char first = ' ';
+            while (" \n\t".Contains(first)) first = yaml[pos++];
+            bool quote = first == '"';
+            StringBuilder sb = new();
+            if (quote) {
+                char c = yaml[pos++];
+                while (c != '"') {
+                    sb.Append(c);
+                    c = yaml[pos++];
+                }
+                c = yaml[pos++];
+                if (c != ':' && c != '\n') throw new Exception("После '\"' может быть только ':', либо '\n'");
+                if (c == ':') pos--;
+            } else {
+                sb.Append(first);
+                char c = yaml[pos++];
+                while (c != ':' && c != '\n') {
+                    sb.Append(c);
+                    c = yaml[pos++];
+                }
+                if (c == ':') pos--;
+            }
+            YAML_Log("Parsed str: " + sb.ToString(), 1);
+            return sb.ToString();
+        }
+        private static string YAML_ParseNum(ref string yaml, ref int pos) {
+            char c = yaml[pos++];
+            StringBuilder sb = new();
+            while ("0123456789.".Contains(c)) {
+                sb.Append(c);
+                c = yaml[pos++];
+            }
+            if (c != '\n') throw new Exception("После числа всяко должен быть '\n");
+            YAML_Log("Parsed num: " + sb.ToString(), 1);
+            return sb.ToString();
+        }
+        private static string YAML_ParseItem(ref string yaml, ref int pos) {
+            char first = ' ';
+            while (" \n\t".Contains(first)) first = yaml[pos++];
+            pos--;
+            if (first == '"')
+                return '"' + YAML_ParseString(ref yaml, ref pos) + '"';
+            if ("0123456789".Contains(first))
+                return YAML_ParseNum(ref yaml, ref pos);
+
+            string str = YAML_ParseString(ref yaml, ref pos);
+            string[] arr = new[] { "true", "false", "null", "undefined", "", "[]", "{}" };
+            if (arr.Contains(str)) return str;
+            return '"' + str + '"';
+        }
+        private static string YAML_ParseLayer(ref string yaml, ref int pos) {
+            if (pos == yaml.Length) return ""; // Конец файла
+            StringBuilder sb = new();
+            char first = yaml[pos++];
+            while (" \t".Contains(first)) {
+                sb.Append(first);
+                first = yaml[pos++];
+            }
+            pos--;
+            return sb.ToString();
+        }
+        private static string YAML_ToJSONHandler(ref string yaml, ref int pos) {
+            var layer = YAML_ParseLayer(ref yaml, ref pos);
+            if (pos == yaml.Length) return ""; // Конец файла
+            char first = yaml[pos++];
+
+            switch (first) {
+            case '[':
+                if (yaml[pos++] != ']' || yaml[pos++] != '\n') throw new Exception("После [ ожидалось ]\\n");
+                return "[]";
+            case '{':
+                if (yaml[pos++] != '}' || yaml[pos++] != '\n') throw new Exception("После { ожидалось }\\n");
+                return "{}";
+            case '-': {
+                StringBuilder res = new();
+                res.Append('[');
+                bool First = true;
+                pos--;
+                while (true) {
+                    if (pos == yaml.Length) break; // Конец файла
+
+                    if (First) First = false;
+                    else {
+                        var saved_pos2 = pos;
+                        var layer3 = YAML_ParseLayer(ref yaml, ref pos);
+                        YAML_Log("DOWN_LAYER: '" + layer + "', '" + layer3 + "'");
+                        if (layer != layer3) {
+                            if (layer3.Length > layer.Length) throw new Exception("Ожидался элемент списка вместо подъёма");
+                            if (!layer.StartsWith(layer3)) throw new Exception("Странность в упавшем layer'е");
+                            YAML_Log("Падение"); pos = saved_pos2; break;
+                        }
+
+                        res.Append(", ");
+                    }
+
+                    if (yaml[pos++] != '-') throw new Exception("Ожидалось '-' в следующем элементе списка");
+
+                    char c = yaml[pos++];
+                    if (c == ' ') {
+                        var value = YAML_ParseItem(ref yaml, ref pos);
+                        res.Append(value);
+                    } else if (c == '\n') {
+                    } else throw new Exception("После '-' ожидалось ' ', либо '\n'");
+
+                    int saved_pos = pos;
+                    var layer2 = YAML_ParseLayer(ref yaml, ref pos);
+                    YAML_Log("LAYER: '" + layer + "', '" + layer2 + "'");
+                    if (layer2.Length < layer.Length) {
+                        if (!layer.StartsWith(layer2)) throw new Exception("Странность в упавшем layer'е");
+                        YAML_Log("Падение"); pos = saved_pos; break;
+                    }
+                    if (!layer2.StartsWith(layer)) throw new Exception("Странность в следующем layer'е");
+                    if (layer == layer2) { YAML_Log("Сохранение"); pos = saved_pos; continue; }
+                    YAML_Log("Подъём");
+                    if (c == '\n') {
+                        pos = saved_pos;
+                        var value = YAML_ToJSONHandler(ref yaml, ref pos);
+                        res.Append(value);
+                    } else throw new Exception("Здесь не может быть подъёма");
+                }
+                res.Append(']');
+                YAML_Log("Список рождён: " + res.ToString(), 2);
+                return res.ToString(); }
+            case '"':
+            default: {
+                pos--;
+                StringBuilder res = new();
+                res.Append('{');
+                bool First = true;
+                while (true) {
+                    if (pos == yaml.Length) break; // Конец файла
+
+                    if (First) First = false;
+                    else {
+                        var saved_pos2 = pos;
+                        var layer3 = YAML_ParseLayer(ref yaml, ref pos);
+                        YAML_Log("DICT_LAYER: '" + layer + "', '" + layer3 + "'");
+                        if (layer != layer3) {
+                            if (layer3.Length > layer.Length) throw new Exception("Ожидался элемент словаря вместо подъёма");
+                            if (!layer.StartsWith(layer3)) throw new Exception("Странность в упавшем layer'е");
+                            YAML_Log("Падение"); pos = saved_pos2; break;
+                        }
+
+                        res.Append(", ");
+                    }
+
+                    var key = YAML_ParseString(ref yaml, ref pos);
+                    res.Append('"');
+                    res.Append(key);
+                    res.Append("\": ");
+                    if (yaml[pos++] != ':') throw new Exception("После ключа ожидалось ':'");
+
+                    char c = yaml[pos++];
+                    if (c == ' ') {
+                        var value = YAML_ParseItem(ref yaml, ref pos);
+                        res.Append(value);
+                    } else if (c == '\n') {
+                    } else throw new Exception("После ключа и ':' ожидалось ' ', либо '\n'");
+
+                    int saved_pos = pos;
+                    var layer2 = YAML_ParseLayer(ref yaml, ref pos);
+                    YAML_Log("LAYER: '" + layer + "', '" + layer2 + "'");
+                    if (layer2.Length < layer.Length) {
+                        if (!layer.StartsWith(layer2)) throw new Exception("Странность в упавшем layer'е");
+                        YAML_Log("Падение"); pos = saved_pos; break;
+                    }
+                    if (!layer2.StartsWith(layer)) throw new Exception("Странность в следующем layer'е");
+                    if (layer == layer2) { YAML_Log("Сохранение"); pos = saved_pos; continue; }
+                    YAML_Log("Подъём");
+                    if (c == '\n') {
+                        pos = saved_pos;
+                        var value = YAML_ToJSONHandler(ref yaml, ref pos);
+                        res.Append(value);
+                    } else throw new Exception("Здесь не может быть подъёма");
+                }
+                res.Append('}');
+                YAML_Log("Словарь рождён: " + res.ToString(), 2);
+                return res.ToString(); }
+            }
+        }
+        public static string Yaml2json(string yaml) {
+            try {
+                if (!yaml.StartsWith("---\n")) throw new Exception("Это не YAML");
+                int pos = 4;
+                var res = YAML_ToJSONHandler(ref yaml, ref pos);
+                YAML_Log("data: " + res, 3);
+                return res;
+            } catch (Exception e) { Log.Write("Ошибка YAML парсера: " + e); throw; }
+        }
+
+        /*
          * Misc
          */
 
         public static string? Obj2xml(object? obj) => Json2xml(Obj2json(obj)); // Чёт припомнилось свойство транзитивности с дискретной матеши...
         public static object? Xml2obj(string xml) => Json2obj(Xml2json(xml));
+        public static string? Obj2yaml(object? obj) => Json2yaml(Obj2json(obj));
+        public static object? Yaml2obj(string xml) => Json2obj(Yaml2json(xml));
 
         public static void RenderToFile(Control target, string path) {
             // var target = (Control?) tar.Parent;

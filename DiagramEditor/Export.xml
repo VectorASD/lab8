@@ -13,11 +13,11 @@
 				</Dict>
 			</List>
 			<List _1='$781' _2='$72' _3='$601' _4='$275'>
-				<Dict name="yeah" stereo="$0" access="$0">
+				<Dict name="named" stereo="$0" access="$0">
 					<attributes>
 						<List>
-							<Dict name="cat" type="dog" access="$1" readonly="yeah" static="nop" stereo="$1" default="coow"/>
-							<Dict name="meow" type="woof" access="$3" readonly="nop" static="yeah" stereo="$3" default="myyyy"/>
+							<Dict name="cat" type="dog" access="$1" readonly="_BOOL_yeah" static="_BOOL_nop" stereo="$1" default="coow"/>
+							<Dict name="meow" type="woof" access="$3" readonly="_BOOL_nop" static="_BOOL_yeah" stereo="$3" default="myyyy"/>
 						</List>
 					</attributes>
 					<methods>
@@ -46,7 +46,7 @@
 				</Dict>
 			</List>
 			<List _1='$525' _2='$504' _3='$64' _4='$211'>
-				<Dict name="yeah" stereo="$0" access="$0">
+				<Dict name="yeahA" stereo="$0" access="$0">
 					<attributes>
 						<List/>
 					</attributes>
@@ -56,7 +56,7 @@
 				</Dict>
 			</List>
 			<List _1='$744' _2='$504' _3='$64' _4='$213'>
-				<Dict name="yeah" stereo="$0" access="$0">
+				<Dict name="yeahB" stereo="$0" access="$0">
 					<attributes>
 						<List/>
 					</attributes>

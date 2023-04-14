@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Shapes;
+using Avalonia.Input;
 using Avalonia.LogicalTree;
 using Avalonia.Media;
 using DiagramEditor.ViewModels;
@@ -10,8 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection.Metadata;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DiagramEditor.Models {
     public class Mapper {
@@ -297,8 +296,7 @@ namespace DiagramEditor.Models {
                 bool a = marker.IsVisible, b = marker2.IsVisible;
                 marker.IsVisible = marker2.IsVisible = false;
 
-                try { Utils.RenderToFile(canv, "../../../Export.png"); }
-                catch (Exception e) { Log.Write("Ошибка экспорта PNG: " + e); }
+                try { Utils.RenderToFile(canv, "../../../Export.png"); } catch (Exception e) { Log.Write("Ошибка экспорта PNG: " + e); }
 
                 marker.IsVisible = a; marker2.IsVisible = b;
                 return;
@@ -321,31 +319,51 @@ namespace DiagramEditor.Models {
                 ["joins"] = joins,
             };
 
-            if (type == "JSON") {
+            switch (type) {
+            case "JSON":
                 var json = Utils.Obj2json(data);
                 if (json == null) { Log.Write("Не удалось экспортировать в Export.json :/"); return; }
                 // Log.Write("J: " + json);
                 File.WriteAllText("../../../Export.json", json);
-            } else {
+                break;
+            case "XML":
                 var xml = Utils.Obj2xml(data);
                 if (xml == null) { Log.Write("Не удалось экспортировать в Export.xml :/"); return; }
                 // Log.Write("X: " + xml);
                 File.WriteAllText("../../../Export.xml", xml);
+                break;
+            case "YAML":
+                var yaml = Utils.Obj2yaml(data);
+                if (yaml == null) { Log.Write("Не удалось экспортировать в Export.yaml :/"); return; }
+                // Log.Write("Y: " + yaml);
+                File.WriteAllText("../../../Export.yaml", yaml);
+                break;
             }
         }
 
         public JoinedItems[]? new_joins; // Обрабатывается после Import
 
-        public DiagramItem[]? Import(string type, Canvas canv) {
-            string name = type == "JSON" ? "Export.json" : "Export.xml";
-            
-            if (!File.Exists("../../../" + name)) { Log.Write(name + " не обнаружен"); return null; }
+        public DiagramItem[]? Import(string type, object? content = null) {
+            string name = type switch {
+                "JSON" => "Export.json",
+                "XML" => "Export.xml",
+                "YAML" => "Export.yaml",
+                _ => throw new Exception("ЧЁ?!"),
+            };
+            if (content == null) {
+                if (!File.Exists("../../../" + name)) { Log.Write(name + " не обнаружен"); return null; }
 
-            var data = File.ReadAllText("../../../" + name);
-            // Log.Write("data: " + (type == "XML" ? Utils.Xml2json(data) : data));
+                var data = File.ReadAllText("../../../" + name);
+                // Log.Write("data: " + (type == "XML" ? Utils.Xml2json(data) : data));
 
-            var content = type == "XML" ? Utils.Xml2obj(data) : Utils.Json2obj(data);
-            Log.Write("data: " + Utils.Obj2json(content));
+                content = type switch {
+                    "JSON" => Utils.Json2obj(data),
+                    "XML" => Utils.Xml2obj(data),
+                    "YAML" => Utils.Yaml2obj(data),
+                    _ => throw new Exception("ЧЁ?!"),
+                };
+            }
+            // Log.Write("data: " + Utils.Obj2json(content));
 
             if (content is not Dictionary<string, object> @dict) { Log.Write("В начале " + name + " не словарь"); return null; }
             if (!@dict.TryGetValue("items", out var value)) { Log.Write("В корне необнаружен items"); return null; }
@@ -353,11 +371,14 @@ namespace DiagramEditor.Models {
             if (!@dict.TryGetValue("joins", out var value2)) { Log.Write("В корне необнаружен joins"); return null; }
             if (value2 is not List<object> @joins) { Log.Write("joins не того типа"); return null; }
 
-            foreach (var child in canv.Children.Cast<Control>().ToList()) {
-                var tag = (string?) child.Tag;
-                if (tag != "marker" && tag != "marker2") canv.Children.Remove(child);
+            if (items.Count > 0) {
+                var canv = (Canvas) (items[0].Parent ?? throw new Exception("Чё?!"));
+                foreach (var child in canv.Children.Cast<Control>().ToList()) {
+                    var tag = (string?) child.Tag;
+                    if (tag != "marker" && tag != "marker2") canv.Children.Remove(child);
+                }
+                items.Clear();
             }
-            items.Clear();
 
             var empty = Array.Empty<MeasuredText>();
             foreach (var obj in itemz) {
@@ -388,6 +409,48 @@ namespace DiagramEditor.Models {
 
             new_joins = joinz.ToArray();
             return items_arr;
+        }
+
+        public void DragOver(object? sender, DragEventArgs e) {
+            // Log.Write("DragOver " + e.DragEffects);
+            // Only allow Copy or Link as Drop Operations.
+            e.DragEffects &= DragDropEffects.Copy | DragDropEffects.Link;
+
+            // Only allow if the dragged data contains text or filenames.
+            if (!e.Data.Contains(DataFormats.Text) && !e.Data.Contains(DataFormats.FileNames)) e.DragEffects = DragDropEffects.None;
+        }
+
+        private DiagramItem[]? GrandImport(string data) {
+            object? content = null;
+
+            try { content = Utils.Json2obj(data); } catch { }
+            if (content != null) return Import("JSON", content);
+
+            try { content = Utils.Xml2obj(data); } catch { }
+            if (content != null) return Import("XML", content);
+
+            Log.Write("Не получилось разпознать тип данных :/ Нужен JSON, либо XML, либо YAML");
+            return null;
+        }
+
+        public DiagramItem[]? Drop(object? sender, DragEventArgs e) {
+            // Log.Write("Drop");
+            if (e.Data.Contains(DataFormats.Text)) {
+                var data = e.Data.GetText();
+                if (data != null) return GrandImport(data);
+            }
+
+            if (e.Data.Contains(DataFormats.FileNames)) {
+                var list = e.Data.GetFileNames();
+                if (list == null) return null;
+
+                var files = list.ToArray();
+                if (files.Length == 0) return null;
+
+                return GrandImport(File.ReadAllText(files[0]));
+            }
+
+            return null;
         }
     }
 }

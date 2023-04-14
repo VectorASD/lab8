@@ -110,7 +110,7 @@ namespace DiagramEditor.ViewModels {
                 if (e.Source != null && e.Source is Control @control) map.WheelMove(@control, e.Delta.Y);
             };
 
-            /* int x = 100, y = 100, w = 500, angle = 90;
+            /* int x = 100, y = 100, w = 500, angle = 90; // Чисто оставил для вида, как прототип первой нормааааЪааЪаЪально вращаемой стрелочки
             Path p = new() {
                 StrokeThickness = 3,
                 Stroke = Brushes.Sienna,
@@ -118,7 +118,17 @@ namespace DiagramEditor.ViewModels {
                 RenderTransform = new RotateTransform(angle, (x - w) / 2, (y - 20) / 2)
             };
             canv.Children.Add(p); */
+
+            panel.AddHandler(DragDrop.DragOverEvent, map.DragOver);
+            panel.AddHandler(DragDrop.DragEnterEvent, (object? sender, DragEventArgs e) => DropboxVisible = true);
+            panel.AddHandler(DragDrop.DropEvent, (object? sender, DragEventArgs e) => {
+                DiagramItem[]? beginners = map.Drop(sender, e);
+                if (beginners != null) UnpackImport(beginners);
+                DropboxVisible = false;
+            });
         }
+        bool dropbox_visible = false;
+        public bool DropboxVisible { get => dropbox_visible; set => this.RaiseAndSetIfChanged(ref dropbox_visible, value); }
 
         /*
          * Вкладка общих параметров
@@ -204,9 +214,7 @@ namespace DiagramEditor.ViewModels {
                 foreach (var meth in @meths) methods.Add(new MethodItem(this, meth));
         }
 
-        private void FuncExport(string type) => map.Export(type, canv);
-        private void FuncImport(string type) {
-            var items = map.Import(type, canv);
+        private void UnpackImport(DiagramItem[]? items) {
             if (items != null && map.new_joins != null) {
                 foreach (var item in items) {
                     Import(item.entity);
@@ -218,6 +226,11 @@ namespace DiagramEditor.ViewModels {
                 foreach (var join in map.new_joins) canv.Children.Add(join.line);
                 map.new_joins = null;
             }
+        }
+
+        private void FuncExport(string type) => map.Export(type, canv);
+        private void FuncImport(string type) {
+            UnpackImport(map.Import(type));
         }
 
         private void FuncApply() {

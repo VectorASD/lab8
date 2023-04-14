@@ -19,15 +19,22 @@
 				<MenuItem Header="Экспортировать в PNG" Command="{Binding ExportB}" CommandParameter="PNG"/>
 				<MenuItem Header="Экспортировать в JSON" Command="{Binding ExportB}" CommandParameter="JSON"/>
 				<MenuItem Header="Экспортировать в XML" Command="{Binding ExportB}" CommandParameter="XML"/>
+				<MenuItem Header="Экспортировать в YAML" Command="{Binding ExportB}" CommandParameter="YAML"/>
 			</MenuItem>
 			<MenuItem Header="Импортировать" Name="menuImport">
 				<MenuItem Header="Импортировать из JSON" Command="{Binding ImportB}" CommandParameter="JSON"/>
 				<MenuItem Header="Импортировать из XML" Command="{Binding ImportB}" CommandParameter="XML"/>
+				<MenuItem Header="Импортировать из YAML" Command="{Binding ImportB}" CommandParameter="YAML"/>
 			</MenuItem>
 		</Menu>
 		<Panel DragDrop.AllowDrop="True" Tag="scene">
-			<TextBlock Text="{Binding Logg}" IsVisible="{Binding ServiceVisible}"/>
 			<Canvas Background="AliceBlue" Tag="scene" Name="canvas" Cursor="Hand"/>
+			<TextBlock Text="{Binding Logg}"/>
+			<Grid Background="#aeee" RowDefinitions="*,50*,*" ColumnDefinitions="*,50*,*" IsVisible="{Binding DropboxVisible}">
+				<Border Grid.Row="1" Grid.Column="1" BorderThickness="2" BorderBrush="blue">
+					<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48">Перетащите сюда документ XML / JSON / YAML&#13;               Чтобы импортировать его</TextBlock>
+				</Border>
+			</Grid>
 		</Panel>
 	</DockPanel>
 
