@@ -1,7 +1,5 @@
 ﻿using Avalonia.Controls;
-using Avalonia.Controls.Shapes;
 using Avalonia.Input;
-using Avalonia.Media;
 using DiagramEditor.Models;
 using DiagramEditor.Views;
 using ReactiveUI;
@@ -68,6 +66,8 @@ namespace DiagramEditor.ViewModels {
             Apply = ReactiveCommand.Create<Unit, Unit>(_ => { FuncApply(); return new Unit(); });
             Close = ReactiveCommand.Create<Unit, Unit>(_ => { FuncClose(); return new Unit(); });
             Clear = ReactiveCommand.Create<Unit, Unit>(_ => { FuncClear(); return new Unit(); });
+            ExportB = ReactiveCommand.Create<string, Unit>(n => { FuncExport(n); return new Unit(); });
+            ImportB = ReactiveCommand.Create<string, Unit>(n => { FuncImport(n); return new Unit(); });
 
             canv = mw.Find<Canvas>("canvas") ?? new Canvas();
             canv.Children.Add(map.Marker);
@@ -177,7 +177,7 @@ namespace DiagramEditor.ViewModels {
                 ["attributes"] = attributes.Select(x => x.Export()).ToList(),
                 ["methods"] = methods.Select(x => x.Export()).ToList(),
             };
-            Log.Write(Utils.Obj2json(res));
+            // Log.Write(Utils.Obj2json(res));
             return res;
         }
 
@@ -202,6 +202,22 @@ namespace DiagramEditor.ViewModels {
             methods.Clear();
             if (value5 is IEnumerable<object> @meths)
                 foreach (var meth in @meths) methods.Add(new MethodItem(this, meth));
+        }
+
+        private void FuncExport(string type) => map.Export(type, canv);
+        private void FuncImport(string type) {
+            var items = map.Import(type, canv);
+            if (items != null && map.new_joins != null) {
+                foreach (var item in items) {
+                    Import(item.entity);
+                    editable = item;
+                    FuncApply();
+                    canv.Children.Add(item);
+                }
+
+                foreach (var join in map.new_joins) canv.Children.Add(join.line);
+                map.new_joins = null;
+            }
         }
 
         private void FuncApply() {
@@ -249,5 +265,7 @@ namespace DiagramEditor.ViewModels {
         public ReactiveCommand<Unit, Unit> Apply { get; }
         public ReactiveCommand<Unit, Unit> Close { get; }
         public ReactiveCommand<Unit, Unit> Clear { get; }
+        public ReactiveCommand<string, Unit> ExportB { get; }
+        public ReactiveCommand<string, Unit> ImportB { get; }
     }
 }

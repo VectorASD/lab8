@@ -8,6 +8,10 @@ using DiagramEditor.Views;
 using DynamicData;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection.Metadata;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DiagramEditor.Models {
     public class Mapper {
@@ -282,6 +286,108 @@ namespace DiagramEditor.Models {
             // Log.Write("WheelMoved: " + item.GetType().Name + " delta: " + (move > 0 ? 1 : -1));
             if ((string?) item.Tag == "arrow" && item is ArrowFactory @arrow)
                 @arrow.Type = (@arrow.Type + (move > 0 ? 1 : 5)) % 6;
+        }
+
+        /*
+         * Система импортов и экспортов
+         */
+
+        public void Export(string type, Control canv) {
+            if (type == "PNG") {
+                bool a = marker.IsVisible, b = marker2.IsVisible;
+                marker.IsVisible = marker2.IsVisible = false;
+
+                try { Utils.RenderToFile(canv, "../../../Export.png"); }
+                catch (Exception e) { Log.Write("Ошибка экспорта PNG: " + e); }
+
+                marker.IsVisible = a; marker2.IsVisible = b;
+                return;
+            }
+
+            List<object> entities = new();
+            Dictionary<DiagramItem, int> di_to_num = new();
+            int num = 0;
+            foreach (var item in items) {
+                var m = item.Margin;
+                var d = new object[] { item.entity, (int) m.Left, (int) m.Top, (int) item.Width, (int) item.Height };
+                entities.Add(d);
+                di_to_num[item] = num++;
+            }
+            List<object[]> joins = new();
+            foreach (var item in items) joins.Add(item.ExportJoins(di_to_num));
+
+            Dictionary<string, object> data = new() {
+                ["items"] = entities.ToList(),
+                ["joins"] = joins,
+            };
+
+            if (type == "JSON") {
+                var json = Utils.Obj2json(data);
+                if (json == null) { Log.Write("Не удалось экспортировать в Export.json :/"); return; }
+                // Log.Write("J: " + json);
+                File.WriteAllText("../../../Export.json", json);
+            } else {
+                var xml = Utils.Obj2xml(data);
+                if (xml == null) { Log.Write("Не удалось экспортировать в Export.xml :/"); return; }
+                // Log.Write("X: " + xml);
+                File.WriteAllText("../../../Export.xml", xml);
+            }
+        }
+
+        public JoinedItems[]? new_joins; // Обрабатывается после Import
+
+        public DiagramItem[]? Import(string type, Canvas canv) {
+            string name = type == "JSON" ? "Export.json" : "Export.xml";
+            
+            if (!File.Exists("../../../" + name)) { Log.Write(name + " не обнаружен"); return null; }
+
+            var data = File.ReadAllText("../../../" + name);
+            // Log.Write("data: " + (type == "XML" ? Utils.Xml2json(data) : data));
+
+            var content = type == "XML" ? Utils.Xml2obj(data) : Utils.Json2obj(data);
+            Log.Write("data: " + Utils.Obj2json(content));
+
+            if (content is not Dictionary<string, object> @dict) { Log.Write("В начале " + name + " не словарь"); return null; }
+            if (!@dict.TryGetValue("items", out var value)) { Log.Write("В корне необнаружен items"); return null; }
+            if (value is not List<object> @itemz) { Log.Write("items не того типа"); return null; }
+            if (!@dict.TryGetValue("joins", out var value2)) { Log.Write("В корне необнаружен joins"); return null; }
+            if (value2 is not List<object> @joins) { Log.Write("joins не того типа"); return null; }
+
+            foreach (var child in canv.Children.Cast<Control>().ToList()) {
+                var tag = (string?) child.Tag;
+                if (tag != "marker" && tag != "marker2") canv.Children.Remove(child);
+            }
+            items.Clear();
+
+            var empty = Array.Empty<MeasuredText>();
+            foreach (var obj in itemz) {
+                if (obj is not List<object> @item) { Log.Write("Один из элементов не того типа"); continue; }
+                if (@item.Count != 5 ||
+                    @item[1] is not int @x || @item[2] is not int @y ||
+                    @item[3] is not int @w || @item[4] is not int @h) { Log.Write("Содержимое списка элемента ошибочно"); continue; }
+
+                var newy = new DiagramItem(empty, empty, empty, item[0]);
+                newy.Move(new(@x, @y), false);
+                newy.Resize(@w, @h);
+                items.Add(newy);
+            }
+            var items_arr = items.ToArray();
+
+            var joinz = new List<JoinedItems>();
+            foreach (var obj in @joins) {
+                if (obj is not List<object> @join) { Log.Write("Одно из соединений не того типа"); continue; }
+                if (@join.Count != 7 ||
+                    @join[0] is not int @num_a || @join[1] is not int @bord_a || @join[2].ToDouble() is not double @d_a ||
+                    @join[3] is not int @num_b || @join[4] is not int @bord_b || @join[5].ToDouble() is not double @d_b ||
+                    @join[6] is not int @t) { Log.Write("Содержимое списка соединения ошибочно"); continue; }
+
+                var newy = new JoinedItems(new(items_arr[@num_a], 0, 0, 0, @bord_a, @d_a), new(items_arr[@num_b], 0, 0, 0, @bord_b, @d_b));
+                newy.line.Type = @t;
+                joinz.Add(newy);
+            }
+
+            new_joins = joinz.ToArray();
+            return items_arr;
         }
     }
 }

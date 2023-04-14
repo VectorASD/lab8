@@ -201,5 +201,19 @@ namespace DiagramEditor.Views {
             foreach (var join in joins)
                 if (!global || join.A.parent == this) join.Update();
         }
+
+        public List<object[]> ExportJoins(Dictionary<DiagramItem, int> me_to_num) {
+            List<object[]> res = new();
+            foreach (var join in joins) {
+                Distantor a = join.A, b = join.B;
+                if (a.parent == this)
+                    res.Add(new object[] {
+                        me_to_num[this], a.num, double.Round(a.delta, 5),
+                        me_to_num[b.parent], b.num, double.Round(b.delta, 5),
+                        join.line.Type
+                    });
+            }
+            return res;
+        }
     }
 }

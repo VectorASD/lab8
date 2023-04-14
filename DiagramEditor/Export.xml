@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Dict>
+	<items>
+		<List>
+			<List _1='$485' _2='$259' _3='$200' _4='$150'>
+				<Dict name="yeah" stereo="$0" access="$0">
+					<attributes>
+						<List/>
+					</attributes>
+					<methods>
+						<List/>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$781' _2='$72' _3='$601' _4='$275'>
+				<Dict name="yeah" stereo="$0" access="$0">
+					<attributes>
+						<List>
+							<Dict name="cat" type="dog" access="$1" readonly="yeah" static="nop" stereo="$1" default="coow"/>
+							<Dict name="meow" type="woof" access="$3" readonly="nop" static="yeah" stereo="$3" default="myyyy"/>
+						</List>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name="op1" type="dasdsads" access="$3" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="op2" type="void" access="$2" stereo="$1">
+								<props>
+									<List>
+										<Dict name="explode" type="char" default=""/>
+										<Dict name="grove" type="bool" default=""/>
+										<Dict name="dig" type="kitty" default="lol"/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="op3" type="eaww" access="$0" stereo="$3">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$525' _2='$504' _3='$64' _4='$211'>
+				<Dict name="yeah" stereo="$0" access="$0">
+					<attributes>
+						<List/>
+					</attributes>
+					<methods>
+						<List/>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$744' _2='$504' _3='$64' _4='$213'>
+				<Dict name="yeah" stereo="$0" access="$0">
+					<attributes>
+						<List/>
+					</attributes>
+					<methods>
+						<List/>
+					</methods>
+				</Dict>
+			</List>
+		</List>
+	</items>
+	<joins>
+		<List>
+			<List _0='$0' _1='$2' _2='$0.15714' _3='$1' _4='$1' _5='$0.36429' _6='$0'/>
+			<List _0='$0' _1='$3' _2='$0.41579' _3='$2' _4='$0' _5='$0.55556' _6='$4'/>
+			<List _0='$1' _1='$3' _2='$0.35789' _3='$0' _4='$2' _5='$0.75' _6='$0'/>
+			<List _0='$1' _1='$1' _2='$0.83571' _3='$0' _4='$1' _5='$0.57143' _6='$0'/>
+			<List _0='$2' _1='$2' _2='$0.12935' _3='$3' _4='$1' _5='$0.12953' _6='$0'/>
+			<List _0='$2' _1='$2' _2='$0.28856' _3='$3' _4='$1' _5='$0.29534' _6='$1'/>
+			<List _0='$2' _1='$2' _2='$0.46766' _3='$3' _4='$1' _5='$0.46798' _6='$2'/>
+			<List _0='$2' _1='$2' _2='$0.63682' _3='$3' _4='$1' _5='$0.63547' _6='$3'/>
+			<List _0='$2' _1='$2' _2='$0.801' _3='$3' _4='$1' _5='$0.79803' _6='$4'/>
+			<List _0='$2' _1='$2' _2='$0.95522' _3='$3' _4='$1' _5='$0.95074' _6='$5'/>
+			<List _0='$3' _1='$0' _2='$0.33333' _3='$0' _4='$3' _5='$0.92632' _6='$3'/>
+		</List>
+	</joins>
+</Dict>

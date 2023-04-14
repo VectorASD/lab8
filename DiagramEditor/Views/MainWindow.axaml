@@ -16,18 +16,18 @@
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="Экспортировать" Name="menuExport">
-				<MenuItem Header="Экспортировать в PNG" Command="{Binding Export}" CommandParameter="PNG"/>
-				<MenuItem Header="Экспортировать в JSON" Command="{Binding Export}" CommandParameter="JSON"/>
-				<MenuItem Header="Экспортировать в XML" Command="{Binding Export}" CommandParameter="XML"/>
+				<MenuItem Header="Экспортировать в PNG" Command="{Binding ExportB}" CommandParameter="PNG"/>
+				<MenuItem Header="Экспортировать в JSON" Command="{Binding ExportB}" CommandParameter="JSON"/>
+				<MenuItem Header="Экспортировать в XML" Command="{Binding ExportB}" CommandParameter="XML"/>
 			</MenuItem>
 			<MenuItem Header="Импортировать" Name="menuImport">
-				<MenuItem Header="Импортировать из JSON" Command="{Binding Import}" CommandParameter="JSON"/>
-				<MenuItem Header="Импортировать из XML" Command="{Binding Import}" CommandParameter="XML"/>
+				<MenuItem Header="Импортировать из JSON" Command="{Binding ImportB}" CommandParameter="JSON"/>
+				<MenuItem Header="Импортировать из XML" Command="{Binding ImportB}" CommandParameter="XML"/>
 			</MenuItem>
 		</Menu>
-		<Panel Background="AliceBlue" DragDrop.AllowDrop="True" Tag="scene">
+		<Panel DragDrop.AllowDrop="True" Tag="scene">
 			<TextBlock Text="{Binding Logg}" IsVisible="{Binding ServiceVisible}"/>
-			<Canvas Tag="scene" Name="canvas" Cursor="Hand"/>
+			<Canvas Background="AliceBlue" Tag="scene" Name="canvas" Cursor="Hand"/>
 		</Panel>
 	</DockPanel>
 

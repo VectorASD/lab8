@@ -53,8 +53,8 @@ namespace DiagramEditor.Models {
             case short @short: return @short.ToString();
             case int @int: return @int.ToString();
             case long @long: return @long.ToString();
-            case float @float: return @float.ToString();
-            case double @double: return @double.ToString();
+            case float @float: return @float.ToString().Replace(',', '.');
+            case double @double: return @double.ToString().Replace(',', '.');
 
             case Point @point: return "\"$p$" + (int) @point.X + "," + (int) @point.Y + '"';
             case Points @points: return "\"$P$" + string.Join("|", @points.Select(p => (int) p.X + "," + (int) p.Y)) + '"';
@@ -103,7 +103,9 @@ namespace DiagramEditor.Models {
             if (obj == null) return null;
 
             if (obj is List<object?> @list) return @list.Select(JsonHandler).ToList();
-            if (obj is Dictionary<string, object?> @dict) return @dict.Select(pair => new KeyValuePair<string, object?>(pair.Key, JsonHandler(pair.Value)));
+            if (obj is Dictionary<string, object?> @dict) {
+                return new Dictionary<string, object?>(@dict.Select(pair => new KeyValuePair<string, object?>(pair.Key, JsonHandler(pair.Value))));
+            }
             if (obj is JsonElement @item) {
                 switch (@item.ValueKind) {
                 case JsonValueKind.Undefined: return null;
@@ -111,9 +113,8 @@ namespace DiagramEditor.Models {
                     Dictionary<string, object?> res = new();
                     foreach (var el in @item.EnumerateObject()) res[el.Name] = JsonHandler(el.Value);
                     return res;
-                case JsonValueKind.Array: // Неиспытано ещё
-                    List<string> res2 = new();
-                    foreach (var el in @item.EnumerateObject()) _ = res2.Append(JsonHandler(el.Value));
+                case JsonValueKind.Array:
+                    List<object?> res2 = @item.EnumerateArray().Select(item => JsonHandler((object?) item)).ToList();
                     return res2;
                 case JsonValueKind.String:
                     var s = JsonHandler(@item.GetString() ?? "");
@@ -124,10 +125,10 @@ namespace DiagramEditor.Models {
                     // Иначе это целое число
                     long a = @item.GetInt64();
                     int b = @item.GetInt32();
-                    short c = @item.GetInt16();
+                    // short c = @item.GetInt16();
                     if (a != b) return a;
-                    if (b != c) return b;
-                    return c;
+                    // if (b != c) return b;
+                    return b;
                 case JsonValueKind.True: return true;
                 case JsonValueKind.False: return false;
                 case JsonValueKind.Null: return null;
@@ -188,9 +189,12 @@ namespace DiagramEditor.Models {
         private static string List2XML(List<object?> list, string level) {
             StringBuilder attrs = new();
             StringBuilder items = new();
-            foreach (var entry in list)
+            int num = 0;
+            foreach (var entry in list) {
                 if (IsComposite(entry)) items.Append(ToXMLHandler(entry, level + "\t"));
-                else attrs.Append(" " + ToXMLHandler(entry, "{err}") + "=''");
+                else attrs.Append($" _{num}='" + ToXMLHandler(entry, "{err}") + "'");
+                num++;
+            }
 
             if (items.Length == 0) return level + "<List" + attrs.ToString() + "/>";
             return level + "<List" + attrs.ToString() + ">" + items.ToString() + level + "</List>";
@@ -206,8 +210,8 @@ namespace DiagramEditor.Models {
                 case JsonValueKind.Undefined: return "undefined";
                 case JsonValueKind.Object:
                     return Dict2XML(new Dictionary<string, object?>(@item.EnumerateObject().Select(pair => new KeyValuePair<string, object?>(pair.Name, pair.Value))), level);
-                case JsonValueKind.Array: // Неиспытано ещё
-                    return List2XML(@item.EnumerateObject().Select(item => (object?) item.Value).ToList(), level);
+                case JsonValueKind.Array:
+                    return List2XML(@item.EnumerateArray().Select(item => (object?) item).ToList(), level);
                 case JsonValueKind.String:
                     var s = XMLEscape(@item.GetString() ?? "null");
                     // Log.Write("XS: '" + @item.GetString() + "' -> '" + s + "'");
@@ -263,14 +267,26 @@ namespace DiagramEditor.Models {
                 }
                 sb.Append('}');
             } else if (name == "List") {
-                sb.Append('[');
-                foreach (var attr in xml.Attributes()) {
-                    if (sb.Length > 1) sb.Append(", ");
-                    sb.Append(ToJSONHandler(attr.Name.LocalName));
+                var attrs = xml.Attributes().ToArray();
+                var els = xml.Elements().ToArray();
+                int count = attrs.Length + els.Length;
+                var res = new string[count];
+                var used = new bool[count];
+                int num;
+                foreach (var attr in attrs) {
+                    num = int.Parse(attr.Name.LocalName[1..]);
+                    res[num] = ToJSONHandler(attr.Value);
+                    used[num] = true;
                 }
-                foreach (var el in xml.Elements()) {
+                num = 0;
+                foreach (var el in els) {
+                    while (used[num]) num++;
+                    res[num++] = ToJSONHandler(el);
+                }
+                sb.Append('[');
+                foreach (var item in res) {
                     if (sb.Length > 1) sb.Append(", ");
-                    sb.Append(ToJSONHandler(el));
+                    sb.Append(item);
                 }
                 sb.Append(']');
             } else sb.Append("Type??" + name);
@@ -285,9 +301,9 @@ namespace DiagramEditor.Models {
         public static string? Obj2xml(object? obj) => Json2xml(Obj2json(obj)); // Чёт припомнилось свойство транзитивности с дискретной матеши...
         public static object? Xml2obj(string xml) => Json2obj(Xml2json(xml));
 
-        public static void RenderToFile(Control tar, string path) {
-            var target = (Control?) tar.Parent;
-            if (target == null) return;
+        public static void RenderToFile(Control target, string path) {
+            // var target = (Control?) tar.Parent;
+            // if (target == null) return;
 
             double w = target.Bounds.Width, h = target.Bounds.Height;
             var pixelSize = new PixelSize((int) w, (int) h);
@@ -354,6 +370,15 @@ namespace DiagramEditor.Models {
         public static double Hypot(this Point A, Point B) {
             Point delta = A - B;
             return Math.Sqrt(Math.Pow(delta.X, 2) + Math.Pow(delta.Y, 2));
+        }
+
+        public static double? ToDouble(this object num) {
+            return num switch {
+                int @int => @int,
+                long @long => @long,
+                double @double => @double,
+                _ => null,
+            };
         }
     }
 }
