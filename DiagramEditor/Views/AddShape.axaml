@@ -66,8 +66,8 @@
 				<Border Grid.Row="1" Grid.Column="1" Classes="b">
 					<StackPanel> <!--Все радиокнопки автоматически себе задают группу из-за общей панели-->
 						<RadioButton IsChecked="{Binding Stereo_1}">нопь</RadioButton>
-						<RadioButton IsChecked="{Binding Stereo_2}">static</RadioButton>
-						<RadioButton IsChecked="{Binding Stereo_3}">abstract</RadioButton>
+						<RadioButton IsChecked="{Binding Stereo_2}">«static»</RadioButton>
+						<RadioButton IsChecked="{Binding Stereo_3}">«abstract»</RadioButton>
 						<RadioButton IsChecked="{Binding Stereo_4}">«interface»</RadioButton>
 					</StackPanel>
 				</Border>
@@ -152,7 +152,7 @@
 										<ComboBoxItem>virtual</ComboBoxItem>
 										<ComboBoxItem>static</ComboBoxItem>
 										<ComboBoxItem>abstract</ComboBoxItem>
-										<ComboBoxItem>"create"</ComboBoxItem>
+										<ComboBoxItem>«create»</ComboBoxItem>
 									</ComboBox>
 								</StackPanel>
 								<StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
@@ -189,7 +189,7 @@
 	</TabControl>
 
 	<StackPanel Grid.Row="1" Orientation="Horizontal">
-		<Button Command="{Binding Apply}">Добавить</Button>
+		<Button Command="{Binding Apply}" Content="{Binding ApplyText}"/>
 		<Button Command="{Binding Close}">Отмена</Button>
 		<Button Command="{Binding Clear}">Сброс</Button>
 	</StackPanel>

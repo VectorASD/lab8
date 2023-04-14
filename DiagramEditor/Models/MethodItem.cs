@@ -13,7 +13,7 @@ namespace DiagramEditor.Models {
         string name = "mn";
         string type = "mt";
         int access = 0; // private, public, protected, package
-        int stereo = 0; // virtual, static, abstract, "required"
+        int stereo = 0; // virtual, static, abstract, «required»
 
         readonly MainWindowViewModel parent;
 

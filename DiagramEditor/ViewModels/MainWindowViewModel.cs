@@ -86,11 +86,11 @@ namespace DiagramEditor.ViewModels {
                     var pos = e.GetCurrentPoint(canv).Position;
                     map.Release(@control, pos);
                     if (map.tap_mode == 1) {
+                        editable = null;
                         menu = new AddShape { DataContext = this };
                         menu.ShowDialog(mw);
-                        editable = null;
                     }
-                    
+
                     if (map.new_join != null) {
                         var newy = map.new_join.line;
                         canv.Children.Add(newy);
@@ -100,7 +100,7 @@ namespace DiagramEditor.ViewModels {
                     if (map.tap_mode == 2 && map.tapped_item != null) {
                         editable = map.tapped_item;
                         Import(editable.entity);
-                        menu = new AddShape { DataContext = this };
+                        menu = new AddShape { DataContext = this, Title = "Редактирование ноды диаграммы" };
                         menu.ShowDialog(mw);
                     }
                 }
@@ -135,7 +135,7 @@ namespace DiagramEditor.ViewModels {
          */
 
         string name = "yeah";
-        int stereo = 0; // -, static, abstract, «interface»
+        int stereo = 0; // -, «static», «abstract», «interface»
         int access = 0; // private, public, protected, package
 
         public string Name { get => name; set => this.RaiseAndSetIfChanged(ref name, value); }
@@ -176,9 +176,11 @@ namespace DiagramEditor.ViewModels {
         public void FuncAddNextMethod(MethodItem item) => methods.Insert(methods.IndexOf(item) + 1, new MethodItem(this));
         public void FuncRemoveMethod(MethodItem item) => methods.Remove(item);
 
-        // Ещё кнопочки ;'-}
+        /*
+         *  Ещё кнопочки ;'-}
+         */
 
-        private static readonly string[] stereos = new string[] { "static", "abstract", "«interface»" };
+        private static readonly string[] stereos = new string[] { "static", "abstract", "interface" };
 
         private Dictionary<string, object> Export() {
             Dictionary<string, object> res = new() {
@@ -194,7 +196,7 @@ namespace DiagramEditor.ViewModels {
 
         private void Import(object entity) {
             if (entity is not Dictionary<string, object> @dict) { Log.Write("General: Ожидался словарь, вместо " + entity.GetType().Name); return; }
-            
+
             @dict.TryGetValue("name", out var value);
             name = value is not string @str ? "yeah" : @str;
 
@@ -238,7 +240,7 @@ namespace DiagramEditor.ViewModels {
             StringBuilder sb = new();
             sb.Append($"{"-+#~"[access]} {name}");
             var head = stereo != 0 ?
-                new MeasuredText[] { new(stereos[stereo - 1]), new(sb.ToString()) } :
+                new MeasuredText[] { new("«" + stereos[stereo - 1] + "»"), new(sb.ToString()) } :
                 new MeasuredText[] { new(sb.ToString()) };
 
             List<MeasuredText> arr = new(), arr2 = new();
@@ -273,6 +275,8 @@ namespace DiagramEditor.ViewModels {
             this.RaisePropertyChanged(nameof(Stereo_1));
             this.RaisePropertyChanged(nameof(Access_1));
         }
+
+        public string ApplyText { get => editable is null ? "Добавить" : "Изменить"; }
 
         public ReactiveCommand<Unit, Unit> Apply { get; }
         public ReactiveCommand<Unit, Unit> Close { get; }

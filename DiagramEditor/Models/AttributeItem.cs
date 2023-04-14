@@ -13,7 +13,7 @@ namespace DiagramEditor.Models {
         int access = 0; // private, public, protected, package
         bool _readonly = false;
         bool _static = false;
-        int stereo = 0; // -, "event", "property", "required"
+        int stereo = 0; // -, «event», «property», «required»
         string _default = "ad";
 
         readonly MainWindowViewModel parent;
@@ -90,10 +90,10 @@ namespace DiagramEditor.Models {
             access = value3 is not int @int ? 0 : @int;
 
             @dict.TryGetValue("readonly", out var value4);
-            _readonly = value4 is not bool @bool ? false : @bool;
+            _readonly = value4 is bool @bool && @bool;
 
             @dict.TryGetValue("static", out var value5);
-            _static = value5 is not bool @bool2 ? false : @bool2;
+            _static = value5 is bool @bool2 && @bool2;
 
             @dict.TryGetValue("stereo", out var value6);
             stereo = value6 is not int @int2 ? 0 : @int2;

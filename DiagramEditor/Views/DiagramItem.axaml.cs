@@ -208,7 +208,7 @@ namespace DiagramEditor.Views {
                 join.B.parent.RemoveJoin(join);
                 var line = join.line;
                 var canv = (Canvas?) line.Parent;
-                if (canv != null) canv.Children.Remove(line);
+                canv?.Children.Remove(line);
             }
         }
 
