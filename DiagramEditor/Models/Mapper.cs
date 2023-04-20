@@ -153,6 +153,7 @@ namespace DiagramEditor.Models
                 marker2.StartPoint = arrow_start ? @arrow.StartPoint : pos;
                 marker2.EndPoint = arrow_start ? pos : @arrow.EndPoint;
                 marker2.IsVisible = true;
+                marker2.Type = arrow.Type;
                 @arrow.IsVisible = false;
                 break;
             }
@@ -165,7 +166,7 @@ namespace DiagramEditor.Models
                 // if (item.IsPointerOver) { } Гениальная вещь! ;'-} Хотя не, всё равно блокируется после Press и до Release, чего я впринципе хочу избежать ;'-}
                 var item = (Control) logic;
                 var tb = item.TransformedBounds;
-                if (tb != null && new Rect(tb.Value.Clip.TopLeft, new Size()).Sum(item.Bounds).Contains(pos)) res = item; // Гениально! ;'-} НАКОНЕЦ-ТО ЗАРАБОТАЛО!
+                if (tb != null && new Rect(tb.Value.Clip.TopLeft, new Size()).Sum(item.Bounds).Contains(pos) && (string?) item.Tag != "arrow") res = item; // Гениально! ;'-} НАКОНЕЦ-ТО ЗАРАБОТАЛО!
                 FixItem(ref res, pos, item.GetLogicalChildren());
             }
         }
@@ -176,6 +177,7 @@ namespace DiagramEditor.Models
             if (mode == 3 || mode == 6) {
                 item = new Canvas() { Tag = "scene" };
                 FixItem(ref item, pos + new Point(0, 32), items); // doc_panel height = 32
+                // Log.Write("Item: " + item + " " + item.Tag);
             }
 
             string[] mods = new[] { "field", "marker" };

@@ -2,8 +2,8 @@
 <Dict>
 	<items>
 		<List>
-			<List _1='$277' _2='$263' _3='$200' _4='$150'>
-				<Dict name="yeah" stereo="$2" access="$0">
+			<List _1='$71' _2='$365' _3='$200' _4='$150'>
+				<Dict name="LauncherWindow" stereo="$0" access="$1">
 					<attributes>
 						<List/>
 					</attributes>
@@ -12,41 +12,88 @@
 					</methods>
 				</Dict>
 			</List>
-			<List _1='$573' _2='$76' _3='$630' _4='$291'>
-				<Dict name="named" stereo="$3" access="$0">
+			<List _1='$235' _2='$137' _3='$200' _4='$150'>
+				<Dict name="Window" stereo="$0" access="$1">
 					<attributes>
-						<List>
-							<Dict name="cat" type="dog" access="$1" readonly="_BOOL_yeah" static="_BOOL_nop" stereo="$1" default="coow"/>
-							<Dict name="meow" type="woof" access="$3" readonly="_BOOL_nop" static="_BOOL_yeah" stereo="$3" default="myyyy"/>
-						</List>
+						<List/>
+					</attributes>
+					<methods>
+						<List/>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$301' _2='$370' _3='$200' _4='$150'>
+				<Dict name="MainWindow" stereo="$0" access="$1">
+					<attributes>
+						<List/>
+					</attributes>
+					<methods>
+						<List/>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$1015' _2='$293' _3='$149' _4='$64'>
+				<Dict name="AND-2" stereo="$0" access="$1">
+					<attributes>
+						<List/>
+					</attributes>
+					<methods>
+						<List/>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$1023' _2='$409' _3='$130' _4='$64'>
+				<Dict name="OR-2" stereo="$0" access="$1">
+					<attributes>
+						<List/>
+					</attributes>
+					<methods>
+						<List/>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$1054' _2='$483' _3='$119' _4='$64'>
+				<Dict name="NOT" stereo="$0" access="$1">
+					<attributes>
+						<List/>
+					</attributes>
+					<methods>
+						<List/>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$1302' _2='$155' _3='$236' _4='$180'>
+				<Dict name="IGate" stereo="$3" access="$1">
+					<attributes>
+						<List/>
 					</attributes>
 					<methods>
 						<List>
-							<Dict name="op1" type="dasdsads" access="$3" stereo="$0">
+							<Dict name="GetPos" type="Point" access="$1" stereo="$2">
 								<props>
 									<List/>
 								</props>
 							</Dict>
-							<Dict name="op2" type="void" access="$2" stereo="$1">
+							<Dict name="Move" type="void" access="$1" stereo="$2">
 								<props>
 									<List>
-										<Dict name="explode" type="char" default=""/>
-										<Dict name="grove" type="bool" default=""/>
-										<Dict name="dig" type="kitty" default="lol"/>
+										<Dict name="pos" type="Point" default=""/>
 									</List>
 								</props>
 							</Dict>
-							<Dict name="op3" type="eaww" access="$0" stereo="$3">
+							<Dict name="Resize" type="void" access="$1" stereo="$2">
 								<props>
-									<List/>
+									<List>
+										<Dict name="size" type="Size" default=""/>
+									</List>
 								</props>
 							</Dict>
 						</List>
 					</methods>
 				</Dict>
 			</List>
-			<List _1='$317' _2='$508' _3='$64' _4='$211'>
-				<Dict name="yeahA" stereo="$1" access="$0">
+			<List _1='$1008' _2='$556' _3='$162' _4='$64'>
+				<Dict name="XOR-2" stereo="$0" access="$1">
 					<attributes>
 						<List/>
 					</attributes>
@@ -55,8 +102,124 @@
 					</methods>
 				</Dict>
 			</List>
-			<List _1='$536' _2='$508' _3='$64' _4='$213'>
-				<Dict name="yeahB" stereo="$1" access="$0">
+			<List _1='$1028' _2='$652' _3='$134' _4='$64'>
+				<Dict name="PSum" stereo="$0" access="$1">
+					<attributes>
+						<List/>
+					</attributes>
+					<methods>
+						<List/>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$1309' _2='$527' _3='$165' _4='$64'>
+				<Dict name="UserControl" stereo="$0" access="$1">
+					<attributes>
+						<List/>
+					</attributes>
+					<methods>
+						<List/>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$641' _2='$448' _3='$200' _4='$150'>
+				<Dict name="Mapper" stereo="$0" access="$1">
+					<attributes>
+						<List>
+							<Dict name="items" type="List&lt;IGate&gt;" access="$0" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$0" default=""/>
+						</List>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name="AddItem" type="void" access="$0" stereo="$0">
+								<props>
+									<List>
+										<Dict name="item" type="IGate" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="RemoveItem" type="void" access="$0" stereo="$0">
+								<props>
+									<List>
+										<Dict name="item" type="IGate" default=""/>
+									</List>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$618' _2='$155' _3='$200' _4='$150'>
+				<Dict name="FileHandler" stereo="$0" access="$1">
+					<attributes>
+						<List/>
+					</attributes>
+					<methods>
+						<List/>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$887' _2='$100' _3='$340' _4='$145'>
+				<Dict name="Utils" stereo="$0" access="$1">
+					<attributes>
+						<List/>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name="Obj2xml" type="string" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="obj" type="object" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Xml2Obj" type="object" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="data" type="string" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Obj2yaml" type="string" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="obj" type="object" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Yaml2obj" type="object" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="data" type="string" default=""/>
+									</List>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$1264' _2='$35' _3='$129' _4='$64'>
+				<Dict name="Point" stereo="$0" access="$1">
+					<attributes>
+						<List/>
+					</attributes>
+					<methods>
+						<List/>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$1418' _2='$27' _3='$122' _4='$64'>
+				<Dict name="Size" stereo="$0" access="$1">
+					<attributes>
+						<List/>
+					</attributes>
+					<methods>
+						<List/>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$582' _2='$669' _3='$191' _4='$64'>
+				<Dict name="Simulator" stereo="$0" access="$1">
 					<attributes>
 						<List/>
 					</attributes>
@@ -69,17 +232,31 @@
 	</items>
 	<joins>
 		<List>
-			<List _0='$0' _1='$2' _2='$0.15714' _3='$1' _4='$1' _5='$0.36429' _6='$0'/>
-			<List _0='$0' _1='$3' _2='$0.41579' _3='$2' _4='$0' _5='$0.55556' _6='$4'/>
-			<List _0='$1' _1='$3' _2='$0.35789' _3='$0' _4='$2' _5='$0.75' _6='$0'/>
-			<List _0='$1' _1='$1' _2='$0.83571' _3='$0' _4='$1' _5='$0.57143' _6='$0'/>
-			<List _0='$2' _1='$2' _2='$0.12935' _3='$3' _4='$1' _5='$0.12953' _6='$0'/>
-			<List _0='$2' _1='$2' _2='$0.28856' _3='$3' _4='$1' _5='$0.29534' _6='$1'/>
-			<List _0='$2' _1='$2' _2='$0.46766' _3='$3' _4='$1' _5='$0.46798' _6='$2'/>
-			<List _0='$2' _1='$2' _2='$0.63682' _3='$3' _4='$1' _5='$0.63547' _6='$3'/>
-			<List _0='$2' _1='$2' _2='$0.801' _3='$3' _4='$1' _5='$0.79803' _6='$4'/>
-			<List _0='$2' _1='$2' _2='$0.95522' _3='$3' _4='$1' _5='$0.95074' _6='$5'/>
-			<List _0='$3' _1='$0' _2='$0.33333' _3='$0' _4='$3' _5='$0.92632' _6='$3'/>
+			<List _0='$0' _1='$0' _2='$0.85263' _3='$1' _4='$3' _5='$0.16842' _6='$0'/>
+			<List _0='$2' _1='$0' _2='$0.47368' _3='$1' _4='$3' _5='$0.62105' _6='$0'/>
+			<List _0='$2' _1='$2' _2='$0.53571' _3='$10' _4='$1' _5='$0.39286' _6='$5'/>
+			<List _0='$2' _1='$2' _2='$0.36429' _3='$11' _4='$1' _5='$0.47143' _6='$5'/>
+			<List _0='$3' _1='$2' _2='$0.2931' _3='$6' _4='$1' _5='$0.65' _6='$5'/>
+			<List _0='$3' _1='$2' _2='$0.48148' _3='$9' _4='$0' _5='$0.4' _6='$0'/>
+			<List _0='$3' _1='$1' _2='$0.53704' _3='$10' _4='$2' _5='$0.15' _6='$4'/>
+			<List _0='$4' _1='$2' _2='$0' _3='$6' _4='$3' _5='$0.25263' _6='$5'/>
+			<List _0='$4' _1='$2' _2='$0.40741' _3='$9' _4='$0' _5='$0.16774' _6='$0'/>
+			<List _0='$4' _1='$1' _2='$0.77778' _3='$10' _4='$2' _5='$0.28571' _6='$4'/>
+			<List _0='$5' _1='$0' _2='$0.67857' _3='$6' _4='$3' _5='$0.41053' _6='$5'/>
+			<List _0='$5' _1='$2' _2='$0.38889' _3='$9' _4='$1' _5='$0.2037' _6='$0'/>
+			<List _0='$5' _1='$1' _2='$0.48148' _3='$10' _4='$2' _5='$0.45' _6='$4'/>
+			<List _0='$6' _1='$0' _2='$0.4823' _3='$13' _4='$3' _5='$0.57983' _6='$2'/>
+			<List _0='$6' _1='$0' _2='$0.83186' _3='$14' _4='$3' _5='$0.35714' _6='$2'/>
+			<List _0='$7' _1='$0' _2='$0.90132' _3='$6' _4='$3' _5='$0.56316' _6='$5'/>
+			<List _0='$7' _1='$2' _2='$0.51852' _3='$9' _4='$1' _5='$0.66667' _6='$0'/>
+			<List _0='$7' _1='$1' _2='$0.42593' _3='$10' _4='$2' _5='$0.60714' _6='$4'/>
+			<List _0='$8' _1='$0' _2='$0.94355' _3='$6' _4='$3' _5='$0.69474' _6='$5'/>
+			<List _0='$8' _1='$2' _2='$0.44444' _3='$9' _4='$3' _5='$0.13548' _6='$0'/>
+			<List _0='$8' _1='$1' _2='$0.48148' _3='$10' _4='$2' _5='$0.78571' _6='$4'/>
+			<List _0='$10' _1='$2' _2='$0.20714' _3='$6' _4='$1' _5='$0.82353' _6='$2'/>
+			<List _0='$10' _1='$3' _2='$0.42105' _3='$15' _4='$0' _5='$0.64641' _6='$5'/>
+			<List _0='$11' _1='$3' _2='$0.56316' _3='$10' _4='$0' _5='$0.44737' _6='$5'/>
+			<List _0='$11' _1='$2' _2='$0.19286' _3='$12' _4='$1' _5='$0.46667' _6='$5'/>
 		</List>
 	</joins>
 </Dict>
