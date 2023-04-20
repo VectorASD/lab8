@@ -2,12 +2,15 @@
 using Avalonia.Controls.Shapes;
 using Avalonia.Media;
 using Avalonia.Media.Immutable;
+using DiagramEditor.Models;
 using DiagramEditor.ViewModels;
 using System;
 using System.Text;
 
-namespace DiagramEditor.Models {
-    public class ArrowFactory: Path {
+namespace DiagramEditor.Views
+{
+    public class ArrowFactory : Path
+    {
         readonly static int arrow_width = 20;
         readonly static int arrow_height = 10;
         readonly static int rod_step = 5;
@@ -31,27 +34,31 @@ namespace DiagramEditor.Models {
         public Point EndPoint { get => end; set { if (end != value) { end = value; Update(); } } }
         public int Type { get => type; set { if (type != value) { type = value; Update(); } } }
 
-        public ArrowFactory() : base() {
+        public ArrowFactory() : base()
+        {
             Stroke = Brushes.BurlyWood;
             StrokeThickness = 3;
             Fill = Brushes.Bisque;
             Update();
         }
 
-        void UpdatePath() {
+        void UpdatePath()
+        {
             // Стержень
 
-            int rod = type switch {
-                0 or 1 => (int) diag - arrow_width,
-                3 or 4 => (int) diag - arrow_width * 2,
-                2 or 5 or _ => (int) diag,
+            int rod = type switch
+            {
+                0 or 1 => (int)diag - arrow_width,
+                3 or 4 => (int)diag - arrow_width * 2,
+                2 or 5 or _ => (int)diag,
             };
             bool R = true;
 
             StringBuilder sb = new();
-            sb.Append($"M {(int) start.X},{(int) start.Y}");
+            sb.Append($"M {(int)start.X},{(int)start.Y}");
             if (type == 1 || type == 2)
-                while (rod > 0) {
+                while (rod > 0)
+                {
                     int dist = rod > rod_step ? rod_step : rod;
                     rod -= dist;
                     sb.Append(R ? " l" : " m");
@@ -63,20 +70,22 @@ namespace DiagramEditor.Models {
             // Наконечник
 
             int w = arrow_width, h = arrow_height;
-            var head = type switch {
+            var head = type switch
+            {
                 0 or 1 => $" l 0,-{h} {w},{h} -{w},{h} 0,-{h}",
                 3 or 4 => $" l {w},-{h} {w},{h} -{w},{h} -{w},-{h}",
                 2 or 5 or _ => $" m -{w},-{h} l {w},{h} m -{w},{h} l {w},-{h}",
             };
             sb.Append(head);
 
-            var c = Fill switch {
+            var c = Fill switch
+            {
                 ImmutableSolidColorBrush t => t.Color,
                 SolidColorBrush t => t.Color,
                 _ => new Color(),
             };
             Fill = new SolidColorBrush(new Color((byte)(type == 3 ? 0 : 255), c.R, c.G, c.B));
-            
+
             // Финалочка. И-и-и-и-и-и-и-и-и-и-и-и-и-и... плюх :D ^_^ ;'-} Стрелочка, родись! Как ёлочка, зажгись, только воть...
 
             // Log.Write("Path: " + sb.ToString());
@@ -84,7 +93,8 @@ namespace DiagramEditor.Models {
             catch (Exception e) { Log.Write("Path error: " + e + "\nPath: " + sb.ToString()); }
         }
 
-        void Update() {
+        void Update()
+        {
             var delta = start - end;
             double new_diag = delta.Hypot();
             double orig_diag = new_diag > 0 ? new_diag : 0.001;
