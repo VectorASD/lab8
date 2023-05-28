@@ -1,5 +1,4 @@
 ﻿using Avalonia.Controls;
-using DiagramEditor.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

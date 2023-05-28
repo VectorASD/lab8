@@ -3,12 +3,10 @@ using Avalonia.Controls.Shapes;
 using Avalonia.Media;
 using Avalonia.Media.Immutable;
 using DiagramEditor.Models;
-using DiagramEditor.ViewModels;
 using System;
 using System.Text;
 
-namespace DiagramEditor.Views
-{
+namespace DiagramEditor.Views {
     public class ArrowFactory : Path
     {
         readonly static int arrow_width = 20;

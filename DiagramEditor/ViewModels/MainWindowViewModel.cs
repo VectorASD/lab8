@@ -1,8 +1,6 @@
-﻿using Avalonia.Controls;
-using Avalonia.Input;
-using DiagramEditor.Models;
-using DiagramEditor.Views;
+﻿using DiagramEditor.Models;
 using ReactiveUI;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -10,55 +8,24 @@ using System.Reactive;
 using System.Text;
 
 namespace DiagramEditor.ViewModels {
-    public class Log {
-        static readonly List<string> logs = new();
-        // static readonly string path = "../../../Log.txt";
-        // static bool first = true;
-
-        public static MainWindowViewModel? Mwvm { private get; set; }
-        public static void Write(string message, bool without_update = false) {
-            if (!without_update) {
-                foreach (var mess in message.Split('\n')) logs.Add(mess);
-                while (logs.Count > 50) logs.RemoveAt(0);
-
-                if (Mwvm != null) Mwvm.Logg = string.Join('\n', logs);
-            }
-
-            // if (first) File.WriteAllText(path, message + "\n");
-            // else File.AppendAllText(path, message + "\n");
-            // first = false;
-        }
-    }
-
     public class MainWindowViewModel: ViewModelBase {
         private string log = "";
-        private readonly Canvas canv;
-        private readonly Mapper map;
-        private AddShape? menu;
-        private DiagramItem? editable;
-
         public string Logg { get => log; set => this.RaiseAndSetIfChanged(ref log, value); }
 
-        /* Не работает подобная тема :/
-         * Не получается получить недосформированное окно, что как раз занято созданием этого класса XD
-         * Ну или как там дизайнер этот работает...
-        
-        public static Window? GetCurrentWindow() {
-            var cur = Application.Current;
-            if (cur == null) return null;
-
-            var app = (IClassicDesktopStyleApplicationLifetime?) cur.ApplicationLifetime;
-            if (app == null) return null;
-
-            return app.MainWindow;
+        static readonly List<string> logs = new();
+        private void LogHandler(string message) {
+            foreach (var mess in message.Split('\n')) logs.Add(mess);
+            while (logs.Count > 45) logs.RemoveAt(0);
+            Logg = string.Join('\n', logs);
         }
 
-        public MainWindowViewModel() : this(GetCurrentWindow()) {} // Для корректной работы предварительного просмотра
-        */
 
-        public MainWindowViewModel(Window mw) {
-            Log.Mwvm = this;
-            map = new Mapper();
+
+        private readonly Mapper map = new();
+        public Mapper GetMap => map;
+
+        public MainWindowViewModel() {
+            Log.NewLine += LogHandler;
 
             AddFirstAttr = ReactiveCommand.Create<Unit, Unit>(_ => { FuncAddFirstAttr(); return new Unit(); });
             AddFirstMethod = ReactiveCommand.Create<Unit, Unit>(_ => { FuncAddFirstMethod(); return new Unit(); });
@@ -68,65 +35,8 @@ namespace DiagramEditor.ViewModels {
             Clear = ReactiveCommand.Create<Unit, Unit>(_ => { FuncClear(); return new Unit(); });
             ExportB = ReactiveCommand.Create<string, Unit>(n => { FuncExport(n); return new Unit(); });
             ImportB = ReactiveCommand.Create<string, Unit>(n => { FuncImport(n); return new Unit(); });
-
-            canv = mw.Find<Canvas>("canvas") ?? new Canvas();
-            canv.Children.Add(map.Marker);
-            canv.Children.Add(map.Marker2);
-            var panel = (Panel?) canv.Parent;
-            if (panel == null) return;
-
-            panel.PointerPressed += (object? sender, PointerPressedEventArgs e) => {
-                if (e.Source != null && e.Source is Control @control) map.Press(@control, e.GetCurrentPoint(canv).Position);
-            };
-            panel.PointerMoved += (object? sender, PointerEventArgs e) => {
-                if (e.Source != null && e.Source is Control @control) map.Move(@control, e.GetCurrentPoint(canv).Position);
-            };
-            panel.PointerReleased += (object? sender, PointerReleasedEventArgs e) => {
-                if (e.Source != null && e.Source is Control @control) {
-                    var pos = e.GetCurrentPoint(canv).Position;
-                    map.Release(@control, pos);
-                    if (map.tap_mode == 1) {
-                        editable = null;
-                        menu = new AddShape { DataContext = this };
-                        menu.ShowDialog(mw);
-                    }
-
-                    if (map.new_join != null) {
-                        var newy = map.new_join.line;
-                        canv.Children.Add(newy);
-                        map.new_join = null;
-                    }
-
-                    if (map.tap_mode == 2 && map.tapped_item != null) {
-                        editable = map.tapped_item;
-                        Import(editable.entity);
-                        menu = new AddShape { DataContext = this, Title = "Редактирование ноды диаграммы" };
-                        menu.ShowDialog(mw);
-                    }
-                }
-            };
-
-            panel.PointerWheelChanged += (object? sender, PointerWheelEventArgs e) => {
-                if (e.Source != null && e.Source is Control @control) map.WheelMove(@control, e.Delta.Y);
-            };
-
-            /* int x = 100, y = 100, w = 500, angle = 90; // Чисто оставил для вида, как прототип первой нормааааЪааЪаЪально вращаемой стрелочки
-            Path p = new() {
-                StrokeThickness = 3,
-                Stroke = Brushes.Sienna,
-                Data = Geometry.Parse($"M {x},{y} l {w},0 m -20,-20 l 20,20 m -20,20 l 20,-20"),
-                RenderTransform = new RotateTransform(angle, (x - w) / 2, (y - 20) / 2)
-            };
-            canv.Children.Add(p); */
-
-            panel.AddHandler(DragDrop.DragOverEvent, map.DragOver);
-            panel.AddHandler(DragDrop.DragEnterEvent, (object? sender, DragEventArgs e) => DropboxVisible = true);
-            panel.AddHandler(DragDrop.DropEvent, (object? sender, DragEventArgs e) => {
-                DiagramItem[]? beginners = map.Drop(sender, e);
-                if (beginners != null) UnpackImport(beginners);
-                DropboxVisible = false;
-            });
         }
+
         bool dropbox_visible = false;
         public bool DropboxVisible { get => dropbox_visible; set => this.RaiseAndSetIfChanged(ref dropbox_visible, value); }
 
@@ -194,7 +104,7 @@ namespace DiagramEditor.ViewModels {
             return res;
         }
 
-        private void Import(object entity) {
+        public void Import(object entity) {
             if (entity is not Dictionary<string, object> @dict) { Log.Write("General: Ожидался словарь, вместо " + entity.GetType().Name); return; }
 
             @dict.TryGetValue("name", out var value);
@@ -217,26 +127,16 @@ namespace DiagramEditor.ViewModels {
                 foreach (var meth in @meths) methods.Add(new MethodItem(this, meth));
         }
 
-        private void UnpackImport(DiagramItem[]? items) {
-            if (items != null && map.new_joins != null) {
-                foreach (var item in items) {
-                    Import(item.entity);
-                    editable = item;
-                    FuncApply();
-                    canv.Children.Add(item);
-                }
 
-                foreach (var join in map.new_joins) canv.Children.Add(join.line);
-                map.new_joins = null;
-            }
-        }
+        public Action<string>? ExportF;
+        public Action<string>? ImportF;
+        public Action<MeasuredText[], MeasuredText[], MeasuredText[], object>? ApplyF;
+        public Func<bool>? IsEditable;
 
-        private void FuncExport(string type) => map.Export(type, canv);
-        private void FuncImport(string type) {
-            UnpackImport(map.Import(type));
-        }
+        private void FuncExport(string type) => ExportF?.Invoke(type);
+        private void FuncImport(string type) => ImportF?.Invoke(type);
 
-        private void FuncApply() {
+        public void FuncApply() {
             StringBuilder sb = new();
             sb.Append($"{"-+#~"[access]} {name}");
             var head = stereo != 0 ?
@@ -249,23 +149,13 @@ namespace DiagramEditor.ViewModels {
             MeasuredText[] attrs = arr.ToArray();
             MeasuredText[] meths = arr2.ToArray();
 
-            var pos = map.tap_pos;
-            if (editable == null) {
-                var item = new DiagramItem(head, attrs, meths, Export()) { Margin = new(pos.X - 75, pos.Y - 50, 0, 0) };
-                canv.Children.Add(item);
-                map.AddItem(item);
-            } else {
-                editable.Change(head, attrs, meths, Export());
-                editable = null;
-            }
+            var entity = Export();
+            ApplyF?.Invoke(head, attrs, meths, entity);
 
             FuncClose();
         }
-        private void FuncClose() {
-            if (menu == null) return;
-            menu.Close();
-            menu = null;
-        }
+        public Action? CloseMenu;
+        private void FuncClose() => CloseMenu?.Invoke();
         private void FuncClear() {
             Name = "yeah";
             stereo = 0;
@@ -276,7 +166,7 @@ namespace DiagramEditor.ViewModels {
             this.RaisePropertyChanged(nameof(Access_1));
         }
 
-        public string ApplyText { get => editable is null ? "Добавить" : "Изменить"; }
+        public string ApplyText { get => (IsEditable?.Invoke() ?? false) ? "Изменить" : "Добавить"; }
 
         public ReactiveCommand<Unit, Unit> Apply { get; }
         public ReactiveCommand<Unit, Unit> Close { get; }

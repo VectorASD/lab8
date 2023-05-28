@@ -1,5 +1,4 @@
-﻿using DiagramEditor.ViewModels;
-using ReactiveUI;
+﻿using ReactiveUI;
 using System.Collections.Generic;
 using System.Reactive;
 

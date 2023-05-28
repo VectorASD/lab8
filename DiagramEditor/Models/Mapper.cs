@@ -4,7 +4,6 @@ using Avalonia.Controls.Shapes;
 using Avalonia.Input;
 using Avalonia.LogicalTree;
 using Avalonia.Media;
-using DiagramEditor.ViewModels;
 using DiagramEditor.Views;
 using DynamicData;
 using System;
@@ -12,8 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace DiagramEditor.Models
-{
+namespace DiagramEditor.Models {
     public class Mapper {
         readonly Ellipse marker = new() { Tag = "marker", Stroke = Brushes.Orange, Fill = Brushes.Yellow, StrokeThickness = 2, Width = 12, Height = 12, ZIndex = 2, IsVisible = false };
         readonly ArrowFactory marker2 = new() { Tag = "marker2", ZIndex = 2, IsVisible = false };

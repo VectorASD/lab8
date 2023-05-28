@@ -7,7 +7,6 @@ using Avalonia.Media.Imaging;
 using Avalonia;
 using Avalonia.Media;
 using System.Text.Json;
-using DiagramEditor.ViewModels;
 using System.Collections;
 using System.Diagnostics;
 using System;
