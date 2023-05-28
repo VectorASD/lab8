@@ -1,7 +1,9 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Shapes;
 using Avalonia.Input;
 using Avalonia.LogicalTree;
+using Avalonia.Media;
 using DiagramEditor.Models;
 using DiagramEditor.ViewModels;
 using System.Collections.Generic;
@@ -20,6 +22,11 @@ namespace DiagramEditor.Views {
             mwvm.ImportF = ImportF;
             mwvm.ApplyF = ApplyF;
             mwvm.IsEditable = IsEditable;
+
+            map.Marker_SetState = Marker_SetState;
+            map.Marker2_SetState = Marker2_SetState;
+            map.SaveMarkerVisibles = SaveMarkerVisibles;
+            map.RestoreMarkerVisibles = RestoreMarkerVisibles;
 
             InitializeComponent();
             AddWindow();
@@ -97,13 +104,40 @@ namespace DiagramEditor.Views {
         }
 
         /*
+         * Маркеры
+         */
+
+        readonly Ellipse marker = new() { Tag = "marker", Stroke = Brushes.Orange, Fill = Brushes.Yellow, StrokeThickness = 2, Width = 12, Height = 12, ZIndex = 2, IsVisible = false };
+        readonly ArrowFactory marker2 = new() { Tag = "marker2", ZIndex = 2, IsVisible = false };
+        void Marker_SetState(bool? vis, Thickness? margin) {
+            if (vis != null) marker.IsVisible = (bool) vis;
+            if (margin != null) marker.Margin = (Thickness) margin;
+        }
+        void Marker2_SetState(bool? vis, Point? start, Point? end, int? type) {
+            if (vis != null) marker2.IsVisible = (bool) vis;
+            if (start != null) marker2.StartPoint = (Point) start;
+            if (end != null) marker2.EndPoint = (Point) end;
+            if (type != null) marker2.Type = (int) type;
+        }
+        bool mvs = false, m2vs = false;
+        void SaveMarkerVisibles() {
+            mvs = marker.IsVisible;
+            m2vs = marker2.IsVisible;
+            marker.IsVisible = marker2.IsVisible = false;
+        }
+        void RestoreMarkerVisibles() {
+            marker.IsVisible = mvs;
+            marker2.IsVisible = m2vs;
+        }
+
+        /*
          * Основная мясорубка
          */
 
         void AddWindow() {
             canv = this.Find<Canvas>("canvas") ?? new Canvas();
-            canv.Children.Add(map.Marker);
-            canv.Children.Add(map.Marker2);
+            canv.Children.Add(marker);
+            canv.Children.Add(marker2);
             var panel = (Panel?) canv.Parent;
             if (panel == null) return;
 

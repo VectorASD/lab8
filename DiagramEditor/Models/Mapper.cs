@@ -1,8 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.Shapes;
 using Avalonia.Input;
-using Avalonia.Media;
 using DiagramEditor.Views;
 using DynamicData;
 using System;
@@ -12,11 +10,12 @@ using System.Linq;
 
 namespace DiagramEditor.Models {
     public class Mapper {
-        readonly Ellipse marker = new() { Tag = "marker", Stroke = Brushes.Orange, Fill = Brushes.Yellow, StrokeThickness = 2, Width = 12, Height = 12, ZIndex = 2, IsVisible = false };
-        readonly ArrowFactory marker2 = new() { Tag = "marker2", ZIndex = 2, IsVisible = false };
+        public Action<bool?, Thickness?>? Marker_SetState; // IsVisible | Margin
+        public Action<bool?, Point?, Point?, int?>? Marker2_SetState; // IsVisible | StartPoint | EndPoint | Type
+        public Action? SaveMarkerVisibles;
+        public Action? RestoreMarkerVisibles;
+
         private DiagramItem? marker_parent;
-        public Ellipse Marker { get => marker; }
-        public ArrowFactory Marker2 { get => marker2; }
 
         readonly List<DiagramItem> items = new();
         Point camera_pos;
@@ -130,8 +129,8 @@ namespace DiagramEditor.Models {
             case 3:
                 if (marker_pos == null) { mode = 0; break; }
                 item_old_pos = pos;
-                marker2.StartPoint = marker2.EndPoint = marker_pos.p;
-                marker2.IsVisible = true;
+                Point m_pos = marker_pos.p;
+                Marker2_SetState?.Invoke(true, m_pos, m_pos, 0);
                 marker_parent = GetItemRoot(item);
                 start_dist = marker_pos;
                 break;
@@ -147,10 +146,9 @@ namespace DiagramEditor.Models {
                 arrow_start = dist_a > dist_b;
                 old_arrow = @arrow;
 
-                marker2.StartPoint = arrow_start ? @arrow.StartPoint : pos;
-                marker2.EndPoint = arrow_start ? pos : @arrow.EndPoint;
-                marker2.IsVisible = true;
-                marker2.Type = arrow.Type;
+                var start = arrow_start ? @arrow.StartPoint : pos;
+                var end = arrow_start ? pos : @arrow.EndPoint;
+                Marker2_SetState?.Invoke(true, start, end, arrow.Type);
                 @arrow.IsVisible = false;
                 break;
             }
@@ -167,15 +165,15 @@ namespace DiagramEditor.Models {
                 if (marker_parent == null) {
                     var d_item = GetItemRoot(item);
                     if (d_item != null) marker_parent = d_item;
-                    marker.IsVisible = true;
+                    Marker_SetState?.Invoke(true, null);
                 }
                 if (marker_parent != null) {
                     var m_pos = marker_parent.GetPos(pos);
-                    marker.Margin = new(m_pos.p.X - 6, m_pos.p.Y - 6, 0, 0);
+                    Marker_SetState?.Invoke(null, new(m_pos.p.X - 6, m_pos.p.Y - 6, 0, 0));
                     marker_pos = m_pos;
                 }
             } else {
-                marker.IsVisible = false;
+                Marker_SetState?.Invoke(false, null);
                 marker_parent = null;
                 marker_pos = null;
             }
@@ -201,7 +199,7 @@ namespace DiagramEditor.Models {
                 d_item.Move(new_pos, false);
                 break;
             case 3:
-                marker2.EndPoint = marker_pos == null ? pos : marker_pos.p;
+                Marker2_SetState?.Invoke(null, null, marker_pos == null ? pos : marker_pos.p, null);
                 break;
             case 4:
                 d_item = GetItemRoot(item);
@@ -212,8 +210,8 @@ namespace DiagramEditor.Models {
             case 6:
                 if (old_arrow == null) break;
                 var p = marker_pos == null ? pos : marker_pos.p;
-                if (arrow_start) marker2.EndPoint = p;
-                else marker2.StartPoint = p;
+                if (arrow_start) Marker2_SetState?.Invoke(null, null, p, null);
+                else Marker2_SetState?.Invoke(null, p, null, null);
                 break;
             }
         }
@@ -231,7 +229,7 @@ namespace DiagramEditor.Models {
                     var join = new JoinedItems(start_dist, marker_pos);
                     new_join = join;
                 }
-                marker2.IsVisible = false;
+                Marker2_SetState?.Invoke(false, null, null, null);
             }
 
             if (mode == 6 && old_arrow != null) {
@@ -242,7 +240,7 @@ namespace DiagramEditor.Models {
                     @join.Update();
                 }
                 old_arrow.IsVisible = true;
-                marker2.IsVisible = false;
+                Marker2_SetState?.Invoke(false, null, null, null);
                 old_arrow = null;
 
                 if (delete_arrow && @join != null) @join.Delete();
@@ -279,12 +277,11 @@ namespace DiagramEditor.Models {
 
         public void Export(string type, Control canv) {
             if (type == "PNG") {
-                bool a = marker.IsVisible, b = marker2.IsVisible;
-                marker.IsVisible = marker2.IsVisible = false;
+                SaveMarkerVisibles?.Invoke();
 
                 try { Utils.RenderToFile(canv, "../../../Export.png"); } catch (Exception e) { Log.Write("Ошибка экспорта PNG: " + e); }
 
-                marker.IsVisible = a; marker2.IsVisible = b;
+                RestoreMarkerVisibles?.Invoke();
                 return;
             }
 
