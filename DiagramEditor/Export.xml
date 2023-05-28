@@ -2,74 +2,664 @@
 <Dict>
 	<items>
 		<List>
-			<List _1='$71' _2='$365' _3='$200' _4='$150'>
-				<Dict name="LauncherWindow" stereo="$0" access="$1">
-					<attributes>
-						<List/>
-					</attributes>
-					<methods>
-						<List/>
-					</methods>
-				</Dict>
-			</List>
-			<List _1='$235' _2='$137' _3='$200' _4='$150'>
-				<Dict name="Window" stereo="$0" access="$1">
-					<attributes>
-						<List/>
-					</attributes>
-					<methods>
-						<List/>
-					</methods>
-				</Dict>
-			</List>
-			<List _1='$301' _2='$370' _3='$200' _4='$150'>
-				<Dict name="MainWindow" stereo="$0" access="$1">
-					<attributes>
-						<List/>
-					</attributes>
-					<methods>
-						<List/>
-					</methods>
-				</Dict>
-			</List>
-			<List _1='$1015' _2='$293' _3='$149' _4='$64'>
-				<Dict name="AND-2" stereo="$0" access="$1">
-					<attributes>
-						<List/>
-					</attributes>
-					<methods>
-						<List/>
-					</methods>
-				</Dict>
-			</List>
-			<List _1='$1023' _2='$409' _3='$130' _4='$64'>
-				<Dict name="OR-2" stereo="$0" access="$1">
-					<attributes>
-						<List/>
-					</attributes>
-					<methods>
-						<List/>
-					</methods>
-				</Dict>
-			</List>
-			<List _1='$1054' _2='$483' _3='$119' _4='$64'>
-				<Dict name="NOT" stereo="$0" access="$1">
-					<attributes>
-						<List/>
-					</attributes>
-					<methods>
-						<List/>
-					</methods>
-				</Dict>
-			</List>
-			<List _1='$1302' _2='$155' _3='$236' _4='$180'>
-				<Dict name="IGate" stereo="$3" access="$1">
+			<List _1='$1248' _2='$-29' _3='$279' _4='$148'>
+				<Dict name="App" stereo="$0" access="$1">
 					<attributes>
 						<List/>
 					</attributes>
 					<methods>
 						<List>
+							<Dict name="Initialize" type="void" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="OnFrameworkInitializationCompleted" type="void" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$1593' _2='$-42' _3='$282' _4='$135'>
+				<Dict name="Program" stereo="$0" access="$1">
+					<attributes>
+						<List/>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name="Main" type="void" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="args" type="string[]" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="BuildAvaloniaApp" type="AppBuilder" access="$1" stereo="$1">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$1572' _2='$-278' _3='$233' _4='$117'>
+				<Dict name="ViewLocator" stereo="$0" access="$1">
+					<attributes>
+						<List/>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name="Build" type="IControl" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="data" type="object" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Match" type="bool" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="data" type="object" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$1101' _2='$208' _3='$375' _4='$138'>
+				<Dict name="LauncherWindow" stereo="$0" access="$1">
+					<attributes>
+						<List/>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name="DTapped" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="sender" type="object" default=""/>
+										<Dict name="e" type="RoutedEventArgs" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="InitializeComponent" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="loadXaml" type="bool" default="True"/>
+										<Dict name="attachDevTools" type="bool" default="True"/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$1582' _2='$811' _3='$326' _4='$159'>
+				<Dict name="MainWindow" stereo="$0" access="$1">
+					<attributes>
+						<List/>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name="DTapped" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="sender" type="object" default=""/>
+										<Dict name="e" type="RoutedEventArgs" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Update" type="void" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="InitializeComponent" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="loadXaml" type="bool" default="True"/>
+										<Dict name="attachDevTools" type="bool" default="True"/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$649' _2='$-425' _3='$215' _4='$146'>
+				<Dict name="AND_2" stereo="$0" access="$1">
+					<attributes>
+						<List>
+							<Dict name="TypeId" type="int" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+						</List>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name="get_TypeId" type="int" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="GetSelf" type="UserControl" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="Brain" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="ins" type="ref bool[]" default=""/>
+										<Dict name="outs" type="ref bool[]" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="InitializeComponent" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="loadXaml" type="bool" default="True"/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$651' _2='$-275' _3='$213' _4='$148'>
+				<Dict name="Button" stereo="$0" access="$1">
+					<attributes>
+						<List>
+							<Dict name="TypeId" type="int" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="ButtonSize" type="double" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+						</List>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name="get_TypeId" type="int" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="GetSelf" type="UserControl" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_ButtonSize" type="double" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="Brain" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="ins" type="ref bool[]" default=""/>
+										<Dict name="outs" type="ref bool[]" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="InitializeComponent" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="loadXaml" type="bool" default="True"/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$663' _2='$44' _3='$200' _4='$150'>
+				<Dict name="FlipFlop" stereo="$0" access="$1">
+					<attributes>
+						<List>
+							<Dict name="TypeId" type="int" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+						</List>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name="get_TypeId" type="int" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="GetSelf" type="UserControl" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="Brain" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="ins" type="ref bool[]" default=""/>
+										<Dict name="outs" type="ref bool[]" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="ExtraExport" type="Dictionary&lt;string, object&gt;" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="ExtraImport" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="key" type="string" default=""/>
+										<Dict name="extra" type="object" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="InitializeComponent" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="loadXaml" type="bool" default="True"/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$17' _2='$-543' _3='$385' _4='$991'>
+				<Dict name="GateBase" stereo="$2" access="$1">
+					<attributes>
+						<List>
+							<Dict name="CountIns" type="int" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; private set; }"/>
+							<Dict name="CountOuts" type="int" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; private set; }"/>
+							<Dict name="BaseSize" type="double" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="BaseFraction" type="double" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="EllipseSize" type="double" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="BodyStrokeSize" type="Thickness" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="EllipseStrokeSize" type="double" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="PinStrokeSize" type="double" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="BodyMargin" type="Thickness" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="BodyWidth" type="double" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="BodyHeight" type="double" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="BodyRadius" type="CornerRadius" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="UC_Width" type="double" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="UC_Height" type="double" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="FontSizze" type="double" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="ImageMargins" type="Thickness" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="PinPoints" type="Point[][]" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="EllipseMargins" type="Thickness[]" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="ImageSize" type="double" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="TypeId" type="int" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="PropertyChanged" type="PropertyChangedEventHandler" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$1" default=""/>
+						</List>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name="get_CountIns" type="int" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_CountOuts" type="int" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="GetSelf" type="UserControl" access="$1" stereo="$2">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="Move" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="pos" type="Point" default=""/>
+										<Dict name="global" type="bool" default="False"/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Resize" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="size" type="Size" default=""/>
+										<Dict name="global" type="bool" default="False"/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="ChangeScale" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="scale" type="double" default=""/>
+										<Dict name="global" type="bool" default="False"/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="GetPos" type="Point" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="GetSize" type="Size" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="GetBodySize" type="Size" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="SavePose" type="void" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="GetPose" type="Point" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="GetBounds" type="Rect" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_BaseSize" type="double" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_BaseFraction" type="double" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_EllipseSize" type="double" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_BodyStrokeSize" type="Thickness" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_EllipseStrokeSize" type="double" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_PinStrokeSize" type="double" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_BodyMargin" type="Thickness" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_BodyWidth" type="double" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_BodyHeight" type="double" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_BodyRadius" type="CornerRadius" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_UC_Width" type="double" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_UC_Height" type="double" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_FontSizze" type="double" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_ImageMargins" type="Thickness" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_PinPoints" type="Point[][]" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_EllipseMargins" type="Thickness[]" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_ImageSize" type="double" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="add_PropertyChanged" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="value" type="PropertyChangedEventHandler" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="add_PropertyChanged" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="value" type="EventHandler&lt;AvaloniaPropertyChangedEventArgs&gt;" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="remove_PropertyChanged" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="value" type="PropertyChangedEventHandler" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="remove_PropertyChanged" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="value" type="EventHandler&lt;AvaloniaPropertyChangedEventArgs&gt;" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="AddJoin" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="join" type="JoinedItems" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="RemoveJoin" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="join" type="JoinedItems" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="UpdateJoins" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="global" type="bool" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="ClearJoins" type="void" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="SetJoinColor" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="o_num" type="int" default=""/>
+										<Dict name="value" type="bool" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="ContainsJoin" type="bool" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="join" type="JoinedItems" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="GetPin" type="Distantor" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="finded" type="Ellipse" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="GetPinPos" type="Point" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="n" type="int" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="LogicUpdate" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="ids" type="Dictionary&lt;IGate, Meta&gt;" default=""/>
+										<Dict name="me" type="Meta" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="get_TypeId" type="int" access="$1" stereo="$2">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="Export" type="object" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="ExtraExport" type="Dictionary&lt;string, object&gt;" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="ExportJoins" type="List&lt;object[]&gt;" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="to_num" type="Dictionary&lt;IGate, int&gt;" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Import" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="dict" type="Dictionary&lt;string, object&gt;" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="ExtraImport" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="key" type="string" default=""/>
+										<Dict name="extra" type="object" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$899' _2='$-515' _3='$291' _4='$462'>
+				<Dict name="IGate" stereo="$2" access="$1">
+					<attributes>
+						<List>
+							<Dict name="CountIns" type="int" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="CountOuts" type="int" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="TypeId" type="int" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+						</List>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name="get_CountIns" type="int" access="$1" stereo="$2">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_CountOuts" type="int" access="$1" stereo="$2">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="GetSelf" type="UserControl" access="$1" stereo="$2">
+								<props>
+									<List/>
+								</props>
+							</Dict>
 							<Dict name="GetPos" type="Point" access="$1" stereo="$2">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="GetSize" type="Size" access="$1" stereo="$2">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="GetBodySize" type="Size" access="$1" stereo="$2">
 								<props>
 									<List/>
 								</props>
@@ -78,6 +668,7 @@
 								<props>
 									<List>
 										<Dict name="pos" type="Point" default=""/>
+										<Dict name="global" type="bool" default="False"/>
 									</List>
 								</props>
 							</Dict>
@@ -85,6 +676,118 @@
 								<props>
 									<List>
 										<Dict name="size" type="Size" default=""/>
+										<Dict name="global" type="bool" default="False"/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="ChangeScale" type="void" access="$1" stereo="$2">
+								<props>
+									<List>
+										<Dict name="scale" type="double" default=""/>
+										<Dict name="global" type="bool" default="False"/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="SavePose" type="void" access="$1" stereo="$2">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="GetPose" type="Point" access="$1" stereo="$2">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="GetBounds" type="Rect" access="$1" stereo="$2">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="GetPin" type="Distantor" access="$1" stereo="$2">
+								<props>
+									<List>
+										<Dict name="finded" type="Ellipse" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="GetPinPos" type="Point" access="$1" stereo="$2">
+								<props>
+									<List>
+										<Dict name="n" type="int" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="AddJoin" type="void" access="$1" stereo="$2">
+								<props>
+									<List>
+										<Dict name="join" type="JoinedItems" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="RemoveJoin" type="void" access="$1" stereo="$2">
+								<props>
+									<List>
+										<Dict name="join" type="JoinedItems" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="ClearJoins" type="void" access="$1" stereo="$2">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="SetJoinColor" type="void" access="$1" stereo="$2">
+								<props>
+									<List>
+										<Dict name="o_num" type="int" default=""/>
+										<Dict name="value" type="bool" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="ContainsJoin" type="bool" access="$1" stereo="$2">
+								<props>
+									<List>
+										<Dict name="join" type="JoinedItems" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Brain" type="void" access="$1" stereo="$2">
+								<props>
+									<List>
+										<Dict name="ins" type="ref bool[]" default=""/>
+										<Dict name="outs" type="ref bool[]" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="LogicUpdate" type="void" access="$1" stereo="$2">
+								<props>
+									<List>
+										<Dict name="ids" type="Dictionary&lt;IGate, Meta&gt;" default=""/>
+										<Dict name="me" type="Meta" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="get_TypeId" type="int" access="$1" stereo="$2">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="Export" type="object" access="$1" stereo="$2">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="ExportJoins" type="List&lt;object[]&gt;" access="$1" stereo="$2">
+								<props>
+									<List>
+										<Dict name="to_num" type="Dictionary&lt;IGate, int&gt;" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Import" type="void" access="$1" stereo="$2">
+								<props>
+									<List>
+										<Dict name="dict" type="Dictionary&lt;string, object&gt;" default=""/>
 									</List>
 								</props>
 							</Dict>
@@ -92,80 +795,1249 @@
 					</methods>
 				</Dict>
 			</List>
-			<List _1='$1008' _2='$556' _3='$162' _4='$64'>
-				<Dict name="XOR-2" stereo="$0" access="$1">
+			<List _1='$656' _2='$-120' _3='$214' _4='$153'>
+				<Dict name="LightBulb" stereo="$0" access="$1">
 					<attributes>
-						<List/>
+						<List>
+							<Dict name="TypeId" type="int" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+						</List>
 					</attributes>
 					<methods>
-						<List/>
+						<List>
+							<Dict name="get_TypeId" type="int" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="GetSelf" type="UserControl" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="Brain" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="ins" type="ref bool[]" default=""/>
+										<Dict name="outs" type="ref bool[]" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="InitializeComponent" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="loadXaml" type="bool" default="True"/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+						</List>
 					</methods>
 				</Dict>
 			</List>
-			<List _1='$1028' _2='$652' _3='$134' _4='$64'>
+			<List _1='$436' _2='$169' _3='$230' _4='$192'>
+				<Dict name="NAND_2" stereo="$0" access="$1">
+					<attributes>
+						<List>
+							<Dict name="TypeId" type="int" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="InvertorSize" type="double" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="InvertorStrokeSize" type="double" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="InvertorMargin" type="Thickness" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+						</List>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name="get_TypeId" type="int" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="GetSelf" type="UserControl" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_InvertorSize" type="double" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_InvertorStrokeSize" type="double" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_InvertorMargin" type="Thickness" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="Brain" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="ins" type="ref bool[]" default=""/>
+										<Dict name="outs" type="ref bool[]" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="InitializeComponent" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="loadXaml" type="bool" default="True"/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$438' _2='$-184' _3='$214' _4='$150'>
+				<Dict name="NOT" stereo="$0" access="$1">
+					<attributes>
+						<List>
+							<Dict name="TypeId" type="int" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+						</List>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name="get_TypeId" type="int" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="GetSelf" type="UserControl" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="Brain" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="ins" type="ref bool[]" default=""/>
+										<Dict name="outs" type="ref bool[]" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="InitializeComponent" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="loadXaml" type="bool" default="True"/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$676' _2='$239' _3='$200' _4='$150'>
+				<Dict name="OR_2" stereo="$0" access="$1">
+					<attributes>
+						<List>
+							<Dict name="TypeId" type="int" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+						</List>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name="get_TypeId" type="int" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="GetSelf" type="UserControl" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="Brain" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="ins" type="ref bool[]" default=""/>
+										<Dict name="outs" type="ref bool[]" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="InitializeComponent" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="loadXaml" type="bool" default="True"/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$441' _2='$-7' _3='$210' _4='$150'>
 				<Dict name="PSum" stereo="$0" access="$1">
 					<attributes>
-						<List/>
-					</attributes>
-					<methods>
-						<List/>
-					</methods>
-				</Dict>
-			</List>
-			<List _1='$1309' _2='$527' _3='$165' _4='$64'>
-				<Dict name="UserControl" stereo="$0" access="$1">
-					<attributes>
-						<List/>
-					</attributes>
-					<methods>
-						<List/>
-					</methods>
-				</Dict>
-			</List>
-			<List _1='$641' _2='$448' _3='$200' _4='$150'>
-				<Dict name="Mapper" stereo="$0" access="$1">
-					<attributes>
 						<List>
-							<Dict name="items" type="List&lt;IGate&gt;" access="$0" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$0" default=""/>
+							<Dict name="TypeId" type="int" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
 						</List>
 					</attributes>
 					<methods>
 						<List>
-							<Dict name="AddItem" type="void" access="$0" stereo="$0">
+							<Dict name="get_TypeId" type="int" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="GetSelf" type="UserControl" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="Brain" type="void" access="$1" stereo="$0">
 								<props>
 									<List>
-										<Dict name="item" type="IGate" default=""/>
+										<Dict name="ins" type="ref bool[]" default=""/>
+										<Dict name="outs" type="ref bool[]" default=""/>
 									</List>
 								</props>
 							</Dict>
-							<Dict name="RemoveItem" type="void" access="$0" stereo="$0">
+							<Dict name="InitializeComponent" type="void" access="$1" stereo="$0">
 								<props>
 									<List>
-										<Dict name="item" type="IGate" default=""/>
+										<Dict name="loadXaml" type="bool" default="True"/>
 									</List>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List/>
 								</props>
 							</Dict>
 						</List>
 					</methods>
 				</Dict>
 			</List>
-			<List _1='$618' _2='$155' _3='$200' _4='$150'>
+			<List _1='$438' _2='$-348' _3='$211' _4='$152'>
+				<Dict name="Switch" stereo="$0" access="$1">
+					<attributes>
+						<List>
+							<Dict name="TypeId" type="int" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+						</List>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name="get_TypeId" type="int" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="GetSelf" type="UserControl" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="Brain" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="ins" type="ref bool[]" default=""/>
+										<Dict name="outs" type="ref bool[]" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="ExtraExport" type="Dictionary&lt;string, object&gt;" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="ExtraImport" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="key" type="string" default=""/>
+										<Dict name="extra" type="object" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="InitializeComponent" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="loadXaml" type="bool" default="True"/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$437' _2='$-507' _3='$218' _4='$135'>
+				<Dict name="XOR_2" stereo="$0" access="$1">
+					<attributes>
+						<List>
+							<Dict name="TypeId" type="int" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+						</List>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name="get_TypeId" type="int" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="GetSelf" type="UserControl" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="Brain" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="ins" type="ref bool[]" default=""/>
+										<Dict name="outs" type="ref bool[]" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="InitializeComponent" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="loadXaml" type="bool" default="True"/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$1500' _2='$231' _3='$200' _4='$150'>
+				<Dict name="LauncherWindowViewModel" stereo="$0" access="$1">
+					<attributes>
+						<List>
+							<Dict name="Create" type="ReactiveCommand&lt;Unit, Unit&gt;" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="Open" type="ReactiveCommand&lt;Unit, Unit&gt;" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="Exit" type="ReactiveCommand&lt;Unit, Unit&gt;" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="ProjectList" type="Project[]" access="$1" readonly="_BOOL_nop" static="_BOOL_yeah" stereo="$2" default="{public get; }"/>
+						</List>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name="AddWindow" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="lw" type="Window" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="get_Create" type="ReactiveCommand&lt;Unit, Unit&gt;" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_Open" type="ReactiveCommand&lt;Unit, Unit&gt;" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_Exit" type="ReactiveCommand&lt;Unit, Unit&gt;" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_ProjectList" type="Project[]" access="$1" stereo="$1">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="DTapped" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="sender" type="object" default=""/>
+										<Dict name="e" type="RoutedEventArgs" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$1703' _2='$209' _3='$200' _4='$150'>
+				<Dict name="Log" stereo="$0" access="$1">
+					<attributes>
+						<List>
+							<Dict name="Mwvm" type="MainWindowViewModel" access="$0" readonly="_BOOL_nop" static="_BOOL_yeah" stereo="$2" default="{private get; public set; }"/>
+						</List>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name="set_Mwvm" type="void" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="value" type="MainWindowViewModel" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Write" type="void" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="message" type="string" default=""/>
+										<Dict name="without_update" type="bool" default="False"/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$1608' _2='$387' _3='$297' _4='$395'>
+				<Dict name="MainWindowViewModel" stereo="$0" access="$1">
+					<attributes>
+						<List>
+							<Dict name="Logg" type="string" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; public set; }"/>
+							<Dict name="ItemTypes" type="IGate[]" access="$1" readonly="_BOOL_nop" static="_BOOL_yeah" stereo="$2" default="{public get; }"/>
+							<Dict name="SelectedItem" type="int" access="$1" readonly="_BOOL_nop" static="_BOOL_yeah" stereo="$2" default="{public get; public set; }"/>
+							<Dict name="ProjName" type="string" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="Schemes" type="ObservableCollection&lt;Scheme&gt;" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="CanSave" type="bool" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="Comm" type="ReactiveCommand&lt;string, Unit&gt;" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="NewItem" type="ReactiveCommand&lt;Unit, Unit&gt;" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="LockSelfConnect" type="bool" access="$1" readonly="_BOOL_nop" static="_BOOL_yeah" stereo="$2" default="{public get; public set; }"/>
+						</List>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name="get_Logg" type="string" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="set_Logg" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="value" type="string" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="AddWindow" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="window" type="Window" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="get_ItemTypes" type="IGate[]" access="$1" stereo="$1">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_SelectedItem" type="int" access="$1" stereo="$1">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="set_SelectedItem" type="void" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="value" type="int" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="get_ProjName" type="string" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_Schemes" type="ObservableCollection&lt;Scheme&gt;" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="DTapped" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="sender" type="object" default=""/>
+										<Dict name="e" type="RoutedEventArgs" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Update" type="void" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_CanSave" type="bool" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="FuncComm" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="Comm" type="string" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="get_Comm" type="ReactiveCommand&lt;string, Unit&gt;" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_NewItem" type="ReactiveCommand&lt;Unit, Unit&gt;" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_LockSelfConnect" type="bool" access="$1" stereo="$1">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="set_LockSelfConnect" type="void" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="value" type="bool" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$1226' _2='$354' _3='$199' _4='$98'>
+				<Dict name="ViewModelBase" stereo="$0" access="$1">
+					<attributes>
+						<List>
+							<Dict name="map" type="Mapper" access="$1" readonly="_BOOL_yeah" static="_BOOL_yeah" stereo="$0" default=""/>
+						</List>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$1225' _2='$-308' _3='$200' _4='$150'>
+				<Dict name="Distantor" stereo="$0" access="$1">
+					<attributes>
+						<List>
+							<Dict name="num" type="int" access="$1" readonly="_BOOL_yeah" static="_BOOL_nop" stereo="$0" default=""/>
+							<Dict name="parent" type="IGate" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$0" default=""/>
+							<Dict name="tag" type="string" access="$1" readonly="_BOOL_yeah" static="_BOOL_nop" stereo="$0" default=""/>
+						</List>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name="GetPos" type="Point" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List>
+										<Dict name="parent" type="IGate" default=""/>
+										<Dict name="n" type="int" default=""/>
+										<Dict name="tag" type="string" default=""/>
+									</List>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$644' _2='$862' _3='$220' _4='$98'>
 				<Dict name="FileHandler" stereo="$0" access="$1">
 					<attributes>
 						<List/>
 					</attributes>
 					<methods>
-						<List/>
+						<List>
+							<Dict name="CreateProject" type="Project" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+						</List>
 					</methods>
 				</Dict>
 			</List>
-			<List _1='$887' _2='$100' _3='$340' _4='$145'>
-				<Dict name="Utils" stereo="$0" access="$1">
+			<List _1='$1215' _2='$-549' _3='$250' _4='$214'>
+				<Dict name="JoinedItems" stereo="$0" access="$1">
+					<attributes>
+						<List>
+							<Dict name="A" type="Distantor" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; public set; }"/>
+							<Dict name="B" type="Distantor" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; public set; }"/>
+							<Dict name="line" type="Line" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$0" default=""/>
+							<Dict name="arrow_to_join" type="Dictionary&lt;Line, JoinedItems&gt;" access="$1" readonly="_BOOL_yeah" static="_BOOL_yeah" stereo="$0" default=""/>
+						</List>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name="get_A" type="Distantor" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="set_A" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="value" type="Distantor" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="get_B" type="Distantor" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="set_B" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="value" type="Distantor" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Update" type="void" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="Delete" type="void" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List>
+										<Dict name="a" type="Distantor" default=""/>
+										<Dict name="b" type="Distantor" default=""/>
+									</List>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$312' _2='$456' _3='$308' _4='$471'>
+				<Dict name="Mapper" stereo="$0" access="$1">
+					<attributes>
+						<List>
+							<Dict name="Marker" type="Line" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="Marker2" type="Rectangle" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="SelectedItem" type="int" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; public set; }"/>
+							<Dict name="sim" type="Simulator" access="$1" readonly="_BOOL_yeah" static="_BOOL_nop" stereo="$0" default=""/>
+							<Dict name="canv" type="Canvas" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$0" default=""/>
+							<Dict name="item_types" type="IGate[]" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$0" default=""/>
+							<Dict name="lock_self_connect" type="bool" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$0" default=""/>
+							<Dict name="tapped" type="bool" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$0" default=""/>
+							<Dict name="tap_pos" type="Point" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$0" default=""/>
+							<Dict name="filer" type="FileHandler" access="$1" readonly="_BOOL_yeah" static="_BOOL_nop" stereo="$0" default=""/>
+							<Dict name="current_scheme" type="Scheme" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$0" default=""/>
+						</List>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name="get_Marker" type="Line" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_Marker2" type="Rectangle" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_SelectedItem" type="int" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="set_SelectedItem" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="value" type="int" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="GenSelectedItem" type="IGate" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="AddItem" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="item" type="IGate" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="RemoveItem" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="item" type="IGate" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="RemoveAll" type="void" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="Press" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="item" type="Control" default=""/>
+										<Dict name="pos" type="Point" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="FixItem" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="res" type="ref Control" default=""/>
+										<Dict name="pos" type="Point" default=""/>
+										<Dict name="items" type="IEnumerable&lt;ILogical&gt;" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Move" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="item" type="Control" default=""/>
+										<Dict name="pos" type="Point" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Release" type="int" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="item" type="Control" default=""/>
+										<Dict name="pos" type="Point" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="WheelMove" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="item" type="Control" default=""/>
+										<Dict name="move" type="double" default=""/>
+										<Dict name="pos" type="Point" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="KeyPressed" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="_" type="Control" default=""/>
+										<Dict name="key" type="Key" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Export" type="void" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="ImportScheme" type="void" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$894' _2='$567' _3='$339' _4='$393'>
+				<Dict name="Project" stereo="$0" access="$1">
+					<attributes>
+						<List>
+							<Dict name="Name" type="string" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; private set; }"/>
+							<Dict name="FileDir" type="string" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; private set; }"/>
+							<Dict name="FileName" type="string" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; public set; }"/>
+							<Dict name="Created" type="long" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$0" default=""/>
+							<Dict name="Modified" type="long" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$0" default=""/>
+							<Dict name="schemes" type="ObservableCollection&lt;Scheme&gt;" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$0" default=""/>
+						</List>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name="get_Name" type="string" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_FileDir" type="string" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_FileName" type="string" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="set_FileName" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="value" type="string" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="CreateScheme" type="Scheme" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="AddScheme" type="Scheme" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="prev" type="Scheme" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="RemoveScheme" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="me" type="Scheme" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="UpdateList" type="void" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="GetFirstScheme" type="Scheme" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="Export" type="object" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="Save" type="void" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="CompareTo" type="int" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="obj" type="object" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="ToString" type="string" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="CanSave" type="bool" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="SaveAs" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="mw" type="Window" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List>
+										<Dict name="parent" type="FileHandler" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List>
+										<Dict name="parent" type="FileHandler" default=""/>
+										<Dict name="dir" type="string" default=""/>
+										<Dict name="fileName" type="string" default=""/>
+										<Dict name="data" type="object" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List>
+										<Dict name="parent" type="FileHandler" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List>
+										<Dict name="parent" type="FileHandler" default=""/>
+										<Dict name="dir" type="string" default=""/>
+										<Dict name="fileName" type="string" default=""/>
+										<Dict name="data" type="object" default=""/>
+									</List>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$1288' _2='$485' _3='$280' _4='$478'>
+				<Dict name="Scheme" stereo="$0" access="$1">
+					<attributes>
+						<List>
+							<Dict name="Name" type="string" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; public set; }"/>
+							<Dict name="Open" type="ReactiveCommand&lt;Unit, Unit&gt;" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="NewItem" type="ReactiveCommand&lt;Unit, Unit&gt;" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="Delete" type="ReactiveCommand&lt;Unit, Unit&gt;" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="CanUseSchemeDeleter" type="bool" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="CanOpenMe" type="bool" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$2" default="{public get; }"/>
+							<Dict name="Created" type="long" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$0" default=""/>
+							<Dict name="Modified" type="long" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$0" default=""/>
+							<Dict name="items" type="object[]" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$0" default=""/>
+							<Dict name="joins" type="object[]" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$0" default=""/>
+							<Dict name="states" type="string" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$0" default=""/>
+						</List>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name="get_Name" type="string" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="set_Name" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="value" type="string" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Update" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="items" type="object[]" default=""/>
+										<Dict name="joins" type="object[]" default=""/>
+										<Dict name="states" type="string" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Update" type="void" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="Export" type="object" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="Update" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="items" type="object[]" default=""/>
+										<Dict name="joins" type="object[]" default=""/>
+										<Dict name="states" type="string" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Update" type="void" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="ToString" type="string" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_Open" type="ReactiveCommand&lt;Unit, Unit&gt;" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_NewItem" type="ReactiveCommand&lt;Unit, Unit&gt;" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_Delete" type="ReactiveCommand&lt;Unit, Unit&gt;" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_CanUseSchemeDeleter" type="bool" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="get_CanOpenMe" type="bool" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="UpdateProps" type="void" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List>
+										<Dict name="p" type="Project" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List>
+										<Dict name="p" type="Project" default=""/>
+										<Dict name="data" type="object" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List>
+										<Dict name="p" type="Project" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List>
+										<Dict name="p" type="Project" default=""/>
+										<Dict name="data" type="object" default=""/>
+									</List>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$884' _2='$287' _3='$200' _4='$150'>
+				<Dict name="Meta" stereo="$0" access="$1">
+					<attributes>
+						<List>
+							<Dict name="item" type="IGate" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$0" default=""/>
+							<Dict name="ins" type="int[]" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$0" default=""/>
+							<Dict name="outs" type="int[]" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$0" default=""/>
+							<Dict name="i_buf" type="bool[]" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$0" default=""/>
+							<Dict name="o_buf" type="bool[]" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$0" default=""/>
+						</List>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name="Print" type="void" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List>
+										<Dict name="item" type="IGate" default=""/>
+										<Dict name="out_id" type="int" default=""/>
+									</List>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$667' _2='$706' _3='$200' _4='$150'>
+				<Dict name="Simulator" stereo="$0" access="$1">
+					<attributes>
+						<List>
+							<Dict name="lock_sim" type="bool" access="$1" readonly="_BOOL_nop" static="_BOOL_nop" stereo="$0" default=""/>
+						</List>
+					</attributes>
+					<methods>
+						<List>
+							<Dict name="Start" type="void" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="Stop" type="void" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="AddItem" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="item" type="IGate" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="RemoveItem" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="item" type="IGate" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Export" type="string" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="Import" type="void" access="$1" stereo="$0">
+								<props>
+									<List>
+										<Dict name="state" type="string" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Clear" type="void" access="$1" stereo="$0">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name=".ctor" type="self" access="$1" stereo="$3">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+						</List>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$19' _2='$459' _3='$293' _4='$498'>
+				<Dict name="Utils" stereo="$1" access="$1">
 					<attributes>
 						<List/>
 					</attributes>
 					<methods>
 						<List>
+							<Dict name="Base64Encode" type="string" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="plainText" type="string" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Base64Decode" type="string" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="base64EncodedData" type="string" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="JsonEscape" type="string" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="str" type="string" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Obj2json" type="string" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="obj" type="object" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Json2obj" type="object" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="json" type="string" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="XMLEscape" type="string" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="str" type="string" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Json2xml" type="string" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="json" type="string" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Xml2json" type="string" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="xml" type="string" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="YAMLEscape" type="string" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="str" type="string" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Json2yaml" type="string" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="json" type="string" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Yaml2json" type="string" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="yaml" type="string" default=""/>
+									</List>
+								</props>
+							</Dict>
 							<Dict name="Obj2xml" type="string" access="$1" stereo="$1">
 								<props>
 									<List>
@@ -173,10 +2045,10 @@
 									</List>
 								</props>
 							</Dict>
-							<Dict name="Xml2Obj" type="object" access="$1" stereo="$1">
+							<Dict name="Xml2obj" type="object" access="$1" stereo="$1">
 								<props>
 									<List>
-										<Dict name="data" type="string" default=""/>
+										<Dict name="xml" type="string" default=""/>
 									</List>
 								</props>
 							</Dict>
@@ -190,7 +2062,200 @@
 							<Dict name="Yaml2obj" type="object" access="$1" stereo="$1">
 								<props>
 									<List>
-										<Dict name="data" type="string" default=""/>
+										<Dict name="xml" type="string" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="RenderToFile" type="void" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="target" type="Control" default=""/>
+										<Dict name="path" type="string" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="TrimAll" type="string" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="str" type="string" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="NormSplit" type="string[]" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="str" type="string" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="GetStackInfo" type="string" access="$1" stereo="$1">
+								<props>
+									<List/>
+								</props>
+							</Dict>
+							<Dict name="Normalize" type="int" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="num" type="int" default=""/>
+										<Dict name="min" type="int" default=""/>
+										<Dict name="max" type="int" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Normalize" type="double" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="num" type="double" default=""/>
+										<Dict name="min" type="double" default=""/>
+										<Dict name="max" type="double" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Normalize" type="int" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="num" type="int" default=""/>
+										<Dict name="min" type="int" default=""/>
+										<Dict name="max" type="int" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Normalize" type="double" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="num" type="double" default=""/>
+										<Dict name="min" type="double" default=""/>
+										<Dict name="max" type="double" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Hypot" type="double" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="delta" type="Point" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Hypot" type="double" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="A" type="Point" default=""/>
+										<Dict name="B" type="Point" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Hypot" type="double" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="delta" type="Point" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Hypot" type="double" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="A" type="Point" default=""/>
+										<Dict name="B" type="Point" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="ToDouble" type="Nullable&lt;double&gt;" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="num" type="object" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Min" type="int" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="A" type="int" default=""/>
+										<Dict name="B" type="int" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Min" type="double" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="A" type="double" default=""/>
+										<Dict name="B" type="double" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Max" type="int" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="A" type="int" default=""/>
+										<Dict name="B" type="int" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Max" type="double" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="A" type="double" default=""/>
+										<Dict name="B" type="double" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Min" type="int" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="A" type="int" default=""/>
+										<Dict name="B" type="int" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Min" type="double" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="A" type="double" default=""/>
+										<Dict name="B" type="double" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Max" type="int" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="A" type="int" default=""/>
+										<Dict name="B" type="int" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Max" type="double" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="A" type="double" default=""/>
+										<Dict name="B" type="double" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Remove" type="void" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="item" type="Control" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="Center" type="Point" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="item" type="Visual" default=""/>
+										<Dict name="parent" type="Visual" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="UnixTimeStampToDateTime" type="DateTime" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="unixTimeStamp" type="long" default=""/>
+									</List>
+								</props>
+							</Dict>
+							<Dict name="UnixTimeStampToString" type="string" access="$1" stereo="$1">
+								<props>
+									<List>
+										<Dict name="unixTimeStamp" type="long" default=""/>
 									</List>
 								</props>
 							</Dict>
@@ -198,8 +2263,8 @@
 					</methods>
 				</Dict>
 			</List>
-			<List _1='$1264' _2='$35' _3='$129' _4='$64'>
-				<Dict name="Point" stereo="$0" access="$1">
+			<List _1='$894' _2='$18' _3='$64' _4='$64'>
+				<Dict name="" stereo="$0" access="$1">
 					<attributes>
 						<List/>
 					</attributes>
@@ -208,8 +2273,8 @@
 					</methods>
 				</Dict>
 			</List>
-			<List _1='$1418' _2='$27' _3='$122' _4='$64'>
-				<Dict name="Size" stereo="$0" access="$1">
+			<List _1='$893' _2='$181' _3='$64' _4='$64'>
+				<Dict name="" stereo="$0" access="$1">
 					<attributes>
 						<List/>
 					</attributes>
@@ -218,8 +2283,18 @@
 					</methods>
 				</Dict>
 			</List>
-			<List _1='$582' _2='$669' _3='$191' _4='$64'>
-				<Dict name="Simulator" stereo="$0" access="$1">
+			<List _1='$1207' _2='$488' _3='$64' _4='$64'>
+				<Dict name="" stereo="$0" access="$1">
+					<attributes>
+						<List/>
+					</attributes>
+					<methods>
+						<List/>
+					</methods>
+				</Dict>
+			</List>
+			<List _1='$1079' _2='$457' _3='$64' _4='$64'>
+				<Dict name="" stereo="$0" access="$1">
 					<attributes>
 						<List/>
 					</attributes>
@@ -232,31 +2307,57 @@
 	</items>
 	<joins>
 		<List>
-			<List _0='$0' _1='$0' _2='$0.85263' _3='$1' _4='$3' _5='$0.16842' _6='$0'/>
-			<List _0='$2' _1='$0' _2='$0.47368' _3='$1' _4='$3' _5='$0.62105' _6='$0'/>
-			<List _0='$2' _1='$2' _2='$0.53571' _3='$10' _4='$1' _5='$0.39286' _6='$5'/>
-			<List _0='$2' _1='$2' _2='$0.36429' _3='$11' _4='$1' _5='$0.47143' _6='$5'/>
-			<List _0='$3' _1='$2' _2='$0.2931' _3='$6' _4='$1' _5='$0.65' _6='$5'/>
-			<List _0='$3' _1='$2' _2='$0.48148' _3='$9' _4='$0' _5='$0.4' _6='$0'/>
-			<List _0='$3' _1='$1' _2='$0.53704' _3='$10' _4='$2' _5='$0.15' _6='$4'/>
-			<List _0='$4' _1='$2' _2='$0' _3='$6' _4='$3' _5='$0.25263' _6='$5'/>
-			<List _0='$4' _1='$2' _2='$0.40741' _3='$9' _4='$0' _5='$0.16774' _6='$0'/>
-			<List _0='$4' _1='$1' _2='$0.77778' _3='$10' _4='$2' _5='$0.28571' _6='$4'/>
-			<List _0='$5' _1='$0' _2='$0.67857' _3='$6' _4='$3' _5='$0.41053' _6='$5'/>
-			<List _0='$5' _1='$2' _2='$0.38889' _3='$9' _4='$1' _5='$0.2037' _6='$0'/>
-			<List _0='$5' _1='$1' _2='$0.48148' _3='$10' _4='$2' _5='$0.45' _6='$4'/>
-			<List _0='$6' _1='$0' _2='$0.4823' _3='$13' _4='$3' _5='$0.57983' _6='$2'/>
-			<List _0='$6' _1='$0' _2='$0.83186' _3='$14' _4='$3' _5='$0.35714' _6='$2'/>
-			<List _0='$7' _1='$0' _2='$0.90132' _3='$6' _4='$3' _5='$0.56316' _6='$5'/>
-			<List _0='$7' _1='$2' _2='$0.51852' _3='$9' _4='$1' _5='$0.66667' _6='$0'/>
-			<List _0='$7' _1='$1' _2='$0.42593' _3='$10' _4='$2' _5='$0.60714' _6='$4'/>
-			<List _0='$8' _1='$0' _2='$0.94355' _3='$6' _4='$3' _5='$0.69474' _6='$5'/>
-			<List _0='$8' _1='$2' _2='$0.44444' _3='$9' _4='$3' _5='$0.13548' _6='$0'/>
-			<List _0='$8' _1='$1' _2='$0.48148' _3='$10' _4='$2' _5='$0.78571' _6='$4'/>
-			<List _0='$10' _1='$2' _2='$0.20714' _3='$6' _4='$1' _5='$0.82353' _6='$2'/>
-			<List _0='$10' _1='$3' _2='$0.42105' _3='$15' _4='$0' _5='$0.64641' _6='$5'/>
-			<List _0='$11' _1='$3' _2='$0.56316' _3='$10' _4='$0' _5='$0.44737' _6='$5'/>
-			<List _0='$11' _1='$2' _2='$0.19286' _3='$12' _4='$1' _5='$0.46667' _6='$5'/>
+			<List _0='$0' _1='$3' _2='$0.81041' _3='$3' _4='$0' _5='$0.89041' _6='$5'/>
+			<List _0='$1' _1='$1' _2='$0.696' _3='$0' _4='$2' _5='$0.54348' _6='$5'/>
+			<List _0='$3' _1='$2' _2='$0.5' _3='$17' _4='$1' _5='$0.34286' _6='$5'/>
+			<List _0='$4' _1='$0' _2='$0.38924' _3='$19' _4='$3' _5='$0.32404' _6='$5'/>
+			<List _0='$5' _1='$1' _2='$0.47794' _3='$8' _4='$2' _5='$0.18756' _6='$0'/>
+			<List _0='$5' _1='$2' _2='$0.16176' _3='$9' _4='$1' _5='$0.23894' _6='$1'/>
+			<List _0='$6' _1='$1' _2='$0.55797' _3='$8' _4='$2' _5='$0.35576' _6='$0'/>
+			<List _0='$6' _1='$2' _2='$0.42029' _3='$9' _4='$1' _5='$0.65487' _6='$1'/>
+			<List _0='$7' _1='$1' _2='$0.79286' _3='$8' _4='$2' _5='$0.7156' _6='$0'/>
+			<List _0='$7' _1='$2' _2='$0.16429' _3='$30' _4='$1' _5='$0.88889' _6='$1'/>
+			<List _0='$8' _1='$2' _2='$0.00917' _3='$23' _4='$1' _5='$0.06863' _6='$2'/>
+			<List _0='$8' _1='$2' _2='$0.95821' _3='$27' _4='$1' _5='$0.77857' _6='$2'/>
+			<List _0='$9' _1='$0' _2='$0' _3='$8' _4='$2' _5='$0.0265' _6='$4'/>
+			<List _0='$9' _1='$2' _2='$0.48894' _3='$21' _4='$1' _5='$0.1' _6='$2'/>
+			<List _0='$9' _1='$3' _2='$0.4306' _3='$27' _4='$0' _5='$0.71579' _6='$2'/>
+			<List _0='$10' _1='$1' _2='$0.65734' _3='$8' _4='$2' _5='$0.52803' _6='$0'/>
+			<List _0='$10' _1='$2' _2='$0.21678' _3='$9' _4='$1' _5='$0.93805' _6='$1'/>
+			<List _0='$11' _1='$1' _2='$0.18681' _3='$8' _4='$2' _5='$0.76351' _6='$0'/>
+			<List _0='$11' _1='$2' _2='$0.19231' _3='$31' _4='$1' _5='$0.46296' _6='$1'/>
+			<List _0='$12' _1='$1' _2='$0.15714' _3='$8' _4='$2' _5='$0.39551' _6='$0'/>
+			<List _0='$12' _1='$2' _2='$0.38571' _3='$9' _4='$1' _5='$0.85177' _6='$1'/>
+			<List _0='$13' _1='$1' _2='$0.9' _3='$8' _4='$2' _5='$0.92762' _6='$0'/>
+			<List _0='$13' _1='$2' _2='$0.27857' _3='$31' _4='$1' _5='$0.87037' _6='$1'/>
+			<List _0='$14' _1='$1' _2='$0.22857' _3='$8' _4='$2' _5='$0.5841' _6='$0'/>
+			<List _0='$14' _1='$2' _2='$0.29286' _3='$30' _4='$1' _5='$0.35185' _6='$1'/>
+			<List _0='$15' _1='$1' _2='$0.25' _3='$8' _4='$2' _5='$0.23547' _6='$0'/>
+			<List _0='$15' _1='$2' _2='$0.46479' _3='$9' _4='$1' _5='$0.51106' _6='$1'/>
+			<List _0='$16' _1='$1' _2='$0.44366' _3='$8' _4='$2' _5='$0.09378' _6='$0'/>
+			<List _0='$16' _1='$2' _2='$0.488' _3='$9' _4='$1' _5='$0.15044' _6='$1'/>
+			<List _0='$17' _1='$1' _2='$0.77857' _3='$20' _4='$2' _5='$0.17045' _6='$0'/>
+			<List _0='$18' _1='$3' _2='$0.75789' _3='$19' _4='$0' _5='$0.82578' _6='$2'/>
+			<List _0='$19' _1='$1' _2='$0.05974' _3='$20' _4='$2' _5='$0.67045' _6='$0'/>
+			<List _0='$20' _1='$3' _2='$0.06349' _3='$32' _4='$0' _5='$0.55556' _6='$2'/>
+			<List _0='$22' _1='$2' _2='$0.77143' _3='$25' _4='$1' _5='$0.95039' _6='$2'/>
+			<List _0='$22' _1='$1' _2='$0.78409' _3='$29' _4='$2' _5='$0.96107' _6='$5'/>
+			<List _0='$23' _1='$3' _2='$0.3875' _3='$21' _4='$0' _5='$0.43684' _6='$2'/>
+			<List _0='$24' _1='$2' _2='$0.06941' _3='$33' _4='$1' _5='$0.68519' _6='$2'/>
+			<List _0='$24' _1='$2' _2='$0.70933' _3='$28' _4='$1' _5='$0.53571' _6='$2'/>
+			<List _0='$24' _1='$2' _2='$0.95707' _3='$22' _4='$1' _5='$0.32955' _6='$2'/>
+			<List _0='$25' _1='$2' _2='$0.94517' _3='$26' _4='$1' _5='$0.95085' _6='$2'/>
+			<List _0='$25' _1='$1' _2='$0.85901' _3='$22' _4='$2' _5='$0.42143' _6='$2'/>
+			<List _0='$26' _1='$2' _2='$0.65385' _3='$19' _4='$1' _5='$0.90649' _6='$4'/>
+			<List _0='$26' _1='$1' _2='$0.85684' _3='$25' _4='$2' _5='$0.82768' _6='$4'/>
+			<List _0='$26' _1='$1' _2='$0.76282' _3='$25' _4='$2' _5='$0.71018' _6='$2'/>
+			<List _0='$27' _1='$1' _2='$0.93571' _3='$8' _4='$2' _5='$0.98063' _6='$4'/>
+			<List _0='$27' _1='$0' _2='$0.87895' _3='$9' _4='$3' _5='$0.51246' _6='$4'/>
+			<List _0='$27' _1='$0' _2='$0.53158' _3='$9' _4='$3' _5='$0.31317' _6='$2'/>
+			<List _0='$30' _1='$0' _2='$0.37037' _3='$9' _4='$3' _5='$0.07117' _6='$1'/>
+			<List _0='$31' _1='$0' _2='$0.48148' _3='$30' _4='$3' _5='$0.38889' _6='$1'/>
+			<List _0='$32' _1='$1' _2='$0.74074' _3='$24' _4='$2' _5='$0.13449' _6='$2'/>
+			<List _0='$33' _1='$0' _2='$0.2037' _3='$9' _4='$3' _5='$0.66548' _6='$2'/>
 		</List>
 	</joins>
 </Dict>

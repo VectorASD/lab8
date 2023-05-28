@@ -37,7 +37,7 @@ namespace DiagramEditor.Views
         public ArrowFactory() : base()
         {
             Stroke = Brushes.BurlyWood;
-            StrokeThickness = 3;
+            StrokeThickness = 5;
             Fill = Brushes.Bisque;
             Update();
         }
