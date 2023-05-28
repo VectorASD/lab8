@@ -33,7 +33,7 @@ namespace DiagramEditor.Views {
         }
 
         /*
-         * Проводники между этим классом и ViewModel. Не MVVM, их бы не было XD
+         * РџСЂРѕРІРѕРґРЅРёРєРё РјРµР¶РґСѓ СЌС‚РёРј РєР»Р°СЃСЃРѕРј Рё ViewModel. РќРµ MVVM, РёС… Р±С‹ РЅРµ Р±С‹Р»Рѕ XD
          */
 
         private AddShape? menu;
@@ -80,21 +80,21 @@ namespace DiagramEditor.Views {
         private bool IsEditable() => editable is not null;
 
         /*
-         * Проводники между этим классом и Mapper. Не MVVM, их бы не было XD
+         * РџСЂРѕРІРѕРґРЅРёРєРё РјРµР¶РґСѓ СЌС‚РёРј РєР»Р°СЃСЃРѕРј Рё Mapper. РќРµ MVVM, РёС… Р±С‹ РЅРµ Р±С‹Р»Рѕ XD
          */
 
         private void FixItem(ref Control res, Point pos, IEnumerable<ILogical> items) {
             foreach (var logic in items) {
-                // if (item.IsPointerOver) { } Гениальная вещь! ;'-} Хотя не, всё равно блокируется после Press и до Release, чего я впринципе хочу избежать ;'-}
+                // if (item.IsPointerOver) { } Р“РµРЅРёР°Р»СЊРЅР°СЏ РІРµС‰СЊ! ;'-} РҐРѕС‚СЏ РЅРµ, РІСЃС‘ СЂР°РІРЅРѕ Р±Р»РѕРєРёСЂСѓРµС‚СЃСЏ РїРѕСЃР»Рµ Press Рё РґРѕ Release, С‡РµРіРѕ СЏ РІРїСЂРёРЅС†РёРїРµ С…РѕС‡Сѓ РёР·Р±РµР¶Р°С‚СЊ ;'-}
                 var item = (Control) logic;
                 var tb = item.TransformedBounds;
-                if (tb != null && new Rect(tb.Value.Clip.TopLeft, new Size()).Sum(item.Bounds).Contains(pos) && (string?) item.Tag != "arrow") res = item; // Гениально! ;'-} НАКОНЕЦ-ТО ЗАРАБОТАЛО!
+                if (tb != null && new Rect(tb.Value.Clip.TopLeft, new Size()).Sum(item.Bounds).Contains(pos) && (string?) item.Tag != "arrow") res = item; // Р“РµРЅРёР°Р»СЊРЅРѕ! ;'-} РќРђРљРћРќР•Р¦-РўРћ Р—РђР РђР‘РћРўРђР›Рћ!
                 FixItem(ref res, pos, item.GetLogicalChildren());
             }
         }
         private Control FixItem(Control item, Point pos) {
             var mode = map.GetMode;
-            // К сожалению, во время протягивания проводки, marker Ellipse застревает, как кость в горле, так что и соответствующий багофикс, ибо то, что попало в Press, фиксируется на всё время (Move/до конца Release) ;'-}
+            // Рљ СЃРѕР¶Р°Р»РµРЅРёСЋ, РІРѕ РІСЂРµРјСЏ РїСЂРѕС‚СЏРіРёРІР°РЅРёСЏ РїСЂРѕРІРѕРґРєРё, marker Ellipse Р·Р°СЃС‚СЂРµРІР°РµС‚, РєР°Рє РєРѕСЃС‚СЊ РІ РіРѕСЂР»Рµ, С‚Р°Рє С‡С‚Рѕ Рё СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёР№ Р±Р°РіРѕС„РёРєСЃ, РёР±Рѕ С‚Рѕ, С‡С‚Рѕ РїРѕРїР°Р»Рѕ РІ Press, С„РёРєСЃРёСЂСѓРµС‚СЃСЏ РЅР° РІСЃС‘ РІСЂРµРјСЏ (Move/РґРѕ РєРѕРЅС†Р° Release) ;'-}
             if (mode == 3 || mode == 6) {
                 item = new Canvas() { Tag = "scene" };
                 FixItem(ref item, pos + new Point(0, 32), canv.Children); // doc_panel height = 32
@@ -104,7 +104,7 @@ namespace DiagramEditor.Views {
         }
 
         /*
-         * Маркеры
+         * РњР°СЂРєРµСЂС‹
          */
 
         readonly Ellipse marker = new() { Tag = "marker", Stroke = Brushes.Orange, Fill = Brushes.Yellow, StrokeThickness = 2, Width = 12, Height = 12, ZIndex = 2, IsVisible = false };
@@ -131,7 +131,7 @@ namespace DiagramEditor.Views {
         }
 
         /*
-         * Основная мясорубка
+         * РћСЃРЅРѕРІРЅР°СЏ РјСЏСЃРѕСЂСѓР±РєР°
          */
 
         void AddWindow() {
@@ -170,7 +170,7 @@ namespace DiagramEditor.Views {
                     if (map.tap_mode == 2 && map.tapped_item != null) {
                         editable = map.tapped_item;
                         mwvm.Import(editable.entity);
-                        menu = new AddShape { DataContext = mwvm, Title = "Редактирование ноды диаграммы" };
+                        menu = new AddShape { DataContext = mwvm, Title = "Р РµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ РЅРѕРґС‹ РґРёР°РіСЂР°РјРјС‹" };
                         menu.ShowDialog(this);
                     }
                 }
@@ -180,7 +180,7 @@ namespace DiagramEditor.Views {
                 if (e.Source != null && e.Source is Control @control) map.WheelMove(@control, e.Delta.Y);
             };
 
-            /* int x = 100, y = 100, w = 500, angle = 90; // Чисто оставил для вида, как прототип первой нормааааЪааЪаЪально вращаемой стрелочки
+            /* int x = 100, y = 100, w = 500, angle = 90; // Р§РёСЃС‚Рѕ РѕСЃС‚Р°РІРёР» РґР»СЏ РІРёРґР°, РєР°Рє РїСЂРѕС‚РѕС‚РёРї РїРµСЂРІРѕР№ РЅРѕСЂРјР°Р°Р°Р°РЄР°Р°РЄР°РЄР°Р»СЊРЅРѕ РІСЂР°С‰Р°РµРјРѕР№ СЃС‚СЂРµР»РѕС‡РєРё
             Path p = new() {
                 StrokeThickness = 3,
                 Stroke = Brushes.Sienna,
