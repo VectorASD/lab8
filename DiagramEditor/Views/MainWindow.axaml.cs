@@ -1,7 +1,10 @@
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.LogicalTree;
 using DiagramEditor.Models;
 using DiagramEditor.ViewModels;
+using System.Collections.Generic;
 
 namespace DiagramEditor.Views {
     public partial class MainWindow: Window {
@@ -23,7 +26,7 @@ namespace DiagramEditor.Views {
         }
 
         /*
-         * Проводники между этим классом и ViewModel. Не MVVM их бы не было XD
+         * Проводники между этим классом и ViewModel. Не MVVM, их бы не было XD
          */
 
         private AddShape? menu;
@@ -70,6 +73,30 @@ namespace DiagramEditor.Views {
         private bool IsEditable() => editable is not null;
 
         /*
+         * Проводники между этим классом и Mapper. Не MVVM, их бы не было XD
+         */
+
+        private void FixItem(ref Control res, Point pos, IEnumerable<ILogical> items) {
+            foreach (var logic in items) {
+                // if (item.IsPointerOver) { } Гениальная вещь! ;'-} Хотя не, всё равно блокируется после Press и до Release, чего я впринципе хочу избежать ;'-}
+                var item = (Control) logic;
+                var tb = item.TransformedBounds;
+                if (tb != null && new Rect(tb.Value.Clip.TopLeft, new Size()).Sum(item.Bounds).Contains(pos) && (string?) item.Tag != "arrow") res = item; // Гениально! ;'-} НАКОНЕЦ-ТО ЗАРАБОТАЛО!
+                FixItem(ref res, pos, item.GetLogicalChildren());
+            }
+        }
+        private Control FixItem(Control item, Point pos) {
+            var mode = map.GetMode;
+            // К сожалению, во время протягивания проводки, marker Ellipse застревает, как кость в горле, так что и соответствующий багофикс, ибо то, что попало в Press, фиксируется на всё время (Move/до конца Release) ;'-}
+            if (mode == 3 || mode == 6) {
+                item = new Canvas() { Tag = "scene" };
+                FixItem(ref item, pos + new Point(0, 32), canv.Children); // doc_panel height = 32
+                // Log.Write("Item: " + item + " " + item.Tag);
+            }
+            return item;
+        }
+
+        /*
          * Основная мясорубка
          */
 
@@ -84,12 +111,16 @@ namespace DiagramEditor.Views {
                 if (e.Source != null && e.Source is Control @control) map.Press(@control, e.GetCurrentPoint(canv).Position);
             };
             panel.PointerMoved += (sender, e) => {
-                if (e.Source != null && e.Source is Control @control) map.Move(@control, e.GetCurrentPoint(canv).Position);
+                if (e.Source != null && e.Source is Control @control) {
+                    var pos = e.GetCurrentPoint(canv).Position;
+                    map.Move(FixItem(@control, pos), pos);
+                }
             };
             panel.PointerReleased += (sender, e) => {
                 if (e.Source != null && e.Source is Control @control) {
                     var pos = e.GetCurrentPoint(canv).Position;
-                    map.Release(@control, pos);
+                    map.Release(FixItem(@control, pos), pos);
+
                     if (map.tap_mode == 1) {
                         editable = null;
                         menu = new AddShape { DataContext = mwvm };

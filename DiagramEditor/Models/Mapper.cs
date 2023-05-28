@@ -2,7 +2,6 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Shapes;
 using Avalonia.Input;
-using Avalonia.LogicalTree;
 using Avalonia.Media;
 using DiagramEditor.Views;
 using DynamicData;
@@ -159,24 +158,9 @@ namespace DiagramEditor.Models {
             Move(item, pos);
         }
 
-        public void FixItem(ref Control res, Point pos, IEnumerable<ILogical> items) {
-            foreach (var logic in items) {
-                // if (item.IsPointerOver) { } Гениальная вещь! ;'-} Хотя не, всё равно блокируется после Press и до Release, чего я впринципе хочу избежать ;'-}
-                var item = (Control) logic;
-                var tb = item.TransformedBounds;
-                if (tb != null && new Rect(tb.Value.Clip.TopLeft, new Size()).Sum(item.Bounds).Contains(pos) && (string?) item.Tag != "arrow") res = item; // Гениально! ;'-} НАКОНЕЦ-ТО ЗАРАБОТАЛО!
-                FixItem(ref res, pos, item.GetLogicalChildren());
-            }
-        }
+        public int GetMode => mode;
         public void Move(Control item, Point pos) {
             // Log.Write("PointerMoved: " + item.GetType().Name + " pos: " + pos);
-
-            // К сожалению, во время протягивания проводки, marker Ellipse застревает, как кость в горле, так что и соответствующий багофикс, ибо то, что попало в Press, фиксируется на всё время (Move/до конца Release) ;'-}
-            if (mode == 3 || mode == 6) {
-                item = new Canvas() { Tag = "scene" };
-                FixItem(ref item, pos + new Point(0, 32), items); // doc_panel height = 32
-                // Log.Write("Item: " + item + " " + item.Tag);
-            }
 
             string[] mods = new[] { "field", "marker" };
             if (IsMode(item, mods)) {
