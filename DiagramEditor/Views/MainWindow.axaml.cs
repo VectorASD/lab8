@@ -92,7 +92,7 @@ namespace DiagramEditor.Views {
                     map.Release(@control, pos);
                     if (map.tap_mode == 1) {
                         editable = null;
-                        menu = new AddShape { DataContext = this };
+                        menu = new AddShape { DataContext = mwvm };
                         menu.ShowDialog(this);
                     }
 
@@ -105,7 +105,7 @@ namespace DiagramEditor.Views {
                     if (map.tap_mode == 2 && map.tapped_item != null) {
                         editable = map.tapped_item;
                         mwvm.Import(editable.entity);
-                        menu = new AddShape { DataContext = this, Title = "Редактирование ноды диаграммы" };
+                        menu = new AddShape { DataContext = mwvm, Title = "Редактирование ноды диаграммы" };
                         menu.ShowDialog(this);
                     }
                 }

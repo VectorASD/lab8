@@ -238,13 +238,13 @@ namespace DiagramEditor.Models {
         }
 
         private static string ToJSONHandler(string str) {
-            if (str.Length > 1 && str[0] == '$' && str[1] <= '9' && str[1] >= '0') return str[1..]; // unescape NUM
+            if (str.Length > 1 && str[0] == '$' && (str[1] <= '9' && str[1] >= '0' || str[1] == '-')) return str[1..]; // unescape NUM
             return str switch {
                 "null" => "null",
                 "undefined" => "undefined",
                 "_BOOL_yeah" => "true",
                 "_BOOL_nop" => "false",
-                _ => '"' + str + '"',
+                _ => '"' + str.Replace("\\", "\\\\") + '"',
             };
         }
         private static string ToJSONHandler(XElement xml) {
@@ -411,7 +411,7 @@ namespace DiagramEditor.Models {
         private static string YAML_ParseNum(ref string yaml, ref int pos) {
             char c = yaml[pos++];
             StringBuilder sb = new();
-            while ("0123456789.".Contains(c)) {
+            while ("0123456789.-".Contains(c)) {
                 sb.Append(c);
                 c = yaml[pos++];
             }
@@ -425,7 +425,7 @@ namespace DiagramEditor.Models {
             pos--;
             if (first == '"')
                 return '"' + YAML_ParseString(ref yaml, ref pos) + '"';
-            if ("0123456789".Contains(first))
+            if ("0123456789-".Contains(first))
                 return YAML_ParseNum(ref yaml, ref pos);
 
             string str = YAML_ParseString(ref yaml, ref pos);

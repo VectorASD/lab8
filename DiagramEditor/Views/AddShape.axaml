@@ -9,9 +9,9 @@
         Title="Создание новой ноды диаграммы"
         xmlns:vm="using:DiagramEditor.ViewModels">
 
-	<!--Design.DataContext>
+	<Design.DataContext>
         <vm:MainWindowViewModel/>
-    </Design.DataContext-->
+    </Design.DataContext>
 	
 	<Window.Styles>
 		<Style Selector="TabItem">
